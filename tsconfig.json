@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "lib": ["esnext", "dom"],
+    "preserveWatchOutput": true,
+    "pretty": true
+  },
+  "files": ["index.ts", "loader.ts"],
+  "exclude": ["node_modules"]
+}
