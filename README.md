@@ -119,6 +119,8 @@ This package consists of two tools:
 
      _It is still possible to invoke type-checker manually, but it will result in substantial increase in build time._
 
+     _It is also possible to track the usage of a variable in the file._
+
   2. These modifications must affect the whole project so even if this identifier is exported in some other module the type-checker could do its job.
 
      _Possible solution: add intermediate build step, in which TS code is transpiled to TS code with necessary modifications._
