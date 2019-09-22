@@ -85,9 +85,85 @@ This package consists of two tools:
 
   TypeScript compiler API is synchronous, while `css-modules-loader-core` API is asynchronous (Promise-based), which means that it is impossible to reuse the latter for the purpose of parsing CSS in Language Service plugin.
 
+- Limited support for interpolations
+
+  ```javascript
+  const WIDTH = '500px';
+
+  // ok
+  const { a } = css`
+    .a {
+      width: ${WIDTH};
+    }
+  `;
+  ```
+
+  ```javascript
+  const NAME = 'someClass';
+
+  //        error
+  //      vvvvvvvvv
+  const { someClass } = css`
+    .${NAME} {
+      color: red;
+    }
+  `;
+  ```
+
+  Beware of nested multi-line interpolations! **[this particular issue is in progress of being fixed]**
+
+  In this example `className`, `map`, `toLowerCase`, `toUpperCase` will be treated as available class names:
+
+  ```javascript
+  // sadly, this is ok :(
+  const { className, map, toLowerCase, toUpperCase } = css`
+    .className {
+      color: ${NAME.map(
+        x =>
+          `${x
+            .toLowerCase()
+            .toUpperCase()
+            .toLowerCase()
+            .toUpperCase()}`
+      )[0]};
+    }
+  `;
+  ```
+
 - Only plain CSS is supported.
 
-  LESS, SASS, etc. may work, but without any guarantees of stability.
+  Basic features of SASS/LESS/etc. may work:
+
+  ```javascript
+  // simple nesting is ok
+  const { someClass, anotherClass } = css`
+    .someClass {
+      color: red;
+
+      &.anotherClass {
+        border: 1px solid black;
+      }
+    }
+  `;
+  ```
+
+  Advanced features will most probably not work:
+
+  ```javascript
+  //                    error!
+  //                 vvvvvvvvvvvv
+  const { someClass, anotherClass } = css`
+    @name: anotherClass;
+
+    .someClass {
+      color: red;
+
+      &.@{name} {
+        color: black;
+      }
+    }
+  `;
+  ```
 
 - It is not possible to show errors in case destructuring is not used:
 
