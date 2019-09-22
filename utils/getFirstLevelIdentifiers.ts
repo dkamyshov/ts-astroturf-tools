@@ -11,10 +11,6 @@ export const getFirstLevelIdentifiers = (
     return n.kind === ts.SyntaxKind.ObjectBindingPattern;
   })[0];
 
-  if (!objectBindingPattern) {
-    return result;
-  }
-
   objectBindingPattern.forEachChild(child => {
     if (child.kind === ts.SyntaxKind.BindingElement) {
       if (child.getChildCount(file) !== 1) {

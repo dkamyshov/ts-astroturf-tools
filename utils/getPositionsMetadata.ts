@@ -70,7 +70,7 @@ export const getPositionsMetadata = (file: ts.SourceFile) => {
 
     result.push({
       from: objectBindingPattern.getStart(file),
-      to: objectBindingPattern.getEnd(),
+      to: objectBindingPattern.getEnd(), // for some reason getEnd() does not require a file
       available: clearTokens.filter(token => {
         return identifiersStrings.indexOf(token) === -1;
       }),
