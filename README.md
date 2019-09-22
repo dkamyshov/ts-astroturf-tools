@@ -4,7 +4,7 @@
 
 This package is for developers who use both [astroturf](https://github.com/4Catalyzer/astroturf) and [TypeScript](https://www.typescriptlang.org/) and want to maximize type-safety of their code.
 
-## Installation [not yet available]
+## Installation
 
 ```
 $ npm i --save-dev ts-astroturf-tools
