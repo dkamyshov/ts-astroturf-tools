@@ -1,8 +1,12 @@
 {
   "name": "ts-astroturf-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TypeScript tools that enhance astroturf.",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dkamyshov/ts-astroturf-tools.git"
+  },
   "license": "MIT",
   "scripts": {
     "clean": "rm index.js loader.js utils/*.js",
