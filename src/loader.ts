@@ -3,11 +3,13 @@ import * as webpack from 'webpack';
 import { packageName } from './utils/constants';
 import { getAssignmentsMetadata } from './utils/getAssignmentsMetadata';
 import { getMissingIdentifiers } from './utils/getMissingIdentifiers';
+import { getUnusedTokens } from './utils/getUnusedTokens';
 
 const cache: {
   [resourcePath: string]: {
     source: string;
     errors: string[];
+    warnings: string[];
   };
 } = {};
 
@@ -28,6 +30,10 @@ const setupErrorsHook = (() => {
 
       entry.errors.forEach(errorMessage => {
         compilation.errors.push(new Error(errorMessage));
+      });
+
+      entry.warnings.forEach(warningMessage => {
+        compilation.warnings.push(new Error(warningMessage));
       });
     });
 
@@ -73,33 +79,34 @@ const loader: webpack.loader.Loader = function(source, map) {
   }
 
   let currentSessionErrors: string[] = [];
+  let currentSessionWarnings: string[] = [];
 
-  const pushCurrentSessionError = (msg: string) => {
-    currentSessionErrors.push(`[${packageName}/loader] ${msg}`);
-  };
+  const assignmentsMetadata = getAssignmentsMetadata(sourceFile);
 
-  const process = (file: ts.SourceFile) => {
-    const assignmentsMetadata = getAssignmentsMetadata(file);
-
-    assignmentsMetadata.forEach(assignmentMetadata => {
-      const missingIdentifiers = getMissingIdentifiers(assignmentMetadata);
-
-      missingIdentifiers.forEach(missingIdentifier => {
-        pushCurrentSessionError(
-          `${resourcePath}:${missingIdentifier.line +
-            1}:${missingIdentifier.character + 1}:\n    Identifier "${
-            missingIdentifier.name
-          }" is missing in corresponding CSS.`
-        );
-      });
+  assignmentsMetadata.forEach(assignmentMetadata => {
+    getMissingIdentifiers(assignmentMetadata).forEach(missingIdentifier => {
+      currentSessionErrors.push(
+        `[${packageName}/loader] ${resourcePath}:${missingIdentifier.line +
+          1}:${missingIdentifier.character + 1}:\n    Identifier "${
+          missingIdentifier.name
+        }" is missing in corresponding CSS.`
+      );
     });
-  };
 
-  process(sourceFile);
+    getUnusedTokens(assignmentMetadata).forEach(unusedToken => {
+      currentSessionWarnings.push(
+        `[${packageName}/loader] ${resourcePath}:${unusedToken.line +
+          1}:${unusedToken.character + 1}:\n    Identifier "${
+          unusedToken.name
+        }" is unused. Consider removing it from CSS.`
+      );
+    });
+  });
 
   cache[resourcePath] = {
     source: sourceCode,
     errors: currentSessionErrors,
+    warnings: currentSessionWarnings,
   };
 
   this.callback(null, source, map);

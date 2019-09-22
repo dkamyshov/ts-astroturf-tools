@@ -32,6 +32,33 @@ export interface AssignmentIdentifier {
   name: string;
 }
 
+export interface AssignmentCSSIdentifier {
+  /**
+   * Position where identifier starts.
+   */
+  from: number;
+
+  /**
+   * Position where identifier ends.
+   */
+  to: number;
+
+  /**
+   * Line where identifier is located.
+   */
+  line: number;
+
+  /**
+   * Position in line where identifier starts.
+   */
+  character: number;
+
+  /**
+   * Name of the identifier.
+   */
+  name: string;
+}
+
 export interface AssignmentMetadata {
   /**
    * Position where assignment starts.
@@ -61,9 +88,7 @@ export interface AssignmentMetadata {
   /**
    * Identifiers in CSS code.
    */
-  availableIdentifiers: {
-    name: string;
-  }[];
+  availableIdentifiers: AssignmentCSSIdentifier[];
 }
 
 /**
@@ -80,20 +105,36 @@ export const getAssignmentsMetadata = (file: ts.SourceFile) => {
     })[0];
 
     const identifiers = getFirstLevelIdentifiers(assignmentNode, file);
+    const taggedTemplateExpression = assignmentNode.getChildAt(2, file);
+    const taggedTemplateExpressionFrom = taggedTemplateExpression.getStart(
+      file
+    );
     const cssSource = extractTemplateLiteralContent(assignmentNode, file);
     const clearCssSource = cssSource
       .substring(0, cssSource.length - 1)
       .substring(1);
 
-    const filtered = clearCssSource.replace(literalsRegExp, 'none');
+    const tokens: AssignmentCSSIdentifier[] = [];
 
-    const tokens = filtered.match(tokensRegExp);
+    clearCssSource.replace(tokensRegExp, (matched, index) => {
+      const name = matched.substring(1);
+      const from = taggedTemplateExpressionFrom + 4 + index;
+      const to = from + matched.length;
+      const tokenSourcePosition = ts.getLineAndCharacterOfPosition(file, from);
 
-    if (!tokens) {
+      tokens.push({
+        name,
+        from,
+        to,
+        line: tokenSourcePosition.line,
+        character: tokenSourcePosition.character,
+      });
+      return '';
+    });
+
+    if (tokens.length < 1) {
       return;
     }
-
-    const clearTokens = tokens.map(x => x.substring(1));
 
     result.push({
       from: assignmentNode.getStart(file),
@@ -115,9 +156,7 @@ export const getAssignmentsMetadata = (file: ts.SourceFile) => {
           character: identifierSourcePosition.character,
         };
       }),
-      availableIdentifiers: clearTokens.map(token => ({
-        name: token,
-      })),
+      availableIdentifiers: tokens,
     });
   });
 

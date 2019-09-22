@@ -20,6 +20,14 @@ $ npm i --save-dev ts-astroturf-tools
 
   ![](docs/assets/build-error.png)
 
+- 📝 Get suggestion message in case CSS class name is unused:
+
+  ![](docs/assets/editor-suggestion.png)
+
+- 🧰 Get the same message as a warning during build:
+
+  ![](docs/assets/build-suggestion-warning.png)
+
 - 📝 Autocomplete for identifiers:
 
   ![](docs/assets/editor-autocomplete.png)

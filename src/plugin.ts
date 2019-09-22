@@ -1,8 +1,13 @@
 import * as tsserver from 'typescript/lib/tsserverlibrary';
-import { missingIdentifierCode, packageName } from './utils/constants';
+import {
+  missingIdentifierCode,
+  packageName,
+  unusedTokenCode,
+} from './utils/constants';
 import { getAssignmentsMetadata } from './utils/getAssignmentsMetadata';
 import { getMissingIdentifiers } from './utils/getMissingIdentifiers';
 import { getSourceFile } from './utils/getSourceFile';
+import { getUnusedTokens } from './utils/getUnusedTokens';
 
 const init = (modules: { typescript: typeof tsserver }) => {
   const ts = modules.typescript;
@@ -65,16 +70,13 @@ const init = (modules: { typescript: typeof tsserver }) => {
     proxy.getSemanticDiagnostics = (fileName: string) => {
       const original =
         info.languageService.getSemanticDiagnostics(fileName) || [];
+
       const result = [...original];
 
       const sourceFile = getSourceFile(info, fileName);
 
-      const assignmentsMetadata = getAssignmentsMetadata(sourceFile);
-
-      assignmentsMetadata.forEach(assignmentMetadata => {
-        const missingIdentifiers = getMissingIdentifiers(assignmentMetadata);
-
-        missingIdentifiers.forEach(missingIdentifier => {
+      getAssignmentsMetadata(sourceFile).forEach(assignmentMetadata => {
+        getMissingIdentifiers(assignmentMetadata).forEach(missingIdentifier => {
           result.push({
             source: packageName,
             category: ts.DiagnosticCategory.Error,
@@ -83,6 +85,18 @@ const init = (modules: { typescript: typeof tsserver }) => {
             start: missingIdentifier.from,
             length: missingIdentifier.to - missingIdentifier.from,
             messageText: `Identifier "${missingIdentifier.name}" is missing in corresponding CSS.`,
+          });
+        });
+
+        getUnusedTokens(assignmentMetadata).forEach(unusedToken => {
+          result.push({
+            source: packageName,
+            category: ts.DiagnosticCategory.Suggestion,
+            code: unusedTokenCode,
+            file: sourceFile,
+            start: unusedToken.from,
+            length: unusedToken.to - unusedToken.from,
+            messageText: `Identifier "${unusedToken.name}" is unused. Consider removing it from CSS.`,
           });
         });
       });
