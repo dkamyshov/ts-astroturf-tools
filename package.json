@@ -18,7 +18,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "clean": "rm index.js loader.js utils/*.js",
+    "clean": "rm -rf coverage lib",
     "build": "tsc",
     "dev": "tsc --watch",
     "test": "jest ./src"
