@@ -126,11 +126,3 @@ This package consists of two tools:
   2. These modifications must affect the whole project so even if this identifier is exported in some other module the type-checker could do its job.
 
      _Possible solution: add intermediate build step, in which TS code is transpiled to TS code with necessary modifications._
-
-- In webpack's watch mode errors are reported only for modified files.
-
-  Suppose you have files `A.tsx` and `B.tsx` and you use `webpack-dev-server`. During the first run errors from both files will be reported. If you fix the error in `A.tsx` and save it, webpack will not report errors in `B.tsx` anymore.
-
-  This is acceptable for CI (because any run in CI is "the first run"), but it is quite annoying during development.
-
-  **This issue is in process of being fixed.**

@@ -11,12 +11,41 @@ const cache: {
   };
 } = {};
 
-const pushError = (_compilation: any, message: string) => {
-  _compilation.errors.push(new Error(message));
-};
+const setupErrorsHook = (() => {
+  let isAfterCompileHookSet = false;
+
+  const afterCompileErrorsHook = (
+    compilation: webpack.compilation.Compilation,
+    callback: () => void
+  ) => {
+    if (compilation.compiler.isChild()) {
+      callback();
+      return;
+    }
+
+    Object.keys(cache).forEach(cachedResourcePath => {
+      const entry = cache[cachedResourcePath];
+
+      entry.errors.forEach(errorMessage => {
+        compilation.errors.push(new Error(errorMessage));
+      });
+    });
+
+    callback();
+  };
+
+  return (compiler: webpack.Compiler) => {
+    if (!isAfterCompileHookSet) {
+      compiler.hooks.afterCompile.tapAsync(packageName, afterCompileErrorsHook);
+      isAfterCompileHookSet = true;
+    }
+  };
+})();
 
 const loader: webpack.loader.Loader = function(source, map) {
   this.cacheable && this.cacheable();
+
+  setupErrorsHook(this._compiler);
 
   const resourcePath = this.resourcePath;
   const sourceCode = source.toString();
@@ -25,11 +54,6 @@ const loader: webpack.loader.Loader = function(source, map) {
     const entry = cache[resourcePath];
 
     if (entry.source === sourceCode) {
-      const entry = cache[resourcePath];
-
-      entry.errors.forEach(error => {
-        pushError(this._compilation, error);
-      });
       this.callback(null, source, map);
       return;
     }
@@ -91,12 +115,6 @@ const loader: webpack.loader.Loader = function(source, map) {
     source: sourceCode,
     errors: currentSessionErrors,
   };
-
-  const entry = cache[resourcePath];
-
-  entry.errors.forEach(error => {
-    pushError(this._compilation, error);
-  });
 
   this.callback(null, source, map);
   return;
