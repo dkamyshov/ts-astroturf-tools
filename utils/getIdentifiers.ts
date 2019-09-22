@@ -1,16 +1,33 @@
 import * as ts from 'typescript';
-import { findAllNodes } from './findAllNodes';
-import { isDestructuringCSSAssignment } from './isDestructuringCSSAssignment';
-import { getFirstLevelIdentifiers } from './getFirstLevelIdentifiers';
-import { getCSSText } from './getCSSText';
 import { literalsRegExp, tokensRegExp } from './constants';
+import { extractTemplateLiteralContent } from './extractTemplateLiteralContent';
+import { getFirstLevelIdentifiers } from './getFirstLevelIdentifiers';
 import { getTargetNodes } from './getTargetNodes';
 
 export interface IdentifiersResult {
+  /**
+   * List of available class names.
+   *
+   *     const { a } = css` .a { color: #aaa; } .b { color: #bbb; } `;
+   *                         ^                   ^
+   */
   available: string[];
+
+  /**
+   * List of identifiers in ObjectBindingPattern
+   *
+   *     const { a } = css` .a { color: #aaa; } .b { color: #bbb; } `;
+   *             ^
+   */
   requested: ts.Node[];
 }
 
+/**
+ * Returns metadata for all astroturf css assignments
+ * in the file.
+ *
+ * @param file
+ */
 export const getIdentifiers = (file: ts.SourceFile): IdentifiersResult[] => {
   const result: IdentifiersResult[] = [];
 
@@ -19,7 +36,7 @@ export const getIdentifiers = (file: ts.SourceFile): IdentifiersResult[] => {
   if (targetNodes.length > 0) {
     targetNodes.forEach(node => {
       const identifiers = getFirstLevelIdentifiers(node, file);
-      const cssSource = getCSSText(node, file);
+      const cssSource = extractTemplateLiteralContent(node, file);
       const clearCssSource = cssSource
         .substring(0, cssSource.length - 1)
         .substring(1);

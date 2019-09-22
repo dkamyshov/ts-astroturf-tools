@@ -1,16 +1,44 @@
 import * as ts from 'typescript';
-import { getTargetNodes } from './getTargetNodes';
+import { literalsRegExp, tokensRegExp } from './constants';
+import { extractTemplateLiteralContent } from './extractTemplateLiteralContent';
 import { findAllNodes } from './findAllNodes';
 import { getFirstLevelIdentifiers } from './getFirstLevelIdentifiers';
-import { getCSSText } from './getCSSText';
-import { literalsRegExp, tokensRegExp } from './constants';
+import { getTargetNodes } from './getTargetNodes';
 
 interface PositionMetadata {
+  /**
+   * Starting position of ObjectBindingPattern.
+   */
   from: number;
+
+  /**
+   * Ending position of ObjectBindingPattern.
+   */
   to: number;
+
+  /**
+   * Tokens from CSS that aren't yet used
+   * in an assignment.
+   */
   available: string[];
 }
 
+/**
+ * Returns position metadata for each astroturf
+ * css assignment is a file.
+ *
+ *     const { a } = css` .a { color: #aaa; } .b { color: #bbb; } `;
+ *     //    ^   ^         ^                   ^
+ *     //    6   10        used                unused
+ *     // =>
+ *     // [{
+ *     //   from: 6,
+ *     //   to: 10,
+ *     //   available: ['b']
+ *     // }]
+ *
+ * @param file
+ */
 export const getPositionsMetadata = (file: ts.SourceFile) => {
   const result: PositionMetadata[] = [];
 
@@ -19,17 +47,13 @@ export const getPositionsMetadata = (file: ts.SourceFile) => {
   targetNodes.forEach(node => {
     const objectBindingPattern = findAllNodes(node, n => {
       return n.kind === ts.SyntaxKind.ObjectBindingPattern;
-    })[0];
-
-    if (!objectBindingPattern) {
-      return;
-    }
+    })[0]; // there will always be an ObjectBindingPattern
 
     const identifiers = getFirstLevelIdentifiers(node, file);
     const identifiersStrings = identifiers.map(identifier =>
       identifier.getText(file)
     );
-    const cssSource = getCSSText(node, file);
+    const cssSource = extractTemplateLiteralContent(node, file);
     const clearCssSource = cssSource
       .substring(0, cssSource.length - 1)
       .substring(1);
@@ -45,7 +69,7 @@ export const getPositionsMetadata = (file: ts.SourceFile) => {
     const clearTokens = tokens.map(x => x.substring(1));
 
     result.push({
-      from: objectBindingPattern.getStart(),
+      from: objectBindingPattern.getStart(file),
       to: objectBindingPattern.getEnd(),
       available: clearTokens.filter(token => {
         return identifiersStrings.indexOf(token) === -1;
