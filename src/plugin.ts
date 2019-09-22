@@ -1,13 +1,8 @@
 import * as tsserver from 'typescript/lib/tsserverlibrary';
-import {
-  failedToExecuteCode,
-  missingIdentifierCode,
-  packageName,
-} from './utils/constants';
-import { getIdentifiers } from './utils/getIdentifiers';
+import { missingIdentifierCode, packageName } from './utils/constants';
+import { getAssignmentsMetadata } from './utils/getAssignmentsMetadata';
 import { getMissingIdentifiers } from './utils/getMissingIdentifiers';
 import { getSourceFile } from './utils/getSourceFile';
-import { getPositionsMetadata } from './utils/getPositionsMetadata';
 
 const init = (modules: { typescript: typeof tsserver }) => {
   const ts = modules.typescript;
@@ -38,17 +33,26 @@ const init = (modules: { typescript: typeof tsserver }) => {
       working.entries = [...working.entries];
 
       const sourceFile = getSourceFile(info, fileName);
+      const assignmentsMetadata = getAssignmentsMetadata(sourceFile);
 
-      const positionsMetadata = getPositionsMetadata(sourceFile);
+      assignmentsMetadata.forEach(item => {
+        if (item.bindingTo >= position && position >= item.bindingFrom) {
+          const unusedIdentifiers = item.availableIdentifiers.filter(
+            availableIdentifier => {
+              return (
+                item.requestedIdentifiers.filter(requestedIdentifier => {
+                  return requestedIdentifier.name === availableIdentifier.name;
+                }).length < 1
+              );
+            }
+          );
 
-      positionsMetadata.forEach(md => {
-        if (md.from <= position && md.to >= position) {
-          md.available.forEach(a => {
-            working.entries.unshift({
-              name: a,
+          unusedIdentifiers.forEach(unusedIdentifier => {
+            working.entries.push({
+              name: unusedIdentifier.name,
               kind: ts.ScriptElementKind.memberVariableElement,
-              sortText: a,
-              insertText: a,
+              sortText: unusedIdentifier.name,
+              insertText: unusedIdentifier.name,
               isRecommended: true,
             });
           });
@@ -65,36 +69,23 @@ const init = (modules: { typescript: typeof tsserver }) => {
 
       const sourceFile = getSourceFile(info, fileName);
 
-      try {
-        const missingIdentifiers = getMissingIdentifiers(
-          getIdentifiers(sourceFile),
-          sourceFile
-        );
+      const assignmentsMetadata = getAssignmentsMetadata(sourceFile);
 
-        if (missingIdentifiers.length > 0) {
-          missingIdentifiers.forEach(missingIdentifier => {
-            result.push({
-              source: packageName,
-              category: ts.DiagnosticCategory.Error,
-              code: missingIdentifierCode,
-              file: sourceFile,
-              start: missingIdentifier.getStart(),
-              length: missingIdentifier.getEnd() - missingIdentifier.getStart(),
-              messageText: `Identifier "${missingIdentifier.getText()}" is missing in corresponding CSS.`,
-            });
+      assignmentsMetadata.forEach(assignmentMetadata => {
+        const missingIdentifiers = getMissingIdentifiers(assignmentMetadata);
+
+        missingIdentifiers.forEach(missingIdentifier => {
+          result.push({
+            source: packageName,
+            category: ts.DiagnosticCategory.Error,
+            code: missingIdentifierCode,
+            file: sourceFile,
+            start: missingIdentifier.from,
+            length: missingIdentifier.to - missingIdentifier.from,
+            messageText: `Identifier "${missingIdentifier.name}" is missing in corresponding CSS.`,
           });
-        }
-      } catch (e) {
-        result.push({
-          source: packageName,
-          category: ts.DiagnosticCategory.Error,
-          code: failedToExecuteCode,
-          file: sourceFile,
-          start: 0,
-          length: 1,
-          messageText: `Failed to execute ${packageName}.`,
         });
-      }
+      });
 
       return result;
     };

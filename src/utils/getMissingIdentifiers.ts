@@ -1,5 +1,7 @@
-import * as ts from 'typescript';
-import { IdentifiersResult } from './getIdentifiers';
+import {
+  AssignmentIdentifier,
+  AssignmentMetadata,
+} from './getAssignmentsMetadata';
 
 /**
  * Computes identifiers that are used in an assignment
@@ -8,22 +10,16 @@ import { IdentifiersResult } from './getIdentifiers';
  *     const { a, b } = css` .a { color: #aaa; } `;
  *                ^
  *
- * @param identifiersResult
- * @param file
+ * @param assignmentMetadata
  */
 export const getMissingIdentifiers = (
-  identifiersResult: IdentifiersResult[],
-  file: ts.SourceFile
-): ts.Node[] => {
-  const result: ts.Node[] = [];
-
-  identifiersResult.forEach(item => {
-    result.push(
-      ...item.requested.filter(requested => {
-        return item.available.indexOf(requested.getText(file)) === -1;
-      })
+  assignmentMetadata: AssignmentMetadata
+): AssignmentIdentifier[] => {
+  return assignmentMetadata.requestedIdentifiers.filter(requestedIdentifier => {
+    return (
+      assignmentMetadata.availableIdentifiers.filter(availableIdentifier => {
+        return availableIdentifier.name === requestedIdentifier.name;
+      }).length < 1
     );
   });
-
-  return result;
 };

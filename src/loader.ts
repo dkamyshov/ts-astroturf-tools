@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import * as webpack from 'webpack';
 import { packageName } from './utils/constants';
+import { getAssignmentsMetadata } from './utils/getAssignmentsMetadata';
 import { getMissingIdentifiers } from './utils/getMissingIdentifiers';
-import { getIdentifiers } from './utils/getIdentifiers';
 
 const cache: {
   [resourcePath: string]: {
@@ -79,34 +79,20 @@ const loader: webpack.loader.Loader = function(source, map) {
   };
 
   const process = (file: ts.SourceFile) => {
-    try {
-      const missingIdentifiers = getMissingIdentifiers(
-        getIdentifiers(file),
-        file
-      );
+    const assignmentsMetadata = getAssignmentsMetadata(file);
 
-      if (missingIdentifiers.length > 0) {
-        missingIdentifiers.forEach(missingIdentifier => {
-          const linePosition = file.getLineAndCharacterOfPosition(
-            missingIdentifier.getStart(file)
-          );
+    assignmentsMetadata.forEach(assignmentMetadata => {
+      const missingIdentifiers = getMissingIdentifiers(assignmentMetadata);
 
-          pushCurrentSessionError(
-            `${resourcePath}:${linePosition.line + 1}:${linePosition.character +
-              1}:\n    Identifier "${missingIdentifier.getText(
-              file
-            )}" is missing in corresponding CSS.`
-          );
-        });
-      }
-    } catch (e) {
-      const linePosition = file.getLineAndCharacterOfPosition(file.getStart());
-      pushCurrentSessionError(
-        `${resourcePath}:${linePosition.line + 1}:${linePosition.character +
-          1}:\n    Failed to execute "${packageName}/loader".\n    ${e.message}`
-      );
-    }
-    return file;
+      missingIdentifiers.forEach(missingIdentifier => {
+        pushCurrentSessionError(
+          `${resourcePath}:${missingIdentifier.line +
+            1}:${missingIdentifier.character + 1}:\n    Identifier "${
+            missingIdentifier.name
+          }" is missing in corresponding CSS.`
+        );
+      });
+    });
   };
 
   process(sourceFile);
