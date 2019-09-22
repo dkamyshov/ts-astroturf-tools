@@ -1,4 +1,4 @@
 *
-!index.js
-!loader.js
-!utils/*.js
+index.js
+loader.js
+!lib/**/*.js

@@ -1,6 +1,6 @@
 {
   "name": "ts-astroturf-tools",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "TypeScript tools that enhance astroturf.",
   "keywords": [
     "astroturf",
@@ -21,7 +21,7 @@
     "clean": "rm index.js loader.js utils/*.js",
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "jest"
+    "test": "jest ./src"
   },
   "dependencies": {
     "typescript": "^3.6.3"

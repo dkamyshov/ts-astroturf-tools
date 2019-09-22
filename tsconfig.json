@@ -3,8 +3,10 @@
     "strict": true,
     "lib": ["esnext", "dom"],
     "preserveWatchOutput": true,
-    "pretty": true
+    "pretty": true,
+    "rootDir": "src",
+    "outDir": "lib"
   },
-  "files": ["index.ts", "loader.ts"],
+  "files": ["src/plugin.ts", "src/loader.ts"],
   "exclude": ["node_modules"]
 }
