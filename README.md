@@ -32,6 +32,43 @@ $ npm i --save-dev ts-astroturf-tools
 
   ![](docs/assets/editor-autocomplete.png)
 
+- "Direct mode" for `css`.
+
+  This is possible in direct mode:
+
+  ```typescript
+  import { xcss } from 'ts-astroturf-tools';
+
+  const redClassName = xcss`
+    color: red;
+  `;
+
+  const greenClassName = xcss`
+    color: green;
+  `;
+
+  const obj = {
+    red: xcss`
+      color: red;
+    `,
+
+    green: xcss`
+      color: green;
+    `,
+  };
+  ```
+
+  Enable direct mode by passing `direct: true` to the loader:
+
+  ```json
+  {
+    "loader": "ts-astroturf-tools/loader",
+    "options": {
+      "direct": true
+    }
+  }
+  ```
+
 ## Tools
 
 This package consists of two tools:
@@ -80,6 +117,39 @@ This package consists of two tools:
             'awesome-typescript-loader',
             'astroturf/loader',
             'ts-astroturf-tools/loader',
+          ],
+        },
+      ],
+    },
+  };
+  ```
+
+  Available options:
+
+  | Option name | Type      | Description                            |
+  | ----------- | --------- | -------------------------------------- |
+  | `direct`    | `boolean` | Enables direct mode (calls to `xcss`). |
+
+  Defaults:
+
+  ```javascript
+  module.exports = {
+    // ...
+    module: {
+      rules: [
+        // ...
+        {
+          test: /\.tsx?$/,
+          use: [
+            // works with any typescript loader
+            'awesome-typescript-loader',
+            'astroturf/loader',
+            {
+              loader: 'ts-astroturf-tools/loader',
+              options: {
+                direct: false,
+              },
+            },
           ],
         },
       ],

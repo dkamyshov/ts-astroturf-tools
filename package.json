@@ -1,6 +1,6 @@
 {
   "name": "ts-astroturf-tools",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "TypeScript tools that enhance astroturf.",
   "keywords": [
     "astroturf",
@@ -12,6 +12,7 @@
     "visual studio code"
   ],
   "main": "index.js",
+  "typings": "./index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/dkamyshov/ts-astroturf-tools.git"
@@ -24,7 +25,8 @@
     "test": "jest ./src"
   },
   "dependencies": {
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "loader-utils": "^1.2.3"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
