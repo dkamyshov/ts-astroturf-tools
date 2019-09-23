@@ -7,6 +7,10 @@
     "rootDir": "src",
     "outDir": "lib"
   },
-  "files": ["src/plugin/index.ts", "src/loader/index.ts"],
+  "files": [
+    "src/plugin/index.ts",
+    "src/loader/index.ts",
+    "src/babel-plugin/index.ts"
+  ],
   "exclude": ["node_modules"]
 }
