@@ -1,54 +1,14 @@
 import { getOptions } from 'loader-utils';
 import * as ts from 'typescript';
 import * as webpack from 'webpack';
-import { packageName } from './utils/constants';
-import { getAssignmentsMetadata } from './utils/getAssignmentsMetadata';
-import { getMissingIdentifiers } from './utils/getMissingIdentifiers';
-import { getUnusedTokens } from './utils/getUnusedTokens';
+import { packageName } from '../core/constants';
+import { getAssignmentsMetadata } from '../core/getAssignmentsMetadata';
+import { getMissingIdentifiers } from '../core/getMissingIdentifiers';
+import { getUnusedTokens } from '../core/getUnusedTokens';
+import { cache } from './cache';
+import { createSetupErrorsHook } from './createSetupErrorsHook';
 
-const cache: {
-  [resourcePath: string]: {
-    source: string;
-    transformed: string;
-    errors: string[];
-    warnings: string[];
-  };
-} = {};
-
-const setupErrorsHook = (() => {
-  let isAfterCompileHookSet = false;
-
-  const afterCompileErrorsHook = (
-    compilation: webpack.compilation.Compilation,
-    callback: () => void
-  ) => {
-    if (compilation.compiler.isChild()) {
-      callback();
-      return;
-    }
-
-    Object.keys(cache).forEach(cachedResourcePath => {
-      const entry = cache[cachedResourcePath];
-
-      entry.errors.forEach(errorMessage => {
-        compilation.errors.push(new Error(errorMessage));
-      });
-
-      entry.warnings.forEach(warningMessage => {
-        compilation.warnings.push(new Error(warningMessage));
-      });
-    });
-
-    callback();
-  };
-
-  return (compiler: webpack.Compiler) => {
-    if (!isAfterCompileHookSet) {
-      compiler.hooks.afterCompile.tapAsync(packageName, afterCompileErrorsHook);
-      isAfterCompileHookSet = true;
-    }
-  };
-})();
+const setupErrorsHook = createSetupErrorsHook(cache);
 
 interface LoaderOptions {
   /**

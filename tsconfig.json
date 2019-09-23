@@ -7,6 +7,6 @@
     "rootDir": "src",
     "outDir": "lib"
   },
-  "files": ["src/plugin.ts", "src/loader.ts"],
+  "files": ["src/plugin/index.ts", "src/loader/index.ts"],
   "exclude": ["node_modules"]
 }

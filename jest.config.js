@@ -3,7 +3,8 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.ts',
-    '!src/utils/constants.ts',
-    '!src/utils/getSourceFile.ts',
+    '!src/core/constants.ts',
+    '!src/core/getSourceFile.ts',
+    '!src/loader/cache.ts',
   ],
 };

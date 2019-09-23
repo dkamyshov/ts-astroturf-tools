@@ -3,11 +3,11 @@ import {
   missingIdentifierCode,
   packageName,
   unusedTokenCode,
-} from './utils/constants';
-import { getAssignmentsMetadata } from './utils/getAssignmentsMetadata';
-import { getMissingIdentifiers } from './utils/getMissingIdentifiers';
-import { getSourceFile } from './utils/getSourceFile';
-import { getUnusedTokens } from './utils/getUnusedTokens';
+} from '../core/constants';
+import { getAssignmentsMetadata } from '../core/getAssignmentsMetadata';
+import { getMissingIdentifiers } from '../core/getMissingIdentifiers';
+import { getSourceFile } from '../core/getSourceFile';
+import { getUnusedTokens } from '../core/getUnusedTokens';
 
 const init = (modules: { typescript: typeof tsserver }) => {
   const ts = modules.typescript;
