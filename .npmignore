@@ -1,4 +1,5 @@
 *
 !index.js
 !loader.js
+!babel-plugin.js
 !lib/**/*.js
