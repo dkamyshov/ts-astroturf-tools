@@ -38,7 +38,7 @@ const plugin = () => {
         getUnusedTokens(assignmentMetadata).forEach(unusedToken => {
           console.warn(
             colors.yellow(
-              `WARNING [${packageName}/loader] ${filename}:${unusedToken.line +
+              `WARNING [${packageName}/babel-plugin] ${filename}:${unusedToken.line +
                 1}:${unusedToken.character + 1}:\n    Identifier "${
                 unusedToken.name
               }" is unused. Consider removing it from CSS.`
