@@ -77,7 +77,7 @@ $ npm i --save-dev ts-astroturf-tools
 
 ## Tools
 
-This package consists of two tools:
+This package consists of three tools:
 
 - TypeScript Language Service Plugin (in-editor error messages, autocomplete)
 - webpack loader (build-time error messages for webpack)
