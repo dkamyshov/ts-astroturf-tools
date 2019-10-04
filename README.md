@@ -16,7 +16,7 @@ $ npm i --save-dev ts-astroturf-tools
 
   ![](docs/assets/editor-error.png)
 
-- 🧰 Get the same message during build:
+- 🧰 Get the same message during webpack build:
 
   ![](docs/assets/build-error.png)
 
@@ -24,7 +24,7 @@ $ npm i --save-dev ts-astroturf-tools
 
   ![](docs/assets/editor-suggestion.png)
 
-- 🧰 Get the same message as a warning during build:
+- 🧰 Get the same message as a warning during webpack build:
 
   ![](docs/assets/build-suggestion-warning.png)
 
@@ -32,7 +32,13 @@ $ npm i --save-dev ts-astroturf-tools
 
   ![](docs/assets/editor-autocomplete.png)
 
-- "Direct mode" for `css`.
+- 🧰 Same errors and warnings during babel-only build:
+
+  ![](docs/assets/build-error-babel.png)
+
+  ![](docs/assets/build-warning-babel.png)
+
+- "Direct mode" for `css` **(right now it only works if you use webpack loader)**
 
   This is possible in direct mode:
 
@@ -74,7 +80,8 @@ $ npm i --save-dev ts-astroturf-tools
 This package consists of two tools:
 
 - TypeScript Language Service Plugin (in-editor error messages, autocomplete)
-- webpack loader (build-time error messages)
+- webpack loader (build-time error messages for webpack)
+- babel plugin (build-time error messages for babel)
 
 ## Configuration
 
@@ -154,6 +161,17 @@ This package consists of two tools:
         },
       ],
     },
+  };
+  ```
+
+- Babel plugin
+
+  Add `ts-stroturf-tools/babel-plugin` to your babel plugins:
+
+  ```js
+  module.exports = {
+    presets: ['@babel/env', '@babel/preset-react'],
+    plugins: ['ts-astroturf-tools/babel-plugin'],
   };
   ```
 
