@@ -2,6 +2,7 @@ import { getOptions } from 'loader-utils';
 import * as ts from 'typescript';
 import * as webpack from 'webpack';
 import { packageName } from '../core/constants';
+import { createTransformationContext } from '../core/createTransformationContext';
 import { getAssignmentsMetadata } from '../core/getAssignmentsMetadata';
 import { getMissingIdentifiers } from '../core/getMissingIdentifiers';
 import { getUnusedTokens } from '../core/getUnusedTokens';
@@ -83,150 +84,16 @@ const loader: webpack.loader.Loader = function(source, map) {
   });
 
   if (options.direct) {
-    const transformer: ts.TransformerFactory<ts.SourceFile> = context => {
-      const visit: ts.Visitor = node => {
-        node = ts.visitEachChild(node, visit, context);
+    const transformationContext = createTransformationContext(
+      sourceFile,
+      resultSourceCode
+    );
+    ts.transform(sourceFile, [transformationContext.transformer]);
+    const result = transformationContext.getResultSourceCode();
 
-        if (ts.isPropertyAssignment(node)) {
-          const firstChild = node.getChildAt(0, sourceFile);
-          if (ts.isIdentifier(firstChild)) {
-            const lastChild = node.getChildAt(2, sourceFile);
-            if (ts.isTaggedTemplateExpression(lastChild)) {
-              const identifierName = lastChild
-                .getChildAt(0, sourceFile)
-                .getText(sourceFile);
-
-              if (identifierName === 'xcss') {
-                const variableName = firstChild.getText(sourceFile);
-
-                const cssCode = lastChild
-                  .getChildAt(1, sourceFile)
-                  .getText(sourceFile);
-
-                const clearCssCode = cssCode
-                  .substring(0, cssCode.length - 1)
-                  .substring(1);
-
-                const newCssCode = `.${variableName} {\n${clearCssCode}\n}`;
-
-                let nodeText = node.getText(sourceFile);
-
-                resultSourceCode = resultSourceCode.replace(
-                  nodeText,
-                  `${variableName}: (function() { var __local_${variableName} = (css\`\n${newCssCode}\n\`).${variableName}; return __local_${variableName}; })()`
-                );
-
-                return ts.createPropertyAssignment(
-                  ts.createIdentifier('a'),
-                  ts.createCall(
-                    ts.createParen(
-                      ts.createFunctionExpression(
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        [],
-                        undefined,
-                        ts.createBlock(
-                          [
-                            ts.createVariableStatement(
-                              undefined,
-                              ts.createVariableDeclarationList(
-                                [
-                                  ts.createVariableDeclaration(
-                                    ts.createIdentifier(
-                                      `__local_${variableName}`
-                                    ),
-                                    undefined,
-                                    ts.createTaggedTemplate(
-                                      ts.createIdentifier('css'),
-                                      ts.createNoSubstitutionTemplateLiteral(
-                                        newCssCode,
-                                        newCssCode
-                                      )
-                                    )
-                                  ),
-                                ],
-                                ts.NodeFlags.Const
-                              )
-                            ),
-                            ts.createReturn(
-                              ts.createPropertyAccess(
-                                ts.createIdentifier(`__local_${variableName}`),
-                                ts.createIdentifier(variableName)
-                              )
-                            ),
-                          ],
-                          true
-                        )
-                      )
-                    ),
-                    undefined,
-                    []
-                  )
-                );
-              }
-            }
-          }
-        }
-
-        if (ts.isVariableDeclaration(node)) {
-          const firstChild = node.getChildAt(0, sourceFile);
-          if (ts.isIdentifier(firstChild)) {
-            const lastChild = node.getChildAt(2, sourceFile);
-            if (ts.isTaggedTemplateExpression(lastChild)) {
-              const identifierName = lastChild
-                .getChildAt(0, sourceFile)
-                .getText(sourceFile);
-
-              if (identifierName === 'xcss') {
-                const variableName = firstChild.getText(sourceFile);
-
-                const cssCode = lastChild
-                  .getChildAt(1, sourceFile)
-                  .getText(sourceFile);
-
-                const clearCssCode = cssCode
-                  .substring(0, cssCode.length - 1)
-                  .substring(1);
-
-                const newCssCode = `.${variableName} {\n${clearCssCode}\n}`;
-
-                let nodeText = node.getFullText(sourceFile);
-
-                resultSourceCode = resultSourceCode.replace(
-                  nodeText,
-                  ` ${variableName} = (css\`\n${newCssCode}\n\`).${variableName}`
-                );
-
-                return ts.createVariableDeclaration(
-                  ts.createIdentifier(variableName),
-                  undefined,
-                  ts.createPropertyAccess(
-                    ts.createParen(
-                      ts.createTaggedTemplate(
-                        ts.createIdentifier('css'),
-                        ts.createNoSubstitutionTemplateLiteral(
-                          newCssCode,
-                          newCssCode
-                        )
-                      )
-                    ),
-                    ts.createIdentifier(`${variableName}`)
-                  )
-                );
-              }
-            }
-          }
-        }
-
-        return node;
-      };
-
-      return node => ts.visitNode(node, visit);
-    };
-
-    ts.transform(sourceFile, [transformer]);
+    if (result) {
+      resultSourceCode = result;
+    }
   }
 
   cache[resourcePath] = {

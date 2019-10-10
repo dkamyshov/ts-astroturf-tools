@@ -4,3 +4,4 @@
 !babel-plugin.js
 !lib/**/*.js
 !index.d.ts
+!transformer.js
