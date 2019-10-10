@@ -3,3 +3,4 @@
 !loader.js
 !babel-plugin.js
 !lib/**/*.js
+!index.d.ts
