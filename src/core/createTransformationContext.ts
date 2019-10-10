@@ -30,7 +30,14 @@ export const createTransformationContext = (
                 .substring(0, cssCode.length - 1)
                 .substring(1);
 
-              const newCssCode = `\n.${variableName} {\n${clearCssCode}\n}\n`;
+              const lines = clearCssCode.split('\n');
+
+              const imports = lines.filter(x => x.trim().startsWith('@import'));
+              const rest = lines.filter(x => !x.trim().startsWith('@import'));
+
+              const newCssCode = `\n${imports.join(
+                '\n'
+              )}\n.${variableName} {\n${rest.join('\n')}\n}\n`;
 
               let nodeText = node.getText(sourceFile);
 
@@ -117,7 +124,14 @@ export const createTransformationContext = (
                 .substring(0, cssCode.length - 1)
                 .substring(1);
 
-              const newCssCode = `.${variableName} {\n${clearCssCode}\n}`;
+              const lines = clearCssCode.split('\n');
+
+              const imports = lines.filter(x => x.trim().startsWith('@import'));
+              const rest = lines.filter(x => !x.trim().startsWith('@import'));
+
+              const newCssCode = `\n${imports.join(
+                '\n'
+              )}\n.${variableName} {\n${rest.join('\n')}\n}\n`;
 
               let nodeText = node.getFullText(sourceFile);
 
