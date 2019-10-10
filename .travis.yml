@@ -5,3 +5,5 @@ script:
   - yarn test
   - yarn build
   - cat coverage/lcov.info | yarn coveralls
+notifications:
+  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
