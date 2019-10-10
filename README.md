@@ -10,35 +10,52 @@ This package is for developers who use both [astroturf](https://github.com/4Cata
 $ npm i --save-dev ts-astroturf-tools
 ```
 
+## Tools
+
+This package includes the following tools:
+
+- TypeScript Language Service Plugin
+- webpack loader
+- babel plugin
+
 ## Features
 
-- 📝 Get an error message in case class names in template string literal do not match the specified identifiers:
+Here's a list of features these tools provide:
 
-  ![](docs/assets/editor-error.png)
+- suggestions and warnings for unused CSS
+- errors for missing CSS
+- autocomplete for identifiers
+- "direct mode" (linaria-style `css`, available as `xcss`)
 
-- 🧰 Get the same message during webpack build:
+Table of tools and corresponding features:
 
-  ![](docs/assets/build-error.png)
+| Tool                               | Warnings (unused CSS) | Errors (missing CSS) | Autocomplete for identifiers | "Direct mode" (`xcss`) |
+| ---------------------------------- | --------------------- | -------------------- | ---------------------------- | ---------------------- |
+| TypeScript Language Service Plugin | ✅ (suggestion)       | ✅                   | ✅                           | `N/A`                  |
+| webpack loader                     | ✅                    | ✅                   | `N/A`                        | ✅                     |
+| babel plugin                       | ✅                    | ✅                   | `N/A`                        | ❌                     |
 
-- 📝 Get suggestion message in case CSS class name is unused:
+- `N/A` - not applicable
+
+## Demo
+
+- Warnings (suggestions)
 
   ![](docs/assets/editor-suggestion.png)
-
-- 🧰 Get the same message as a warning during webpack build:
-
   ![](docs/assets/build-suggestion-warning.png)
+  ![](docs/assets/build-warning-babel.png)
 
-- 📝 Autocomplete for identifiers:
+- Errors
+
+  ![](docs/assets/editor-error.png)
+  ![](docs/assets/build-error.png)
+  ![](docs/assets/build-error-babel.png)
+
+- Autocomplete for identifiers:
 
   ![](docs/assets/editor-autocomplete.png)
 
-- 🧰 Same errors and warnings during babel-only build:
-
-  ![](docs/assets/build-error-babel.png)
-
-  ![](docs/assets/build-warning-babel.png)
-
-- "Direct mode" for `css` **(right now it only works if you use webpack loader)**
+* "Direct mode" for `css`
 
   This is possible in direct mode:
 
@@ -74,14 +91,6 @@ $ npm i --save-dev ts-astroturf-tools
     }
   }
   ```
-
-## Tools
-
-This package consists of three tools:
-
-- TypeScript Language Service Plugin (in-editor error messages, autocomplete)
-- webpack loader (build-time error messages for webpack)
-- babel plugin (build-time error messages for babel)
 
 ## Configuration
 
