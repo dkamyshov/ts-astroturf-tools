@@ -15,6 +15,7 @@ $ npm i --save-dev ts-astroturf-tools
 This package includes the following tools:
 
 - TypeScript Language Service Plugin
+- typescript transformer
 - webpack loader
 - babel plugin
 
@@ -32,8 +33,9 @@ Table of tools and corresponding features:
 | Tool                               | Warnings (unused CSS) | Errors (missing CSS) | Autocomplete for identifiers | "Direct mode" (`xcss`) |
 | ---------------------------------- | --------------------- | -------------------- | ---------------------------- | ---------------------- |
 | TypeScript Language Service Plugin | ✅ (suggestion)       | ✅                   | ✅                           | `N/A`                  |
-| webpack loader                     | ✅                    | ✅                   | `N/A`                        | ✅                     |
+| webpack loader                     | ✅                    | ✅                   | `N/A`                        | ✅ _optional_          |
 | babel plugin                       | ✅                    | ✅                   | `N/A`                        | ❌                     |
+| TypeScript transformer             | ❌                    | ❌                   | `N/A`                        | ✅                     |
 
 - `N/A` - not applicable
 
@@ -115,6 +117,55 @@ Table of tools and corresponding features:
   Don't forget to switch to workspace typescript instance:
 
   ![](docs/assets/workspace-typescript.png)
+
+- TypeScript transformer:
+
+  - raw TypeScript
+
+    You should use [ttypescript](https://www.npmjs.com/package/ttypescript) as a compiler.
+
+    Add `ts-astroturf-tools/transformer` as a transformer to your `tsconfig.json`:
+
+    ```json
+    {
+      "compilerOptions": {
+        "plugins": [
+          {
+            "transform": "ts-astroturf-tools/transformer"
+          }
+        ]
+      },
+      "files": ["src/index.tsx"],
+      "exclude": ["node_modules"]
+    }
+    ```
+
+  - webpack / awesome-typescript-loader
+
+    ```js
+    const transformer = require('ts-astroturf-tools/transformer');
+
+    module.exports = {
+      // ...
+      module: {
+        // ...
+        rules: [
+          {
+            test: /\.tsx$/,
+            use: {
+              loader: 'awesome-typescript-loader',
+              options: {
+                // ...
+                getCustomTransformers: () => ({
+                  before: [transformer()],
+                }),
+              },
+            },
+          },
+        ],
+      },
+    };
+    ```
 
 - webpack loader
 
