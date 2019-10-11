@@ -177,7 +177,7 @@ export const createTransformationContext = (
       return node;
     };
 
-    return (node: ts.Node) => ts.visitNode(node, visit);
+    return () => ts.visitNode(sourceFile, visit);
   };
 
   const getResultSourceCode = () => resultSourceCode;
