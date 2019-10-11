@@ -3,5 +3,6 @@
 !loader.js
 !babel-plugin.js
 !lib/**/*.js
-!index.d.ts
 !transformer.js
+!xcss.js
+!xcss.d.ts

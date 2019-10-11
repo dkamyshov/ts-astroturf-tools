@@ -62,7 +62,7 @@ Table of tools and corresponding features:
   This is possible in direct mode:
 
   ```typescript
-  import { xcss } from 'ts-astroturf-tools';
+  import { xcss } from 'ts-astroturf-tools/xcss';
 
   const redClassName = xcss`
     color: red;
