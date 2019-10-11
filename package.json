@@ -1,6 +1,6 @@
 {
   "name": "ts-astroturf-tools",
-  "version": "0.7.0-alpha.4",
+  "version": "0.6.2",
   "description": "TypeScript tools that enhance astroturf.",
   "keywords": [
     "astroturf",
