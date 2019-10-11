@@ -6,6 +6,40 @@ export const createTransformationContext = (
 ) => {
   let resultSourceCode = sourceCode;
 
+  const identifiers: {
+    [identifier: string]: number | undefined;
+  } = {};
+
+  const processImports = (cleanCSSCode: string) => {
+    const lines = cleanCSSCode.split('\n');
+
+    const [rest, imports] = lines.reduce(
+      (accumulator, current) => {
+        accumulator[+current.trim().startsWith('@import')].push(current);
+        return accumulator;
+      },
+      [[], []] as string[][]
+    );
+
+    return {
+      imports: imports.join('\n'),
+      code: rest.join('\n'),
+    };
+  };
+
+  const getLocalVariableName = (identifier: string) => {
+    const currentCount = identifiers[identifier];
+    const currentTotalCount =
+      typeof currentCount === 'number' ? currentCount : 0;
+    identifiers[identifier] = currentTotalCount + 1;
+
+    if (currentTotalCount === 0) {
+      return `p_${identifier}`;
+    } else {
+      return `p_${identifier}_${currentTotalCount}`;
+    }
+  };
+
   const transformer = (context: ts.TransformationContext) => {
     const visit: ts.Visitor = node => {
       node = ts.visitEachChild(node, visit, context);
@@ -22,29 +56,19 @@ export const createTransformationContext = (
             if (identifierName === 'xcss') {
               const variableName = firstChild.getText(sourceFile);
 
-              const cssCode = lastChild
-                .getChildAt(1, sourceFile)
-                .getText(sourceFile);
-
-              const clearCssCode = cssCode
-                .substring(0, cssCode.length - 1)
-                .substring(1);
-
-              const lines = clearCssCode.split('\n');
-
-              const imports = lines.filter(x => x.trim().startsWith('@import'));
-              const rest = lines.filter(x => !x.trim().startsWith('@import'));
-
-              const newCssCode = `\n${imports.join(
-                '\n'
-              )}\n.${variableName} {\n${rest.join('\n')}\n}\n`;
+              const clearCssCode = getClearCSSCode(
+                lastChild.getChildAt(1, sourceFile).getText(sourceFile)
+              );
+              const { imports, code } = processImports(clearCssCode);
+              const localVariableName = getLocalVariableName(variableName);
+              const newCssCode = `\n${imports}\n.${variableName} {\n${code}\n}\n`;
 
               let nodeText = node.getText(sourceFile);
 
               if (resultSourceCode) {
                 resultSourceCode = resultSourceCode.replace(
                   nodeText,
-                  `${variableName}: (function() { var __local_${variableName} = css\`\n${newCssCode}\n\`; return __local_${variableName}.${variableName}; })()`
+                  `${variableName}: (function() { var ${localVariableName} = css\`\n${newCssCode}\n\`; return ${localVariableName}.${variableName}; })()`
                 );
               }
 
@@ -67,9 +91,7 @@ export const createTransformationContext = (
                               ts.createVariableDeclarationList(
                                 [
                                   ts.createVariableDeclaration(
-                                    ts.createIdentifier(
-                                      `__local_${variableName}`
-                                    ),
+                                    ts.createIdentifier(localVariableName),
                                     undefined,
                                     ts.createTaggedTemplate(
                                       ts.createIdentifier('css'),
@@ -85,7 +107,7 @@ export const createTransformationContext = (
                             ),
                             ts.createReturn(
                               ts.createPropertyAccess(
-                                ts.createIdentifier(`__local_${variableName}`),
+                                ts.createIdentifier(localVariableName),
                                 ts.createIdentifier(variableName)
                               )
                             ),
@@ -116,22 +138,11 @@ export const createTransformationContext = (
             if (identifierName === 'xcss') {
               const variableName = firstChild.getText(sourceFile);
 
-              const cssCode = lastChild
-                .getChildAt(1, sourceFile)
-                .getText(sourceFile);
-
-              const clearCssCode = cssCode
-                .substring(0, cssCode.length - 1)
-                .substring(1);
-
-              const lines = clearCssCode.split('\n');
-
-              const imports = lines.filter(x => x.trim().startsWith('@import'));
-              const rest = lines.filter(x => !x.trim().startsWith('@import'));
-
-              const newCssCode = `\n${imports.join(
-                '\n'
-              )}\n.${variableName} {\n${rest.join('\n')}\n}\n`;
+              const clearCssCode = getClearCSSCode(
+                lastChild.getChildAt(1, sourceFile).getText(sourceFile)
+              );
+              const { imports, code } = processImports(clearCssCode);
+              const newCssCode = `\n${imports}\n.${variableName} {\n${code}\n}\n`;
 
               let nodeText = node.getFullText(sourceFile);
 
@@ -175,4 +186,8 @@ export const createTransformationContext = (
     transformer,
     getResultSourceCode,
   };
+};
+
+const getClearCSSCode = (tagContent: string): string => {
+  return tagContent.substring(0, tagContent.length - 1).substring(1);
 };
