@@ -19,10 +19,11 @@
   },
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf coverage lib",
+    "clean": "rm -rf coverage lib tsconfig.tsbuildinfo",
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "jest ./src"
+    "test": "jest ./src",
+    "prepare": "yarn build && cd examples && sh run-tests.sh"
   },
   "dependencies": {
     "@babel/traverse": "^7.6.0",

@@ -5,7 +5,9 @@
     "preserveWatchOutput": true,
     "pretty": true,
     "rootDir": "src",
-    "outDir": "lib"
+    "outDir": "lib",
+    "esModuleInterop": false,
+    "incremental": true
   },
   "files": [
     "src/plugin/index.ts",
