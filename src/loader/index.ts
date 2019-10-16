@@ -36,14 +36,14 @@ const loader: webpack.loader.Loader = function(source, map) {
   const sourceCode = source.toString();
   let resultSourceCode = sourceCode;
 
-  if (Object.prototype.hasOwnProperty.call(cache, resourcePath)) {
-    const entry = cache[resourcePath];
+  // if (Object.prototype.hasOwnProperty.call(cache, resourcePath)) {
+  //   const entry = cache[resourcePath];
 
-    if (entry.source === sourceCode) {
-      this.callback(null, entry.transformed, map);
-      return;
-    }
-  }
+  //   if (entry.source === sourceCode) {
+  //     this.callback(null, entry.transformed, map);
+  //     return;
+  //   }
+  // }
 
   const sourceFile = ts.createSourceFile(
     resourcePath,
@@ -86,7 +86,8 @@ const loader: webpack.loader.Loader = function(source, map) {
   if (options.direct) {
     const transformationContext = createTransformationContext(
       sourceFile,
-      resultSourceCode
+      resultSourceCode,
+      this.addDependency
     );
     ts.transform(sourceFile, [transformationContext.transformer]);
     const result = transformationContext.getResultSourceCode();

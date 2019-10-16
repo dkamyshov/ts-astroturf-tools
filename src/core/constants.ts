@@ -8,7 +8,7 @@ export const tokensRegExp = /\.[\w\-]+/g;
  * Regexp used to clear CSS source of
  * template placeholders.
  */
-export const literalsRegExp = /\$\{.*\}/g;
+export const literalsRegExp = /\$\{(.*)\}/g;
 
 export const packageName = 'ts-astroturf-tools';
 export const missingIdentifierCode = 1;

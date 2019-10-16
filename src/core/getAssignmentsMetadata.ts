@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { literalsRegExp, tokensRegExp } from './constants';
+import { tokensRegExp } from './constants';
 import { extractTemplateLiteralContent } from './extractTemplateLiteralContent';
 import { findAllNodes } from './findAllNodes';
 import { getFirstLevelIdentifiers } from './getFirstLevelIdentifiers';
