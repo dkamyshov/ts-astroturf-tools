@@ -64,37 +64,44 @@ Table of tools and corresponding features:
   This is possible in direct mode:
 
   ```typescript
+  // colors.tsx
+  export const colors = {
+    red: 'red',
+    green: 'green',
+  };
+
+  // index.tsx
   import { xcss } from 'ts-astroturf-tools/xcss';
+  import styled from 'astroturf';
+  import { colors } from './colors';
 
-  const redClassName = xcss`
-    color: red;
-  `;
+  const redClassName = xcss`color: ${colors.red};`;
 
-  const greenClassName = xcss`
-    color: green;
-  `;
+  const greenClassName = xcss`color: ${colors.green};`;
 
   const obj = {
-    red: xcss`
-      color: red;
-    `,
+    red: xcss`color: red;`,
 
     green: xcss`
-      color: green;
-    `,
+        color: green;
+      `,
   };
+
+  const Button = styled.button`
+    background: ${colors.green};
+  `;
   ```
 
-  Enable direct mode by passing `direct: true` to the loader:
+Enable direct mode by passing `direct: true` to the loader:
 
-  ```json
-  {
-    "loader": "ts-astroturf-tools/loader",
-    "options": {
-      "direct": true
-    }
+```json
+{
+  "loader": "ts-astroturf-tools/loader",
+  "options": {
+    "direct": true
   }
-  ```
+}
+```
 
 ## Configuration
 
