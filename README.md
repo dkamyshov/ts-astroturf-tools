@@ -26,16 +26,18 @@ Here's a list of features these tools provide:
 - suggestions and warnings for unused CSS
 - errors for missing CSS
 - autocomplete for identifiers
-- "direct mode" (linaria-style `css`, available as `xcss`)
+- "direct mode"
+  - linaria-style `css`, available as `xcss`
+  - interpolations from imported files (in `styled` components and in `xcss`)
 
 Table of tools and corresponding features:
 
-| Tool                               | Warnings (unused CSS) | Errors (missing CSS) | Autocomplete for identifiers | "Direct mode" (`xcss`) |
-| ---------------------------------- | --------------------- | -------------------- | ---------------------------- | ---------------------- |
-| TypeScript Language Service Plugin | ✅ (suggestion)       | ✅                   | ✅                           | `N/A`                  |
-| webpack loader                     | ✅                    | ✅                   | `N/A`                        | ✅ _optional_          |
-| babel plugin                       | ✅                    | ✅                   | `N/A`                        | ❌                     |
-| TypeScript transformer             | ❌                    | ❌                   | `N/A`                        | ✅                     |
+| Tool                               | Warnings (unused CSS) | Errors (missing CSS) | Autocomplete for identifiers | "Direct mode" |
+| ---------------------------------- | --------------------- | -------------------- | ---------------------------- | ------------- |
+| TypeScript Language Service Plugin | ✅ (suggestion)       | ✅                   | ✅                           | `N/A`         |
+| webpack loader                     | ✅                    | ✅                   | `N/A`                        | ✅ _optional_ |
+| babel plugin                       | ✅                    | ✅                   | `N/A`                        | ❌            |
+| TypeScript transformer             | ❌                    | ❌                   | `N/A`                        | ✅            |
 
 - `N/A` - not applicable
 
