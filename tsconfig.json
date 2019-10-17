@@ -8,7 +8,7 @@
     "outDir": "lib",
     "esModuleInterop": false,
     "incremental": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": false
   },
   "files": [
     "src/plugin/index.ts",

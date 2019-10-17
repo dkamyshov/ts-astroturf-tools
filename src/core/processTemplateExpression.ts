@@ -1,4 +1,5 @@
-import get from 'lodash.get';
+// @ts-ignore
+import * as get from 'lodash.get';
 import * as ts from 'typescript';
 import { createResolverContext } from './createResolverContext';
 import { findAllNodes } from './findAllNodes';

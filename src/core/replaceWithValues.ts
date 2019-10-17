@@ -1,4 +1,5 @@
-import get from 'lodash.get';
+// @ts-ignore
+import * as get from 'lodash.get';
 import * as ts from 'typescript';
 import { findAllNodes } from '../core/findAllNodes';
 import { literalsRegExp } from './constants';
