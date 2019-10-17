@@ -24,8 +24,6 @@ describe('setupErrorsHook', () => {
   it('pushes errors and warnings', () => {
     const cacheInstance: typeof cache = {
       'file.ts': {
-        source: '',
-        transformed: '',
         errors: ['error1'],
         warnings: ['warning1'],
       },
