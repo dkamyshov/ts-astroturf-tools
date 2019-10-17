@@ -6,18 +6,22 @@ import styled, { css } from 'astroturf';
 
 const { classA } = css`
   .classA {
-    color: red;
+    color: #003df5;
   }
 
   .classB {
-    color: blue;
+    color: #003df5;
   }
 `;
 
-export const A = React.memo(() => {
+export const LocalNestedIconWithLink = React.memo(() => {
   return (
     <div className={classA}>
-      A!
+      <p>
+        This is the "A" component. It must generate a warning during build.
+        "colorB" class is unused.
+      </p>
+
       <Link>
         <Icon />
         Hello!

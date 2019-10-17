@@ -1,2 +1,4 @@
-export { Button } from './Button';
-export { LinkComponent } from './LinkComponent';
+export { Button } from './components/Button/Button';
+export {
+  NestedIconWithLink,
+} from './components/NestedIconWithLink/NestedIconWithLink';
