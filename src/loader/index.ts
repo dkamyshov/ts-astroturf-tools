@@ -36,15 +36,6 @@ const loader: webpack.loader.Loader = function(source, map) {
   const sourceCode = source.toString();
   let resultSourceCode = sourceCode;
 
-  // if (Object.prototype.hasOwnProperty.call(cache, resourcePath)) {
-  //   const entry = cache[resourcePath];
-
-  //   if (entry.source === sourceCode) {
-  //     this.callback(null, entry.transformed, map);
-  //     return;
-  //   }
-  // }
-
   const sourceFile = ts.createSourceFile(
     resourcePath,
     sourceCode,
@@ -98,8 +89,6 @@ const loader: webpack.loader.Loader = function(source, map) {
   }
 
   cache[resourcePath] = {
-    source: sourceCode,
-    transformed: resultSourceCode,
     errors: currentSessionErrors,
     warnings: currentSessionWarnings,
   };

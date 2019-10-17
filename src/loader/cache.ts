@@ -1,6 +1,4 @@
 interface CacheItem {
-  source: string;
-  transformed: string;
   errors: string[];
   warnings: string[];
 }
