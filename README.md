@@ -325,26 +325,6 @@ Table of tools and corresponding features:
   `;
   ```
 
-  Beware of nested multi-line interpolations! **[this particular issue is in progress of being fixed]**
-
-  In this example `className`, `map`, `toLowerCase`, `toUpperCase` will be treated as available class names:
-
-  ```javascript
-  // sadly, this is ok :(
-  const { className, map, toLowerCase, toUpperCase } = css`
-    .className {
-      color: ${NAME.map(
-        x =>
-          `${x
-            .toLowerCase()
-            .toUpperCase()
-            .toLowerCase()
-            .toUpperCase()}`
-      )[0]};
-    }
-  `;
-  ```
-
 - Only plain CSS is supported.
 
   Basic features of SASS/LESS/etc. may work:
