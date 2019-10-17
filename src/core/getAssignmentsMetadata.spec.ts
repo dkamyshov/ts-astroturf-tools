@@ -126,4 +126,59 @@ describe('getAssignmentsMetadata', () => {
 
     expect(getAssignmentsMetadata(sourceFile)).toEqual(reference);
   });
+
+  it('does not include tokens that are not classes', () => {
+    const sourceCode = `
+      import * as React from 'react';
+      import { css } from 'astroturf';
+
+      const { a } = css\`
+        .a {
+          color: \${
+            "red".toUpperCase().toLowerCase()
+          };
+          padding: 0.125rem;
+        }
+      \`;
+
+      export const A = ({children}) => <div className={a}>
+        {children}
+      </div>;
+    `;
+
+    const sourceFile = ts.createSourceFile(
+      'test.ts',
+      sourceCode,
+      ts.ScriptTarget.ESNext
+    );
+
+    const reference: AssignmentMetadata[] = [
+      {
+        availableIdentifiers: [
+          {
+            character: 8,
+            from: 112,
+            line: 5,
+            name: 'a',
+            to: 114,
+          },
+        ],
+        bindingFrom: 91,
+        bindingTo: 96,
+        from: 91,
+        requestedIdentifiers: [
+          {
+            character: 14,
+            from: 93,
+            line: 4,
+            name: 'a',
+            to: 94,
+          },
+        ],
+        to: 242,
+      },
+    ];
+
+    expect(getAssignmentsMetadata(sourceFile)).toEqual(reference);
+  });
 });
