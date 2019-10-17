@@ -2,8 +2,6 @@ language: node_js
 node_js:
   - 10
 script:
-  - yarn test
-  - yarn build
   - cat coverage/lcov.info | yarn coveralls
 notifications:
   webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
