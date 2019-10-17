@@ -36,42 +36,45 @@ const { basicA } = css`
   }
 `;
 
-ReactDOM.render(
-  <>
-    <Example caption="basic astroturf component">
-      <StyledAstroturfComponent>Hello!</StyledAstroturfComponent>
-    </Example>
+const App = React.memo(() => {
+  return (
+    <div>
+      <Example caption="basic astroturf component">
+        <StyledAstroturfComponent>Hello!</StyledAstroturfComponent>
+      </Example>
 
-    <Example caption="xcss variable declaration">
-      <div className={simpleClassDeclaration}>Hello!</div>
-    </Example>
+      <Example caption="xcss variable declaration">
+        <div className={simpleClassDeclaration}>Hello!</div>
+      </Example>
 
-    <Example caption="xcss property assignment">
-      <div className={classes.simpleClassProperty}>Hello!</div>
-    </Example>
+      <Example caption="xcss property assignment">
+        <div className={classes.simpleClassProperty}>Hello!</div>
+      </Example>
 
-    <Example caption="css destricturing">
-      <div className={basicA}>Hello!</div>
-    </Example>
+      <Example caption="css destricturing">
+        <div className={basicA}>Hello!</div>
+      </Example>
 
-    <Example caption="component with dependent styled components and an unused CSS warning">
-      <LocalNestedIconWithLink />
-    </Example>
+      <Example caption="component with dependent styled components and an unused CSS warning">
+        <LocalNestedIconWithLink />
+      </Example>
 
-    <Example caption="basic xcss interpolation">
-      <BasicXCSSInterpolation />
-    </Example>
+      <Example caption="basic xcss interpolation">
+        <BasicXCSSInterpolation />
+      </Example>
 
-    <Example caption="external linked component">
-      <NestedIconWithLink />
-    </Example>
+      <Example caption="external linked component">
+        <NestedIconWithLink />
+      </Example>
 
-    <Example caption="interpolation from imported files">
-      <XCSSInterpolationFromImportedFile />
-    </Example>
-  </>,
-  document.getElementById('root')
-);
+      <Example caption="interpolation from imported files">
+        <XCSSInterpolationFromImportedFile />
+      </Example>
+    </div>
+  );
+});
+
+ReactDOM.render(<App />, document.getElementById('root'));
 
 if (module.hot) {
   module.hot.accept();
