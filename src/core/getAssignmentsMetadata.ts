@@ -116,14 +116,13 @@ export const getAssignmentsMetadata = (file: ts.SourceFile) => {
 
     const tokens: AssignmentCSSIdentifier[] = [];
 
-    clearCssSource.replace(tokensRegExp, (matched, index) => {
-      const name = matched.substring(1);
+    clearCssSource.replace(tokensRegExp, (fullMatch, group, index) => {
       const from = taggedTemplateExpressionFrom + 4 + index;
-      const to = from + matched.length;
+      const to = from + fullMatch.length;
       const tokenSourcePosition = ts.getLineAndCharacterOfPosition(file, from);
 
       tokens.push({
-        name,
+        name: group,
         from,
         to,
         line: tokenSourcePosition.line,
