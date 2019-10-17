@@ -45,8 +45,6 @@ export const createTransformationContext = (
 
   const transformer = (context: ts.TransformationContext) => {
     const visit: ts.Visitor = node => {
-      // console.log(`Processing\n${node.getText(sourceFile)}\n\n`);
-
       if (ts.isPropertyAssignment(node)) {
         const firstChild = node.getChildAt(0, sourceFile);
         if (ts.isIdentifier(firstChild)) {
@@ -97,9 +95,6 @@ export const createTransformationContext = (
                 localVariableName,
                 watcherCallback
               );
-
-              console.log(pte);
-              console.log(pte.getText(sourceFile));
 
               return ts.createPropertyAssignment(
                 ts.createIdentifier(variableName),
@@ -236,10 +231,6 @@ export const createTransformationContext = (
                         variableName,
                         watcherCallback
                       )
-                      // ts.createNoSubstitutionTemplateLiteral(
-                      //   newCssCode,
-                      //   newCssCode
-                      // )
                     )
                   ),
                   ts.createIdentifier(`${variableName}`)
@@ -251,14 +242,11 @@ export const createTransformationContext = (
       }
 
       if (ts.isTaggedTemplateExpression(node)) {
-        // console.log(`This is a tagged template expression`);
         const childrenCount = node.getChildCount(sourceFile);
-        console.log(childrenCount);
         if (childrenCount === 2) {
           const firstChild = node.getChildAt(0, sourceFile);
           if (ts.isPropertyAccessExpression(firstChild)) {
             const accessExpression = firstChild.getText(sourceFile);
-            // console.log(accessExpression);
             if (/^styled\./.test(accessExpression)) {
               const templateExpression = node.getChildAt(1, sourceFile) as
                 | ts.TemplateExpression
@@ -274,7 +262,7 @@ export const createTransformationContext = (
                 watcherCallback
               );
 
-              const { imports, code } = processImports(newClearCssCode.cssCode);
+              const { code } = processImports(newClearCssCode.cssCode);
 
               const newCssCode = code;
 
@@ -286,8 +274,6 @@ export const createTransformationContext = (
                   `${accessExpression}\`\n${newCssCode}\n\``
                 );
               }
-
-              // console.log('Going to transform!');
 
               return ts.createTaggedTemplate(
                 firstChild,
