@@ -6,7 +6,13 @@ export const Example = React.memo<{
 }>(props => {
   return (
     <div className="example">
-      <h3>{props.caption}</h3>
+      <h3
+        style={{
+          color: 'black',
+        }}
+      >
+        {props.caption}
+      </h3>
       {props.children}
     </div>
   );

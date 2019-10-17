@@ -13,7 +13,7 @@ export const NestedIconWithLink = () => {
 const Link = styled.a`
   display: flex;
   align-items: center;
-  padding: 5px 10px;
+  padding: 1px 2px;
   background: papayawhip;
   color: palevioletred;
 `;
@@ -21,8 +21,8 @@ const Link = styled.a`
 const Icon = styled.div`
   flex: none;
   transition: fill 0.25s;
-  width: 48px;
-  height: 48px;
+  width: 16px;
+  height: 16px;
 
   ${Link}:hover & {
     background-color: rebeccapurple;

@@ -48,7 +48,12 @@ module.exports = {
       {
         test: /\.astroturf\.local\.css$/,
         use: [
-          ECC.loader,
+          {
+            loader: ECC.loader,
+            options: {
+              hot: true,
+            },
+          },
           {
             loader: 'astroturf/css-loader',
             options: {

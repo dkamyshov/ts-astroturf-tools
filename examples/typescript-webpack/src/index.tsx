@@ -6,22 +6,23 @@ import { NestedIconWithLink } from '../../typescript-babel/lib';
 import { BasicXCSSInterpolation } from './BasicXCSSInterpolation';
 import { Example } from './Example';
 import { LocalNestedIconWithLink } from './LocalNestedIconWithLink';
+import { XCSSInterpolationFromImportedFile } from './XCSSInterpolationFromImportedFile';
 
 const StyledAstroturfComponent = styled.div`
-  padding: 0.5rem;
+  padding: 0.25rem;
   color: #3366ff;
   border: 1px solid #3366ff;
 `;
 
 const simpleClassDeclaration = xcss`
-  padding: 0.5rem;
+  padding: 0.25rem;
   color: #6633FF;
   border: 1px solid #6633FF;
 `;
 
 const classes = {
   simpleClassProperty: xcss`
-    padding: 0.5rem;
+    padding: 0.25rem;
     color: #CC33FF;
     border: 1px solid #CC33FF;
   `,
@@ -29,7 +30,7 @@ const classes = {
 
 const { basicA } = css`
   .basicA {
-    padding: 0.5rem;
+    padding: 0.25rem;
     color: #ff33cc;
     border: 1px solid #ff33cc;
   }
@@ -63,6 +64,10 @@ ReactDOM.render(
 
     <Example caption="external linked component">
       <NestedIconWithLink />
+    </Example>
+
+    <Example caption="interpolation from imported files">
+      <XCSSInterpolationFromImportedFile />
     </Example>
   </>,
   document.getElementById('root')
