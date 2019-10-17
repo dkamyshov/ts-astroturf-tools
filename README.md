@@ -92,16 +92,16 @@ Table of tools and corresponding features:
   `;
   ```
 
-Enable direct mode by passing `direct: true` to the loader:
+  Enable direct mode by passing `direct: true` to the loader:
 
-```json
-{
-  "loader": "ts-astroturf-tools/loader",
-  "options": {
-    "direct": true
+  ```json
+  {
+    "loader": "ts-astroturf-tools/loader",
+    "options": {
+      "direct": true
+    }
   }
-}
-```
+  ```
 
 ## Configuration
 
