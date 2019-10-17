@@ -243,6 +243,56 @@ Table of tools and corresponding features:
 
   TypeScript compiler API is synchronous, while `css-modules-loader-core` API is asynchronous (Promise-based), which means that it is impossible to reuse the latter for the purpose of parsing CSS in Language Service plugin.
 
+- Limited support for imports
+
+  Supported extensions: `.tsx`, `.ts`, `.js`.
+
+  Files must not contain side-effects, import other heavy modules and / or libraries and code that must be transpiled.
+
+  This is ok:
+
+  ```js
+  // a.js
+  export const redColor = 'red';
+
+  // b.js
+  export const greenColor = 'green';
+  export { redColor } from './a.js';
+
+  // index.js
+  import { greenColor, redColor } from './a.js';
+  import styled from 'astroturf';
+
+  const Button = styled.button`
+    color: ${redColor};
+    background: ${greenColor};
+  `;
+  ```
+
+  This is **not ok** and will most likely result in an error:
+
+  ```js
+  // a.js
+  import * as React from 'react';
+  import image from './someImage.png';
+  export const redColor = 'red';
+
+  export const Something = () => <div style={{ background: `url(${image});` }}>Hello!</div>;
+
+  // b.js
+  export const greenColor = 'green';
+  export { redColor } from './a.js';
+
+  // index.js
+  import { greenColor, redColor } from './a.js';
+  import styled from 'astroturf';
+
+  const Button = styled.button`
+    color: ${redColor};
+    background: ${greenColor};
+  `;
+  ```
+
 - Limited support for interpolations
 
   ```javascript
