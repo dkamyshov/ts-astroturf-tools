@@ -1,8 +1,15 @@
-import { resolve, dirname } from 'path';
 import { existsSync, readFileSync } from 'fs';
+import { dirname, resolve, sep } from 'path';
 import * as ts from 'typescript';
 
-const extensions = ['.tsx', '.ts', '.js'];
+const extensions = [
+  '.tsx',
+  '.ts',
+  '.js',
+  sep + 'index.tsx',
+  sep + 'index.ts',
+  sep + 'index.js',
+];
 
 export const createResolverContext = (
   watcherCallback?: (filename: string) => void
