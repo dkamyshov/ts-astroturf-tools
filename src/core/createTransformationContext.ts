@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
-import { replaceWithValues } from './replaceWithValues';
-import { processTemplateExpression } from './processTemplateExpression';
+import { createTemplateExpressionProcessor } from './createTemplateExpressionProcessor';
 
 export const createTransformationContext = (
   sourceFile: ts.SourceFile,
@@ -12,23 +11,6 @@ export const createTransformationContext = (
   const identifiers: {
     [identifier: string]: number | undefined;
   } = {};
-
-  const processImports = (cleanCSSCode: string) => {
-    const lines = cleanCSSCode.split('\n');
-
-    const [rest, imports] = lines.reduce(
-      (accumulator, current) => {
-        accumulator[+current.trim().startsWith('@import')].push(current);
-        return accumulator;
-      },
-      [[], []] as string[][]
-    );
-
-    return {
-      imports: imports.join('\n'),
-      code: rest.join('\n'),
-    };
-  };
 
   const getLocalVariableName = (identifier: string) => {
     const currentCount = identifiers[identifier];
@@ -61,40 +43,28 @@ export const createTransformationContext = (
 
               const variableName = firstChild.getText(sourceFile);
 
-              const clearCssCode = getClearCSSCode(
-                lastChild.getChildAt(1, sourceFile).getText(sourceFile)
-              );
-
-              const newClearCssCode = replaceWithValues(
-                clearCssCode,
+              const processor = createTemplateExpressionProcessor(
+                context,
                 sourceFile,
+                templateExpression.getText(sourceFile),
                 watcherCallback
               );
 
-              // const { imports, code } = processImports(newClearCssCode.cssCode);
+              const newTemplateExpression = processor.processTemplateExpression(
+                templateExpression,
+                variableName
+              );
+
               const localVariableName = getLocalVariableName(variableName);
-              const newCssCode = `\n.${variableName} {\n${newClearCssCode.cssCode}\n}\n`;
 
               let nodeText = node.getText(sourceFile);
 
               if (resultSourceCode) {
                 resultSourceCode = resultSourceCode.replace(
                   nodeText,
-                  `${variableName}: (function() { var ${localVariableName} = css\`\n${newCssCode}\n\`; return [${localVariableName}.${variableName}${
-                    newClearCssCode.identifiers.length > 0
-                      ? `, ${newClearCssCode.identifiers.join(', ')}`
-                      : ''
-                  }][0]; })()`
+                  `${variableName}: (function() { var ${localVariableName} = css${processor.getResultCode()}; return ${localVariableName}.${variableName}; })()`
                 );
               }
-
-              const pte = processTemplateExpression(
-                context,
-                sourceFile,
-                templateExpression,
-                localVariableName,
-                watcherCallback
-              );
 
               return ts.createPropertyAssignment(
                 ts.createIdentifier(variableName),
@@ -118,7 +88,7 @@ export const createTransformationContext = (
                                   undefined,
                                   ts.createTaggedTemplate(
                                     ts.createIdentifier('css'),
-                                    pte
+                                    newTemplateExpression
                                   )
                                 ),
                               ],
@@ -126,44 +96,9 @@ export const createTransformationContext = (
                             )
                           ),
                           ts.createReturn(
-                            ts.createElementAccess(
-                              ts.createArrayLiteral(
-                                [
-                                  ts.createPropertyAccess(
-                                    ts.createIdentifier(localVariableName),
-                                    ts.createIdentifier(variableName)
-                                  ),
-                                  ...newClearCssCode.identifiers.map(
-                                    identifier => {
-                                      const parts = identifier.split('.');
-
-                                      if (parts.length === 1) {
-                                        return ts.createIdentifier(parts[0]);
-                                      }
-
-                                      let node = ts.createPropertyAccess(
-                                        ts.createIdentifier(parts[0]),
-                                        ts.createIdentifier(parts[1])
-                                      );
-
-                                      if (parts.length === 2) {
-                                        return node;
-                                      }
-
-                                      for (let i = 2; i < parts.length; ++i) {
-                                        node = ts.createPropertyAccess(
-                                          node,
-                                          ts.createIdentifier(parts[i])
-                                        );
-                                      }
-
-                                      return node;
-                                    }
-                                  ),
-                                ],
-                                false
-                              ),
-                              ts.createNumericLiteral('0')
+                            ts.createPropertyAccess(
+                              ts.createIdentifier(localVariableName),
+                              ts.createIdentifier(variableName)
                             )
                           ),
                         ],
@@ -196,24 +131,24 @@ export const createTransformationContext = (
 
               const variableName = firstChild.getText(sourceFile);
 
-              const clearCssCode = getClearCSSCode(
-                lastChild.getChildAt(1, sourceFile).getText(sourceFile)
-              );
-
-              const newClearCssCode = replaceWithValues(
-                clearCssCode,
+              const processor = createTemplateExpressionProcessor(
+                context,
                 sourceFile,
+                templateExpression.getText(sourceFile),
                 watcherCallback
               );
-              const { imports, code } = processImports(newClearCssCode.cssCode);
-              const newCssCode = `\n${imports}\n.${variableName} {\n${code}\n}\n`;
+
+              const newTemplateExpression = processor.processTemplateExpression(
+                templateExpression,
+                variableName
+              );
 
               let nodeText = node.getFullText(sourceFile);
 
               if (resultSourceCode) {
                 resultSourceCode = resultSourceCode.replace(
                   nodeText,
-                  ` ${variableName} = (css\`\n${newCssCode}\n\`).${variableName}`
+                  ` ${variableName} = (css${processor.getResultCode()}).${variableName}`
                 );
               }
 
@@ -224,16 +159,10 @@ export const createTransformationContext = (
                   ts.createParen(
                     ts.createTaggedTemplate(
                       ts.createIdentifier('css'),
-                      processTemplateExpression(
-                        context,
-                        sourceFile,
-                        templateExpression,
-                        variableName,
-                        watcherCallback
-                      )
+                      newTemplateExpression
                     )
                   ),
-                  ts.createIdentifier(`${variableName}`)
+                  ts.createIdentifier(variableName)
                 )
               );
             }
@@ -252,39 +181,27 @@ export const createTransformationContext = (
                 | ts.TemplateExpression
                 | ts.NoSubstitutionTemplateLiteral;
 
-              const clearCssCode = getClearCSSCode(
-                templateExpression.getText(sourceFile)
-              );
-
-              const newClearCssCode = replaceWithValues(
-                clearCssCode,
+              const processor = createTemplateExpressionProcessor(
+                context,
                 sourceFile,
+                templateExpression.getText(sourceFile),
                 watcherCallback
               );
 
-              const { code } = processImports(newClearCssCode.cssCode);
-
-              const newCssCode = code;
+              const newTemplateExpression = processor.processTemplateExpression(
+                templateExpression
+              );
 
               let nodeText = node.getFullText(sourceFile);
 
               if (resultSourceCode) {
                 resultSourceCode = resultSourceCode.replace(
                   nodeText,
-                  `${accessExpression}\`\n${newCssCode}\n\``
+                  `${accessExpression}${processor.getResultCode()}`
                 );
               }
 
-              return ts.createTaggedTemplate(
-                firstChild,
-                processTemplateExpression(
-                  context,
-                  sourceFile,
-                  templateExpression,
-                  void 0,
-                  watcherCallback
-                )
-              );
+              return ts.createTaggedTemplate(firstChild, newTemplateExpression);
             }
           }
         }
@@ -302,8 +219,4 @@ export const createTransformationContext = (
     transformer,
     getResultSourceCode,
   };
-};
-
-const getClearCSSCode = (tagContent: string): string => {
-  return tagContent.substring(0, tagContent.length - 1).substring(1);
 };
