@@ -115,7 +115,10 @@ export const createTransformationContext = (
         }
       }
 
-      if (ts.isVariableDeclaration(node)) {
+      if (
+        ts.isVariableDeclaration(node) &&
+        node.getChildCount(sourceFile) >= 3
+      ) {
         const firstChild = node.getChildAt(0, sourceFile);
         if (ts.isIdentifier(firstChild)) {
           const lastChild = node.getChildAt(2, sourceFile);
