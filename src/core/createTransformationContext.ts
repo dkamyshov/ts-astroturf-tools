@@ -115,14 +115,11 @@ export const createTransformationContext = (
         }
       }
 
-      if (
-        ts.isVariableDeclaration(node) &&
-        node.getChildCount(sourceFile) >= 3
-      ) {
+      if (ts.isVariableDeclaration(node)) {
         const firstChild = node.getChildAt(0, sourceFile);
-        if (ts.isIdentifier(firstChild)) {
+        if (firstChild && ts.isIdentifier(firstChild)) {
           const lastChild = node.getChildAt(2, sourceFile);
-          if (ts.isTaggedTemplateExpression(lastChild)) {
+          if (lastChild && ts.isTaggedTemplateExpression(lastChild)) {
             const identifierName = lastChild
               .getChildAt(0, sourceFile)
               .getText(sourceFile);
