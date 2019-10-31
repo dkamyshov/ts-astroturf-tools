@@ -24,7 +24,8 @@
     "dev": "tsc --watch",
     "test": "jest ./src",
     "test-integration": "jest examples/tests --config=examples/tests/jest.config.js",
-    "prepare": "yarn build && yarn test && yarn test-integration"
+    "build-examples": "cd examples && cd typescript-babel && yarn && cd ../typescript-webpack && yarn && cd ../..",
+    "prepare": "yarn build && yarn test && yarn build-examples && yarn test-integration"
   },
   "dependencies": {
     "@babel/traverse": "^7.6.0",
