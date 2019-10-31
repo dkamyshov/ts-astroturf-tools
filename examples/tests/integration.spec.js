@@ -5,14 +5,44 @@ const fs = require('fs');
 jest.setTimeout(30000);
 
 describe('integration tests', () => {
-  // describe('typescript-babel', () => {
-  //   it('completes successfully and shows a warning', async () => {
-  //     const workingDirectory = path.resolve(__dirname, '../typescript-babel');
-  //     await expect(runner.run(workingDirectory, 'yarn', [])).resolves.toContain(
-  //       `Identifier "classB" is unused.`
-  //     );
-  //   });
-  // });
+  describe('typescript-raw', () => {
+    const workingDirectory = path.resolve(__dirname, '../typescript-raw');
+
+    beforeAll(async () => {
+      await runner.run(workingDirectory, 'yarn', []);
+    });
+
+    const executeTest = async (workingDirectory, testName) => {
+      return runner.run(workingDirectory, 'yarn', [
+        'ttsc',
+        `src/${testName}.tsx`,
+      ]);
+    };
+
+    const basicSnapshotTests = [
+      'xcss',
+      'xcss-property-assignment',
+      'xcss-local-interpolation',
+      'xcss-property-assignment-local-interpolation',
+      'styled-remote-interpolation',
+      'xcss-remote-interpolation',
+      'xcss-property-assignment-remote-interpolation',
+    ];
+
+    basicSnapshotTests.forEach(basicSnapshotTest => {
+      it(`basic snapshot test - ${basicSnapshotTest}`, async () => {
+        await executeTest(workingDirectory, basicSnapshotTest);
+
+        const resultJSFileContent = fs
+          .readFileSync(
+            path.resolve(workingDirectory, `lib/${basicSnapshotTest}.js`)
+          )
+          .toString();
+
+        expect(resultJSFileContent).toMatchSnapshot();
+      });
+    });
+  });
 
   describe('typescript-webpack', () => {
     const workingDirectory = path.resolve(__dirname, '../typescript-webpack');

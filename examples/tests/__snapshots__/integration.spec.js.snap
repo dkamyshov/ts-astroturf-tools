@@ -1,5 +1,106 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`integration tests typescript-raw basic snapshot test - styled-remote-interpolation 1`] = `
+"import styled from 'astroturf';
+import { RED, GREEN } from './utils/colors';
+export const SomeComponent = styled.div \`
+  color: \${\\"red\\"};
+  background: \${\\"green\\"};
+\`;
+//# sourceMappingURL=styled-remote-interpolation.js.map"
+`;
+
+exports[`integration tests typescript-raw basic snapshot test - xcss 1`] = `
+"import { xcss } from '../../../xcss';
+export const someClassName = (css \`
+.someClassName {
+
+  color: red;
+
+}\`).someClassName;
+//# sourceMappingURL=xcss.js.map"
+`;
+
+exports[`integration tests typescript-raw basic snapshot test - xcss-local-interpolation 1`] = `
+"import { xcss } from '../../../xcss';
+const RED = 'red';
+export const someClassName = (css \`
+.someClassName {
+
+  color: \${RED};
+
+}
+\`).someClassName;
+//# sourceMappingURL=xcss-local-interpolation.js.map"
+`;
+
+exports[`integration tests typescript-raw basic snapshot test - xcss-property-assignment 1`] = `
+"import { xcss } from '../../../xcss';
+export const classes = {
+    someClassName: (function () {
+        var p_someClassName = css \`
+.someClassName {
+
+    color: red;
+  
+}\`;
+        return p_someClassName.someClassName;
+    })(),
+};
+//# sourceMappingURL=xcss-property-assignment.js.map"
+`;
+
+exports[`integration tests typescript-raw basic snapshot test - xcss-property-assignment-local-interpolation 1`] = `
+"import { xcss } from '../../../xcss';
+const RED = 'red';
+export const classes = {
+    someClassName: (function () {
+        var p_someClassName = css \`
+.someClassName {
+
+    color: \${RED};
+  
+}
+\`;
+        return p_someClassName.someClassName;
+    })(),
+};
+//# sourceMappingURL=xcss-property-assignment-local-interpolation.js.map"
+`;
+
+exports[`integration tests typescript-raw basic snapshot test - xcss-property-assignment-remote-interpolation 1`] = `
+"import { RED, GREEN } from './utils/colors';
+import { xcss } from '../../../xcss';
+export const classes = {
+    someClassName: (function () {
+        var p_someClassName = css \`
+.someClassName {
+
+    color: \${\\"red\\"};
+    background: \${\\"green\\"};
+  
+}
+\`;
+        return p_someClassName.someClassName;
+    })(),
+};
+//# sourceMappingURL=xcss-property-assignment-remote-interpolation.js.map"
+`;
+
+exports[`integration tests typescript-raw basic snapshot test - xcss-remote-interpolation 1`] = `
+"import { RED, GREEN } from './utils/colors';
+import { xcss } from '../../../xcss';
+export const someClassName = (css \`
+.someClassName {
+
+  color: \${\\"red\\"};
+  background: \${\\"green\\"};
+
+}
+\`).someClassName;
+//# sourceMappingURL=xcss-remote-interpolation.js.map"
+`;
+
 exports[`integration tests typescript-webpack basic snapshot test - css 1`] = `
 "
   .css-null-astroturf-local_classA {
