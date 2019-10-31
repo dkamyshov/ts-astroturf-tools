@@ -6,8 +6,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "start": "webpack-dev-server --hot",
-    "build": "webpack-cli",
-    "prepare": "yarn build --config webpack.config.externals.js"
+    "build": "webpack-cli"
   },
   "devDependencies": {
     "@types/react": "^16.9.7",
