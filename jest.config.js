@@ -6,5 +6,6 @@ module.exports = {
     '!src/core/constants.ts',
     '!src/core/getSourceFile.ts',
     '!src/loader/cache.ts',
+    '!src/transformer/index.ts',
   ],
 };
