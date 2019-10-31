@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { xcss } from '../../../xcss';
+import { xcss } from '../../../../xcss';
 
 const A = '#FF6633';
 

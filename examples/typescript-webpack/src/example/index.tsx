@@ -1,8 +1,8 @@
 import styled, { css } from 'astroturf';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { xcss } from '../../../xcss';
-import { NestedIconWithLink } from '../../typescript-babel/lib';
+import { xcss } from '../../../../xcss';
+import { NestedIconWithLink } from '../../../typescript-babel/lib';
 import { BasicXCSSInterpolation } from './BasicXCSSInterpolation';
 import { Example } from './Example';
 import { LocalNestedIconWithLink } from './LocalNestedIconWithLink';

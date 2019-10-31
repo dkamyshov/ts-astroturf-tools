@@ -1,6 +1,6 @@
 import styled from 'astroturf';
 import * as React from 'react';
-import { xcss } from '../../../xcss';
+import { xcss } from '../../../../xcss';
 import { firstLevelExport, secondLevelExport, SomeColors } from './colors';
 import { Example } from './Example';
 

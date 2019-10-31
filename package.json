@@ -23,7 +23,7 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "test": "jest ./src",
-    "test-integration": "jest examples/tests -i --config=examples/tests/jest.config.js",
+    "test-integration": "jest examples/tests --config=examples/tests/jest.config.js",
     "prepare": "yarn build && yarn test && yarn test-integration"
   },
   "dependencies": {

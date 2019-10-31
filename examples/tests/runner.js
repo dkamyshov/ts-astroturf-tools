@@ -18,10 +18,15 @@ const run = (cwd, command, args) => {
 
     process.on('close', code => {
       if (code === 0) {
-        resolve(output);
+        resolve({
+          code,
+          output,
+        });
       } else {
-        console.error(output);
-        reject(code);
+        reject({
+          code,
+          output,
+        });
       }
     });
   });

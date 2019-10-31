@@ -6,7 +6,7 @@ module.exports = {
   mode: 'development',
   devtool: 'source-map',
 
-  entry: './src/index.tsx',
+  entry: './src/example/index.tsx',
 
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -60,7 +60,7 @@ module.exports = {
               importLoaders: 1,
               modules: {
                 mode: 'local',
-                localIdentName: '[name]_[local]_[hash:hex:4]',
+                localIdentName: '[name]_[local]',
               },
             },
           },
@@ -89,7 +89,7 @@ module.exports = {
       filename: 'style.css',
     }),
     new HWP({
-      template: 'src/index.html',
+      template: 'src/example/index.html',
     }),
   ],
 };
