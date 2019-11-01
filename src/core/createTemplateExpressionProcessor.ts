@@ -3,13 +3,14 @@ import * as get from 'lodash.get';
 import * as ts from 'typescript';
 import { createResolverContext } from './createResolverContext';
 import { findAllNodes } from './findAllNodes';
-import { getClearCSSCode } from './utils';
+import { getClearCSSCode, getDefaultFileSystem } from './utils';
 
 export const createTemplateExpressionProcessor = (
   context: ts.TransformationContext,
   sourceFile: ts.SourceFile,
   sourceCode?: string,
-  watcherCallback?: (filename: string) => void
+  watcherCallback?: (filename: string) => void,
+  fs = getDefaultFileSystem()
 ) => {
   let resultCode = sourceCode;
 
@@ -102,7 +103,8 @@ export const createTemplateExpressionProcessor = (
               .substring(1);
 
             const moduleExports = createResolverContext(
-              watcherCallback
+              watcherCallback,
+              fs
             ).resolverRequire(sourceFile.fileName, clearImportPath);
 
             const value = get(moduleExports, identifierName);

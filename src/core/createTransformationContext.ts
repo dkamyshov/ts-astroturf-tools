@@ -1,10 +1,12 @@
 import * as ts from 'typescript';
 import { createTemplateExpressionProcessor } from './createTemplateExpressionProcessor';
+import { getDefaultFileSystem } from './utils';
 
 export const createTransformationContext = (
   sourceFile: ts.SourceFile,
   sourceCode?: string,
-  watcherCallback?: (fullPath: string) => void
+  watcherCallback?: (fullPath: string) => void,
+  fs = getDefaultFileSystem()
 ) => {
   let resultSourceCode = sourceCode;
 
@@ -47,7 +49,8 @@ export const createTransformationContext = (
                 context,
                 sourceFile,
                 templateExpression.getText(sourceFile),
-                watcherCallback
+                watcherCallback,
+                fs
               );
 
               const newTemplateExpression = processor.processTemplateExpression(
@@ -135,7 +138,8 @@ export const createTransformationContext = (
                 context,
                 sourceFile,
                 templateExpression.getText(sourceFile),
-                watcherCallback
+                watcherCallback,
+                fs
               );
 
               const newTemplateExpression = processor.processTemplateExpression(
@@ -185,7 +189,8 @@ export const createTransformationContext = (
                 context,
                 sourceFile,
                 templateExpression.getText(sourceFile),
-                watcherCallback
+                watcherCallback,
+                fs
               );
 
               const newTemplateExpression = processor.processTemplateExpression(

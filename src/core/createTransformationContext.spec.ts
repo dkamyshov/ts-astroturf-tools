@@ -1,9 +1,12 @@
 import { createTransformationContext } from './createTransformationContext';
 import * as ts from 'typescript';
+import { createCustomFileSystem } from '../test-utils/createCustomFileSystem';
+import { FileSystem } from './interface';
 
 describe('createTransformationContext', () => {
   const process = (
     sourceCode: string,
+    fs: FileSystem | undefined,
     callback: (
       resultCode: string | undefined,
       resultFile: ts.SourceFile,
@@ -11,14 +14,16 @@ describe('createTransformationContext', () => {
     ) => void
   ) => {
     const sourceFile = ts.createSourceFile(
-      'index.tsx',
+      '/index.tsx',
       sourceCode,
       ts.ScriptTarget.ESNext
     );
 
     const transformationContext = createTransformationContext(
       sourceFile,
-      sourceCode
+      sourceCode,
+      void 0,
+      fs
     );
 
     ts.transform(sourceFile, [
@@ -59,7 +64,7 @@ describe('createTransformationContext', () => {
       };
     `;
 
-    process(sourceCode, (resultCode, resultFile, sourceFile) => {
+    process(sourceCode, void 0, (resultCode, resultFile, sourceFile) => {
       expect(resultCode).toBe(sourceCode);
       expect(resultFile).toBe(sourceFile);
     });
@@ -73,7 +78,7 @@ describe('createTransformationContext', () => {
 color: red;
 }\`).someClassName;`;
 
-    process(sourceCode, resultCode => {
+    process(sourceCode, void 0, resultCode => {
       expect(resultCode).toBe(referenceResult);
     });
   });
@@ -86,7 +91,7 @@ color: red;
 color: red
 }\`; return p_someProperty.someProperty; })() };`;
 
-    process(sourceCode, resultCode => {
+    process(sourceCode, void 0, resultCode => {
       expect(resultCode).toBe(referenceResult);
     });
   });
@@ -95,7 +100,52 @@ color: red
     const sourceCode = `const SomeComponent = styled.div\`color:red\`;`;
     const referenceResult = `const SomeComponent =styled.div\`color:red\`;`;
 
-    process(sourceCode, resultCode => {
+    process(sourceCode, void 0, resultCode => {
+      expect(resultCode).toBe(referenceResult);
+    });
+  });
+
+  it('processes "styled" expressions with remote interpolations', () => {
+    const sourceCode = `import { RED } from './colors'; const SomeComponent = styled.div\`color: \${RED};\`;`;
+    const referenceResult = `import { RED } from './colors'; const SomeComponent =styled.div\`color: \${"red"};\`;`;
+    const mockfs = createCustomFileSystem({
+      '/colors.tsx': 'export const RED = "red";',
+    });
+
+    process(sourceCode, mockfs, resultCode => {
+      expect(resultCode).toBe(referenceResult);
+    });
+  });
+
+  it('processes "xcss" property assignments with remote interpolation', () => {
+    const sourceCode = `import { RED } from './colors'; const classes = { someClass: xcss\`color: \${RED}\`; };`;
+
+    const referenceResult = `import { RED } from './colors'; const classes = { someClass: (function() { var p_someClass = css\`
+.someClass {
+color: \${\"red\"}
+}
+\`; return p_someClass.someClass; })(); };`;
+
+    const mockfs = createCustomFileSystem({
+      '/colors.tsx': 'export const RED = "red";',
+    });
+
+    process(sourceCode, mockfs, resultCode => {
+      expect(resultCode).toBe(referenceResult);
+    });
+  });
+
+  it('processes "xcss" property assignments with multiple identifiers', () => {
+    const sourceCode = `const a = { a: xcss\`color: red;\`; }; const b = { a: xcss\`color: green;\`; };`;
+    const referenceResult = `const a = { a: (function() { var p_a = css\`
+.a {
+color: red;
+}\`; return p_a.a; })(); }; const b = { a: (function() { var p_a_1 = css\`
+.a {
+color: green;
+}\`; return p_a_1.a; })(); };`;
+
+    process(sourceCode, void 0, resultCode => {
       expect(resultCode).toBe(referenceResult);
     });
   });

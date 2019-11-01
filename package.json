@@ -22,7 +22,7 @@
     "clean": "rm -rf coverage lib tsconfig.tsbuildinfo",
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "jest ./src",
+    "test": "jest --verbose ./src",
     "test-integration": "jest examples/tests --config=examples/tests/jest.config.js",
     "build-examples": "cd examples && cd typescript-babel && yarn && cd ../typescript-webpack && yarn && cd ../..",
     "prepare": "yarn build && yarn test && yarn build-examples && yarn test-integration"

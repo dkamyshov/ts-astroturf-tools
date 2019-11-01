@@ -1,24 +1,22 @@
-import * as realFs from 'fs';
 import * as path from 'path';
 import * as ts from 'typescript';
+import { FileSystem } from './interface';
+import { getDefaultFileSystem } from './utils';
+
+const defaultFileSystem = getDefaultFileSystem();
 
 const extensions = [
   '.tsx',
   '.ts',
   '.js',
-  path.sep + 'index.tsx',
-  path.sep + 'index.ts',
-  path.sep + 'index.js',
+  defaultFileSystem.sep + 'index.tsx',
+  defaultFileSystem.sep + 'index.ts',
+  defaultFileSystem.sep + 'index.js',
 ];
 
 export const createResolverContext = (
   watcherCallback?: (filename: string) => void,
-  fs = {
-    dirname: path.dirname,
-    resolve: path.resolve,
-    existsSync: realFs.existsSync as (filename: string) => boolean,
-    readFileSync: realFs.readFileSync as (filename: string) => Buffer,
-  }
+  fs: FileSystem = defaultFileSystem
 ) => {
   const resolverRequire = (
     currentFileAbsolutePath: string,
