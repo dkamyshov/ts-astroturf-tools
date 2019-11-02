@@ -9,6 +9,7 @@ describe('typescript-webpack', () => {
 
   beforeAll(async () => {
     await runner.run(workingDirectory, 'yarn', []);
+    await runner.run(workingDirectory, 'yarn', ['build-all']);
   });
 
   const executeTest = async (workingDirectory, testName) => {
@@ -38,8 +39,6 @@ describe('typescript-webpack', () => {
 
   basicSnapshotTests.forEach(basicSnapshotTest => {
     it(`basic snapshot test - ${basicSnapshotTest}`, async () => {
-      await executeTest(workingDirectory, basicSnapshotTest);
-
       const resultCssFileContent = fs
         .readFileSync(
           path.resolve(workingDirectory, `dist/${basicSnapshotTest}/style.css`)
@@ -50,22 +49,15 @@ describe('typescript-webpack', () => {
     });
   });
 
-  const rejectWithOutput = p =>
-    p.catch(e => {
-      throw e.output;
-    });
-
-  const resolveWithOutput = p => p.then(r => r.output);
-
   it(`shows missing CSS error for 'css'`, async () => {
     await expect(
-      rejectWithOutput(executeTest(workingDirectory, 'css-missing-css'))
+      runner.rejectWithOutput(executeTest(workingDirectory, 'css-missing-css'))
     ).rejects.toContain(`Identifier "classB" is missing in corresponding CSS.`);
   });
 
   it(`shows unused CSS identifier warning for 'css'`, async () => {
     await expect(
-      resolveWithOutput(executeTest(workingDirectory, 'css-unused-css'))
+      runner.resolveWithOutput(executeTest(workingDirectory, 'css-unused-css'))
     ).resolves.toContain(
       `Identifier "classB" is unused. Consider removing it from CSS.`
     );
