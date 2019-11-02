@@ -25,8 +25,9 @@
     "test": "jest --verbose ./src",
     "test-integration": "jest --verbose examples/tests --config=examples/tests/jest.config.js",
     "build-examples": "cd examples && cd typescript-babel && yarn && cd ../typescript-webpack && yarn && cd ../..",
-    "prepare": "yarn lint && yarn build && yarn test && yarn build-examples && yarn test-integration",
-    "lint": "eslint -c .eslintrc.js --ext .ts ./src"
+    "prepare": "yarn check-style && yarn lint && yarn build && yarn test && yarn build-examples && yarn test-integration",
+    "lint": "eslint -c .eslintrc.js --ext .ts ./src",
+    "check-style": "prettier --check 'src/**/*'"
   },
   "dependencies": {
     "@babel/traverse": "^7.6.0",
@@ -46,7 +47,14 @@
     "@typescript-eslint/parser": "^2.6.0",
     "coveralls": "^3.0.6",
     "eslint": "^6.6.0",
+    "husky": "^3.0.9",
     "jest": "^24.9.0",
+    "prettier": "^1.18.2",
     "ts-jest": "^24.1.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn prettier --check 'src/**/*'"
+    }
   }
 }
