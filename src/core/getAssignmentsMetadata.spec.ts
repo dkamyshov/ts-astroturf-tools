@@ -181,4 +181,44 @@ describe('getAssignmentsMetadata', () => {
 
     expect(getAssignmentsMetadata(sourceFile)).toEqual(reference);
   });
+
+  it('throws an error in case multilevel assignment is used', () => {
+    const sourceCode = `
+      const { classA: { length } } = css\`
+        .classA {
+          color: red;
+        }
+      \`;
+    `;
+
+    const sourceFile = ts.createSourceFile(
+      'test.ts',
+      sourceCode,
+      ts.ScriptTarget.ESNext
+    );
+
+    expect(() => {
+      getAssignmentsMetadata(sourceFile);
+    }).toThrow();
+  });
+
+  it('throws an error in case reassignment is used', () => {
+    const sourceCode = `
+    const { classA: classB } = css\`
+      .classA {
+        color: red;
+      }
+    \`;
+  `;
+
+    const sourceFile = ts.createSourceFile(
+      'test.ts',
+      sourceCode,
+      ts.ScriptTarget.ESNext
+    );
+
+    expect(() => {
+      getAssignmentsMetadata(sourceFile);
+    }).toThrow();
+  });
 });
