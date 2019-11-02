@@ -6,7 +6,7 @@ export const getFirstLevelIdentifiers = (
   file: internalTs.SourceFile,
   localTs: typeof internalTs
 ): internalTs.Node[] => {
-  let result: internalTs.Node[] = [];
+  const result: internalTs.Node[] = [];
 
   const objectBindingPattern = findAllNodes(
     node,

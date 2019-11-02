@@ -19,3 +19,7 @@ export const getDefaultFileSystem = (): FileSystem => {
     sep: path.sep,
   };
 };
+
+export const getClearTemplateHead = (templateHead: string) => {
+  return templateHead.substring(0, templateHead.length - 2).substring(1);
+};

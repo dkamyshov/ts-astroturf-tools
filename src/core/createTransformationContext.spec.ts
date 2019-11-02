@@ -123,7 +123,7 @@ color: red
 
     const referenceResult = `import { RED } from './colors'; const classes = { someClass: (function() { var p_someClass = css\`
 .someClass {
-color: \${\"red\"}
+color: \${"red"}
 }
 \`; return p_someClass.someClass; })(); };`;
 

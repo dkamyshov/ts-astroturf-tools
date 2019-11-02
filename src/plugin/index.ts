@@ -20,7 +20,7 @@ const init = (modules: { typescript: typeof tsserver }) => {
       position: number,
       options: tsserver.GetCompletionsAtPositionOptions | undefined
     ): tsserver.WithMetadata<tsserver.CompletionInfo> | undefined => {
-      let original = info.languageService.getCompletionsAtPosition(
+      const original = info.languageService.getCompletionsAtPosition(
         fileName,
         position,
         options

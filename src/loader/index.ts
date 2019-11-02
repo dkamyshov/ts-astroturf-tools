@@ -49,8 +49,8 @@ const loader: webpack.loader.Loader = function(source, map) {
     return;
   }
 
-  let currentSessionErrors: string[] = [];
-  let currentSessionWarnings: string[] = [];
+  const currentSessionErrors: string[] = [];
+  const currentSessionWarnings: string[] = [];
 
   const assignmentsMetadata = getAssignmentsMetadata(sourceFile, ts);
 

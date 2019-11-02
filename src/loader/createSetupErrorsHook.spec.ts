@@ -7,6 +7,7 @@ describe('setupErrorsHook', () => {
 
     const tapAsync = jest.fn();
 
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     const compiler: any = {
       hooks: {
         afterCompile: {
@@ -31,6 +32,7 @@ describe('setupErrorsHook', () => {
 
     const setupErrorsHook = createSetupErrorsHook(cacheInstance);
 
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     let hookCallback: (compilation: any, callback: any) => void = () => {};
 
     const compiler: any = {
@@ -40,6 +42,7 @@ describe('setupErrorsHook', () => {
         },
       },
     };
+    /* eslint-enable @typescript-eslint/no-explicit-any */
 
     const compilation = {
       errors: {

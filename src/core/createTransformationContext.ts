@@ -62,7 +62,7 @@ export const createTransformationContext = (
 
               const localVariableName = getLocalVariableName(variableName);
 
-              let nodeText = node.getText(sourceFile);
+              const nodeText = node.getText(sourceFile);
 
               if (resultSourceCode) {
                 resultSourceCode = resultSourceCode.replace(
@@ -150,7 +150,7 @@ export const createTransformationContext = (
                 variableName
               );
 
-              let nodeText = node.getFullText(sourceFile);
+              const nodeText = node.getFullText(sourceFile);
 
               if (resultSourceCode) {
                 resultSourceCode = resultSourceCode.replace(
@@ -201,7 +201,7 @@ export const createTransformationContext = (
                 templateExpression
               );
 
-              let nodeText = node.getFullText(sourceFile);
+              const nodeText = node.getFullText(sourceFile);
 
               if (resultSourceCode) {
                 resultSourceCode = resultSourceCode.replace(

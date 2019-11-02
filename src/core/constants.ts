@@ -2,7 +2,7 @@
  * Regexp used to extract CSS class names
  * from CSS sources.
  */
-export const tokensRegExp = /\.(\D[\w\-]*)(?![^\s\.])/g;
+export const tokensRegExp = /\.(\D[\w-]*)(?![^\s.])/g;
 
 /**
  * Regexp used to clear CSS source of

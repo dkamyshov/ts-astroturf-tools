@@ -9,6 +9,7 @@ import { getUnusedTokens } from '../core/getUnusedTokens';
 
 const plugin = () => {
   const visitor = {
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     Program: function(path: NodePath<babelTypes.Program>, stats: any) {
       const filename = stats.file.opts.filename;
       const sourceCode = path.getSource();
