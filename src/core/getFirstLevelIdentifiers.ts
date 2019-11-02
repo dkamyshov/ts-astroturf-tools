@@ -19,7 +19,7 @@ export const getFirstLevelIdentifiers = (
         );
       }
 
-      const identifier = child.getChildAt(0);
+      const identifier = child.getChildAt(0, file);
 
       result.push(identifier);
     }
