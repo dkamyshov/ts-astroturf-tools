@@ -1,9 +1,14 @@
+/* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
 // @ts-ignore
 import * as get from 'lodash.get';
 import * as internalTs from 'typescript';
 import { createResolverContext } from './createResolverContext';
 import { findAllNodes } from './findAllNodes';
-import { getClearCSSCode, getDefaultFileSystem } from './utils';
+import {
+  getClearCSSCode,
+  getClearTemplateHead,
+  getDefaultFileSystem,
+} from './utils';
 
 export const createTemplateExpressionProcessor = (
   context: internalTs.TransformationContext,
@@ -138,8 +143,4 @@ export const createTemplateExpressionProcessor = (
     processTemplateExpression,
     getResultCode: () => resultCode,
   };
-};
-
-const getClearTemplateHead = (templateHead: string) => {
-  return templateHead.substring(0, templateHead.length - 2).substring(1);
 };
