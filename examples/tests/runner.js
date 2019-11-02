@@ -32,4 +32,13 @@ const run = (cwd, command, args) => {
   });
 };
 
+const rejectWithOutput = p =>
+  p.catch(e => {
+    throw e.output;
+  });
+
+const resolveWithOutput = p => p.then(r => r.output);
+
 module.exports.run = run;
+module.exports.rejectWithOutput = rejectWithOutput;
+module.exports.resolveWithOutput = resolveWithOutput;
