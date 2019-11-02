@@ -5,8 +5,13 @@
     "allowSyntheticDefaultImports": true,
     "rootDir": "./src",
     "outDir": "./dist",
-    "jsx": "react"
+    "jsx": "react",
+    "plugins": [
+      {
+        "name": "../../../../index"
+      }
+    ]
   },
-  "include": ["src/index.tsx"],
+  "include": ["src/example/index.tsx"],
   "exclude": ["node_modules"]
 }
