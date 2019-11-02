@@ -52,7 +52,7 @@ const loader: webpack.loader.Loader = function(source, map) {
   let currentSessionErrors: string[] = [];
   let currentSessionWarnings: string[] = [];
 
-  const assignmentsMetadata = getAssignmentsMetadata(sourceFile);
+  const assignmentsMetadata = getAssignmentsMetadata(sourceFile, ts);
 
   assignmentsMetadata.forEach(assignmentMetadata => {
     getMissingIdentifiers(assignmentMetadata).forEach(missingIdentifier => {
@@ -77,6 +77,7 @@ const loader: webpack.loader.Loader = function(source, map) {
   if (options.direct) {
     const transformationContext = createTransformationContext(
       sourceFile,
+      ts,
       resultSourceCode,
       this.addDependency
     );

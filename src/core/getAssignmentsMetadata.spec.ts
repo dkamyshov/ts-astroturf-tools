@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import {
-  getAssignmentsMetadata,
   AssignmentMetadata,
+  getAssignmentsMetadata,
 } from './getAssignmentsMetadata';
 
 describe('getAssignmentsMetadata', () => {
@@ -18,7 +18,7 @@ describe('getAssignmentsMetadata', () => {
       ts.ScriptTarget.ESNext
     );
 
-    expect(getAssignmentsMetadata(sourceFile)).toEqual([]);
+    expect(getAssignmentsMetadata(sourceFile, ts)).toEqual([]);
   });
 
   it('returns all assignments in a file', () => {
@@ -101,7 +101,7 @@ describe('getAssignmentsMetadata', () => {
       },
     ];
 
-    expect(getAssignmentsMetadata(sourceFile)).toEqual(reference);
+    expect(getAssignmentsMetadata(sourceFile, ts)).toEqual(reference);
   });
 
   it('does not include an assignment if tokens list is empty', () => {
@@ -124,7 +124,7 @@ describe('getAssignmentsMetadata', () => {
 
     const reference: AssignmentMetadata[] = [];
 
-    expect(getAssignmentsMetadata(sourceFile)).toEqual(reference);
+    expect(getAssignmentsMetadata(sourceFile, ts)).toEqual(reference);
   });
 
   it('does not include tokens that are not classes', () => {
@@ -179,7 +179,7 @@ describe('getAssignmentsMetadata', () => {
       },
     ];
 
-    expect(getAssignmentsMetadata(sourceFile)).toEqual(reference);
+    expect(getAssignmentsMetadata(sourceFile, ts)).toEqual(reference);
   });
 
   it('throws an error in case multilevel assignment is used', () => {
@@ -198,7 +198,7 @@ describe('getAssignmentsMetadata', () => {
     );
 
     expect(() => {
-      getAssignmentsMetadata(sourceFile);
+      getAssignmentsMetadata(sourceFile, ts);
     }).toThrow();
   });
 
@@ -218,7 +218,7 @@ describe('getAssignmentsMetadata', () => {
     );
 
     expect(() => {
-      getAssignmentsMetadata(sourceFile);
+      getAssignmentsMetadata(sourceFile, ts);
     }).toThrow();
   });
 });

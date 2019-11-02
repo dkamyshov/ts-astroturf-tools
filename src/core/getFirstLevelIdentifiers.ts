@@ -1,18 +1,21 @@
-import * as ts from 'typescript';
+import * as internalTs from 'typescript';
 import { findAllNodes } from './findAllNodes';
 
 export const getFirstLevelIdentifiers = (
-  node: ts.Node,
-  file: ts.SourceFile
-): ts.Node[] => {
-  let result: ts.Node[] = [];
+  node: internalTs.Node,
+  file: internalTs.SourceFile,
+  localTs: typeof internalTs
+): internalTs.Node[] => {
+  let result: internalTs.Node[] = [];
 
-  const objectBindingPattern = findAllNodes(node, n => {
-    return n.kind === ts.SyntaxKind.ObjectBindingPattern;
-  })[0];
+  const objectBindingPattern = findAllNodes(
+    node,
+    n => n.kind === localTs.SyntaxKind.ObjectBindingPattern,
+    localTs
+  )[0];
 
   objectBindingPattern.forEachChild(child => {
-    if (child.kind === ts.SyntaxKind.BindingElement) {
+    if (child.kind === localTs.SyntaxKind.BindingElement) {
       if (child.getChildCount(file) !== 1) {
         throw new Error(
           `Multilevel destructuring assignments are not yet supported.`

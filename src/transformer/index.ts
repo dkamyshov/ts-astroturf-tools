@@ -4,7 +4,7 @@ import { createTransformationContext } from '../core/createTransformationContext
 const transformer = () => {
   return (context: ts.TransformationContext) => {
     return (file: ts.SourceFile) =>
-      createTransformationContext(file).transformer(context)();
+      createTransformationContext(file, ts).transformer(context)();
   };
 };
 

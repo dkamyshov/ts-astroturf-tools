@@ -34,7 +34,7 @@ describe('getTargetNodes', () => {
         ts.ScriptTarget.ESNext
       );
 
-      const targetNodes = getTargetNodes(sourceFile);
+      const targetNodes = getTargetNodes(sourceFile, ts);
 
       expect(targetNodes.length).toBe(1);
     });
@@ -58,7 +58,7 @@ describe('getTargetNodes', () => {
         ts.ScriptTarget.ESNext
       );
 
-      const targetNodes = getTargetNodes(sourceFile);
+      const targetNodes = getTargetNodes(sourceFile, ts);
 
       expect(targetNodes.length).toBe(1);
     });

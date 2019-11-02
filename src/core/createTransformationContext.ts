@@ -1,9 +1,10 @@
-import * as ts from 'typescript';
+import * as internalTs from 'typescript';
 import { createTemplateExpressionProcessor } from './createTemplateExpressionProcessor';
 import { getDefaultFileSystem } from './utils';
 
 export const createTransformationContext = (
-  sourceFile: ts.SourceFile,
+  sourceFile: internalTs.SourceFile,
+  localTs: typeof internalTs,
   sourceCode?: string,
   watcherCallback?: (fullPath: string) => void,
   fs = getDefaultFileSystem()
@@ -27,27 +28,28 @@ export const createTransformationContext = (
     }
   };
 
-  const transformer = (context: ts.TransformationContext) => {
-    const visit: ts.Visitor = node => {
-      if (ts.isPropertyAssignment(node)) {
+  const transformer = (context: internalTs.TransformationContext) => {
+    const visit: internalTs.Visitor = node => {
+      if (internalTs.isPropertyAssignment(node)) {
         const firstChild = node.getChildAt(0, sourceFile);
-        if (ts.isIdentifier(firstChild)) {
+        if (internalTs.isIdentifier(firstChild)) {
           const lastChild = node.getChildAt(2, sourceFile);
-          if (ts.isTaggedTemplateExpression(lastChild)) {
+          if (internalTs.isTaggedTemplateExpression(lastChild)) {
             const identifierName = lastChild
               .getChildAt(0, sourceFile)
               .getText(sourceFile);
 
             if (identifierName === 'xcss') {
               const templateExpression = lastChild.getChildAt(1, sourceFile) as
-                | ts.TemplateExpression
-                | ts.NoSubstitutionTemplateLiteral;
+                | internalTs.TemplateExpression
+                | internalTs.NoSubstitutionTemplateLiteral;
 
               const variableName = firstChild.getText(sourceFile);
 
               const processor = createTemplateExpressionProcessor(
                 context,
                 sourceFile,
+                localTs,
                 templateExpression.getText(sourceFile),
                 watcherCallback,
                 fs
@@ -69,39 +71,41 @@ export const createTransformationContext = (
                 );
               }
 
-              return ts.createPropertyAssignment(
-                ts.createIdentifier(variableName),
-                ts.createCall(
-                  ts.createParen(
-                    ts.createFunctionExpression(
+              return internalTs.createPropertyAssignment(
+                internalTs.createIdentifier(variableName),
+                internalTs.createCall(
+                  internalTs.createParen(
+                    internalTs.createFunctionExpression(
                       undefined,
                       undefined,
                       undefined,
                       undefined,
                       [],
                       undefined,
-                      ts.createBlock(
+                      internalTs.createBlock(
                         [
-                          ts.createVariableStatement(
+                          internalTs.createVariableStatement(
                             undefined,
-                            ts.createVariableDeclarationList(
+                            internalTs.createVariableDeclarationList(
                               [
-                                ts.createVariableDeclaration(
-                                  ts.createIdentifier(localVariableName),
+                                internalTs.createVariableDeclaration(
+                                  internalTs.createIdentifier(
+                                    localVariableName
+                                  ),
                                   undefined,
-                                  ts.createTaggedTemplate(
-                                    ts.createIdentifier('css'),
+                                  internalTs.createTaggedTemplate(
+                                    internalTs.createIdentifier('css'),
                                     newTemplateExpression
                                   )
                                 ),
                               ],
-                              ts.NodeFlags.None
+                              internalTs.NodeFlags.None
                             )
                           ),
-                          ts.createReturn(
-                            ts.createPropertyAccess(
-                              ts.createIdentifier(localVariableName),
-                              ts.createIdentifier(variableName)
+                          internalTs.createReturn(
+                            internalTs.createPropertyAccess(
+                              internalTs.createIdentifier(localVariableName),
+                              internalTs.createIdentifier(variableName)
                             )
                           ),
                         ],
@@ -118,25 +122,26 @@ export const createTransformationContext = (
         }
       }
 
-      if (ts.isVariableDeclaration(node)) {
+      if (internalTs.isVariableDeclaration(node)) {
         const firstChild = node.getChildAt(0, sourceFile);
-        if (firstChild && ts.isIdentifier(firstChild)) {
+        if (firstChild && internalTs.isIdentifier(firstChild)) {
           const lastChild = node.getChildAt(2, sourceFile);
-          if (lastChild && ts.isTaggedTemplateExpression(lastChild)) {
+          if (lastChild && internalTs.isTaggedTemplateExpression(lastChild)) {
             const identifierName = lastChild
               .getChildAt(0, sourceFile)
               .getText(sourceFile);
 
             if (identifierName === 'xcss') {
               const templateExpression = lastChild.getChildAt(1, sourceFile) as
-                | ts.TemplateExpression
-                | ts.NoSubstitutionTemplateLiteral;
+                | internalTs.TemplateExpression
+                | internalTs.NoSubstitutionTemplateLiteral;
 
               const variableName = firstChild.getText(sourceFile);
 
               const processor = createTemplateExpressionProcessor(
                 context,
                 sourceFile,
+                localTs,
                 templateExpression.getText(sourceFile),
                 watcherCallback,
                 fs
@@ -156,17 +161,17 @@ export const createTransformationContext = (
                 );
               }
 
-              return ts.createVariableDeclaration(
-                ts.createIdentifier(variableName),
+              return internalTs.createVariableDeclaration(
+                internalTs.createIdentifier(variableName),
                 undefined,
-                ts.createPropertyAccess(
-                  ts.createParen(
-                    ts.createTaggedTemplate(
-                      ts.createIdentifier('css'),
+                internalTs.createPropertyAccess(
+                  internalTs.createParen(
+                    internalTs.createTaggedTemplate(
+                      internalTs.createIdentifier('css'),
                       newTemplateExpression
                     )
                   ),
-                  ts.createIdentifier(variableName)
+                  internalTs.createIdentifier(variableName)
                 )
               );
             }
@@ -174,20 +179,21 @@ export const createTransformationContext = (
         }
       }
 
-      if (ts.isTaggedTemplateExpression(node)) {
+      if (internalTs.isTaggedTemplateExpression(node)) {
         const childrenCount = node.getChildCount(sourceFile);
         if (childrenCount === 2) {
           const firstChild = node.getChildAt(0, sourceFile);
-          if (ts.isPropertyAccessExpression(firstChild)) {
+          if (internalTs.isPropertyAccessExpression(firstChild)) {
             const accessExpression = firstChild.getText(sourceFile);
             if (/^styled\./.test(accessExpression)) {
               const templateExpression = node.getChildAt(1, sourceFile) as
-                | ts.TemplateExpression
-                | ts.NoSubstitutionTemplateLiteral;
+                | internalTs.TemplateExpression
+                | internalTs.NoSubstitutionTemplateLiteral;
 
               const processor = createTemplateExpressionProcessor(
                 context,
                 sourceFile,
+                localTs,
                 templateExpression.getText(sourceFile),
                 watcherCallback,
                 fs
@@ -206,16 +212,19 @@ export const createTransformationContext = (
                 );
               }
 
-              return ts.createTaggedTemplate(firstChild, newTemplateExpression);
+              return internalTs.createTaggedTemplate(
+                firstChild,
+                newTemplateExpression
+              );
             }
           }
         }
       }
 
-      return ts.visitEachChild(node, visit, context);
+      return internalTs.visitEachChild(node, visit, context);
     };
 
-    return () => ts.visitNode(sourceFile, visit);
+    return () => internalTs.visitNode(sourceFile, visit);
   };
 
   const getResultSourceCode = () => resultSourceCode;

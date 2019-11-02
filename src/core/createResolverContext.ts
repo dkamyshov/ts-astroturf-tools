@@ -1,5 +1,4 @@
-import * as path from 'path';
-import * as ts from 'typescript';
+import * as internalTs from 'typescript';
 import { FileSystem } from './interface';
 import { getDefaultFileSystem } from './utils';
 
@@ -37,7 +36,7 @@ export const createResolverContext = (
         .readFileSync(importAbsolutePathWithExtension)
         .toString();
 
-      const transpiledFile = ts.transpile(importedFileContent);
+      const transpiledFile = internalTs.transpile(importedFileContent);
 
       const wrapperModuleFunc = new Function(
         'module,exports,require',

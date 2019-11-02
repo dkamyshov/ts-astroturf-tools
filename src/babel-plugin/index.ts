@@ -1,11 +1,11 @@
 import { NodePath } from '@babel/traverse';
 import * as babelTypes from '@babel/types';
+import * as colors from 'colors';
 import * as ts from 'typescript';
 import { packageName } from '../core/constants';
 import { getAssignmentsMetadata } from '../core/getAssignmentsMetadata';
 import { getMissingIdentifiers } from '../core/getMissingIdentifiers';
 import { getUnusedTokens } from '../core/getUnusedTokens';
-import * as colors from 'colors';
 
 const plugin = () => {
   const visitor = {
@@ -21,7 +21,7 @@ const plugin = () => {
         ts.ScriptTarget.ESNext
       );
 
-      const assignmentsMetadata = getAssignmentsMetadata(sourceFile);
+      const assignmentsMetadata = getAssignmentsMetadata(sourceFile, ts);
 
       assignmentsMetadata.forEach(assignmentMetadata => {
         getMissingIdentifiers(assignmentMetadata).forEach(missingIdentifier => {

@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import * as internalTs from 'typescript';
 import { tokensRegExp } from './constants';
 import { extractTemplateLiteralContent } from './extractTemplateLiteralContent';
 import { findAllNodes } from './findAllNodes';
@@ -96,15 +96,22 @@ export interface AssignmentMetadata {
  *
  * @param file
  */
-export const getAssignmentsMetadata = (file: ts.SourceFile) => {
+export const getAssignmentsMetadata = (
+  file: internalTs.SourceFile,
+  localTs: typeof internalTs
+) => {
   const result: AssignmentMetadata[] = [];
 
-  getTargetNodes(file).forEach(assignmentNode => {
-    const objectBindingPattern = findAllNodes(assignmentNode, n => {
-      return n.kind === ts.SyntaxKind.ObjectBindingPattern;
-    })[0];
+  const targetNodes = getTargetNodes(file, localTs);
 
-    const identifiers = getFirstLevelIdentifiers(assignmentNode, file);
+  targetNodes.forEach(assignmentNode => {
+    const objectBindingPattern = findAllNodes(
+      assignmentNode,
+      n => n.kind === localTs.SyntaxKind.ObjectBindingPattern,
+      localTs
+    )[0];
+
+    const identifiers = getFirstLevelIdentifiers(assignmentNode, file, localTs);
     const taggedTemplateExpression = assignmentNode.getChildAt(2, file);
     const taggedTemplateExpressionFrom = taggedTemplateExpression.getStart(
       file
@@ -119,7 +126,10 @@ export const getAssignmentsMetadata = (file: ts.SourceFile) => {
     clearCssSource.replace(tokensRegExp, (fullMatch, group, index) => {
       const from = taggedTemplateExpressionFrom + 4 + index;
       const to = from + fullMatch.length;
-      const tokenSourcePosition = ts.getLineAndCharacterOfPosition(file, from);
+      const tokenSourcePosition = internalTs.getLineAndCharacterOfPosition(
+        file,
+        from
+      );
 
       tokens.push({
         name: group,
@@ -142,7 +152,7 @@ export const getAssignmentsMetadata = (file: ts.SourceFile) => {
       bindingTo: objectBindingPattern.getEnd(),
       requestedIdentifiers: identifiers.map(identifier => {
         const from = identifier.getStart(file);
-        const identifierSourcePosition = ts.getLineAndCharacterOfPosition(
+        const identifierSourcePosition = localTs.getLineAndCharacterOfPosition(
           file,
           from
         );

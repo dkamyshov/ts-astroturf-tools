@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import * as internalTs from 'typescript';
 
 /**
  * Extracts tagged template literal content from
@@ -11,8 +11,8 @@ import * as ts from 'typescript';
  * @param file
  */
 export const extractTemplateLiteralContent = (
-  node: ts.Node,
-  file: ts.SourceFile
+  node: internalTs.Node,
+  file: internalTs.SourceFile
 ): string => {
   const taggedTemplateExpression = node.getChildAt(2, file);
   const childNode = taggedTemplateExpression.getChildAt(1, file);

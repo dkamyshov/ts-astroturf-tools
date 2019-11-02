@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import * as internalTs from 'typescript';
 import { findAllNodes } from './findAllNodes';
 import { isDestructuringCSSAssignment } from './isDestructuringCSSAssignment';
 
@@ -11,11 +11,15 @@ import { isDestructuringCSSAssignment } from './isDestructuringCSSAssignment';
  *
  * @param file
  */
-export const getTargetNodes = (file: ts.SourceFile) => {
+export const getTargetNodes = (
+  file: internalTs.SourceFile,
+  localTs: typeof internalTs
+) => {
   return findAllNodes(
     file,
     n =>
-      n.kind === ts.SyntaxKind.VariableDeclaration &&
-      isDestructuringCSSAssignment(n, file)
+      n.kind === localTs.SyntaxKind.VariableDeclaration &&
+      isDestructuringCSSAssignment(n, file, localTs),
+    localTs
   );
 };

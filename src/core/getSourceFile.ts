@@ -1,10 +1,10 @@
-import * as ts from 'typescript';
+import * as internalTs from 'typescript';
 import * as tsserver from 'typescript/lib/tsserverlibrary';
 
 export const getSourceFile = (
   info: tsserver.server.PluginCreateInfo,
   fileName: string
-): ts.SourceFile => {
+): internalTs.SourceFile => {
   const program = info.languageService.getProgram();
 
   if (!program) {

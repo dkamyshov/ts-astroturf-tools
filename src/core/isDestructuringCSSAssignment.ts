@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import * as internalTs from 'typescript';
 
 /**
  * Checks whether specified node is an astroturf
@@ -12,8 +12,9 @@ import * as ts from 'typescript';
  * @param file
  */
 export const isDestructuringCSSAssignment = (
-  node: ts.Node,
-  file: ts.SourceFile
+  node: internalTs.Node,
+  file: internalTs.SourceFile,
+  localTs: typeof internalTs
 ) => {
   // assignment node has exactly 3 children:
   //
@@ -35,7 +36,7 @@ export const isDestructuringCSSAssignment = (
 
   // const { a } = css` .a { color: black; } `;
   //       ^^^^
-  if (firstChild.kind !== ts.SyntaxKind.ObjectBindingPattern) {
+  if (firstChild.kind !== localTs.SyntaxKind.ObjectBindingPattern) {
     return false;
   }
 
@@ -43,7 +44,7 @@ export const isDestructuringCSSAssignment = (
 
   // const { a } = css` .a { color: black; } `;
   //               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  if (lastChild.kind !== ts.SyntaxKind.TaggedTemplateExpression) {
+  if (lastChild.kind !== localTs.SyntaxKind.TaggedTemplateExpression) {
     return false;
   }
 

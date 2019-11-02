@@ -1,6 +1,6 @@
-import { createTransformationContext } from './createTransformationContext';
 import * as ts from 'typescript';
 import { createCustomFileSystem } from '../test-utils/createCustomFileSystem';
+import { createTransformationContext } from './createTransformationContext';
 import { FileSystem } from './interface';
 
 describe('createTransformationContext', () => {
@@ -21,6 +21,7 @@ describe('createTransformationContext', () => {
 
     const transformationContext = createTransformationContext(
       sourceFile,
+      ts,
       sourceCode,
       void 0,
       fs

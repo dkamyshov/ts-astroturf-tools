@@ -1,13 +1,14 @@
 // @ts-ignore
 import * as get from 'lodash.get';
-import * as ts from 'typescript';
+import * as internalTs from 'typescript';
 import { createResolverContext } from './createResolverContext';
 import { findAllNodes } from './findAllNodes';
 import { getClearCSSCode, getDefaultFileSystem } from './utils';
 
 export const createTemplateExpressionProcessor = (
-  context: ts.TransformationContext,
-  sourceFile: ts.SourceFile,
+  context: internalTs.TransformationContext,
+  sourceFile: internalTs.SourceFile,
+  ts: typeof internalTs,
   sourceCode?: string,
   watcherCallback?: (filename: string) => void,
   fs = getDefaultFileSystem()
@@ -70,28 +71,34 @@ export const createTemplateExpressionProcessor = (
         const identifierName = node.getText(sourceFile);
         const parts = identifierName.split('.');
 
-        const importNodes = findAllNodes(sourceFile, node => {
-          if (ts.isImportDeclaration(node)) {
-            return (
-              findAllNodes(node, n2 => {
-                if (ts.isIdentifier(n2)) {
-                  return n2.getText(sourceFile) === parts[0];
-                }
+        const importNodes = findAllNodes(
+          sourceFile,
+          node => {
+            if (ts.isImportDeclaration(node)) {
+              return (
+                findAllNodes(
+                  node,
+                  n2 => {
+                    if (ts.isIdentifier(n2)) {
+                      return n2.getText(sourceFile) === parts[0];
+                    }
 
-                return false;
-              }).length > 0
-            );
-          }
+                    return false;
+                  },
+                  ts
+                ).length > 0
+              );
+            }
 
-          return false;
-        });
+            return false;
+          },
+          ts
+        );
 
         if (importNodes.length > 0) {
           const importNode = importNodes[0];
 
-          const literals = findAllNodes(importNode, node =>
-            ts.isStringLiteral(node)
-          );
+          const literals = findAllNodes(importNode, ts.isStringLiteral, ts);
 
           if (literals.length > 0) {
             const literal = literals[0];
