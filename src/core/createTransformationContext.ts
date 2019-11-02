@@ -4,7 +4,7 @@ import { getDefaultFileSystem } from './utils';
 
 export const createTransformationContext = (
   sourceFile: internalTs.SourceFile,
-  localTs: typeof internalTs,
+  ts: typeof internalTs,
   sourceCode?: string,
   watcherCallback?: (fullPath: string) => void,
   fs = getDefaultFileSystem()
@@ -30,11 +30,11 @@ export const createTransformationContext = (
 
   const transformer = (context: internalTs.TransformationContext) => {
     const visit: internalTs.Visitor = node => {
-      if (internalTs.isPropertyAssignment(node)) {
+      if (ts.isPropertyAssignment(node)) {
         const firstChild = node.getChildAt(0, sourceFile);
-        if (internalTs.isIdentifier(firstChild)) {
+        if (ts.isIdentifier(firstChild)) {
           const lastChild = node.getChildAt(2, sourceFile);
-          if (internalTs.isTaggedTemplateExpression(lastChild)) {
+          if (ts.isTaggedTemplateExpression(lastChild)) {
             const identifierName = lastChild
               .getChildAt(0, sourceFile)
               .getText(sourceFile);
@@ -49,7 +49,7 @@ export const createTransformationContext = (
               const processor = createTemplateExpressionProcessor(
                 context,
                 sourceFile,
-                localTs,
+                ts,
                 templateExpression.getText(sourceFile),
                 watcherCallback,
                 fs
@@ -71,41 +71,39 @@ export const createTransformationContext = (
                 );
               }
 
-              return internalTs.createPropertyAssignment(
-                internalTs.createIdentifier(variableName),
-                internalTs.createCall(
-                  internalTs.createParen(
-                    internalTs.createFunctionExpression(
+              return ts.createPropertyAssignment(
+                ts.createIdentifier(variableName),
+                ts.createCall(
+                  ts.createParen(
+                    ts.createFunctionExpression(
                       undefined,
                       undefined,
                       undefined,
                       undefined,
                       [],
                       undefined,
-                      internalTs.createBlock(
+                      ts.createBlock(
                         [
-                          internalTs.createVariableStatement(
+                          ts.createVariableStatement(
                             undefined,
-                            internalTs.createVariableDeclarationList(
+                            ts.createVariableDeclarationList(
                               [
-                                internalTs.createVariableDeclaration(
-                                  internalTs.createIdentifier(
-                                    localVariableName
-                                  ),
+                                ts.createVariableDeclaration(
+                                  ts.createIdentifier(localVariableName),
                                   undefined,
-                                  internalTs.createTaggedTemplate(
-                                    internalTs.createIdentifier('css'),
+                                  ts.createTaggedTemplate(
+                                    ts.createIdentifier('css'),
                                     newTemplateExpression
                                   )
                                 ),
                               ],
-                              internalTs.NodeFlags.None
+                              ts.NodeFlags.None
                             )
                           ),
-                          internalTs.createReturn(
-                            internalTs.createPropertyAccess(
-                              internalTs.createIdentifier(localVariableName),
-                              internalTs.createIdentifier(variableName)
+                          ts.createReturn(
+                            ts.createPropertyAccess(
+                              ts.createIdentifier(localVariableName),
+                              ts.createIdentifier(variableName)
                             )
                           ),
                         ],
@@ -122,11 +120,11 @@ export const createTransformationContext = (
         }
       }
 
-      if (internalTs.isVariableDeclaration(node)) {
+      if (ts.isVariableDeclaration(node)) {
         const firstChild = node.getChildAt(0, sourceFile);
-        if (firstChild && internalTs.isIdentifier(firstChild)) {
+        if (firstChild && ts.isIdentifier(firstChild)) {
           const lastChild = node.getChildAt(2, sourceFile);
-          if (lastChild && internalTs.isTaggedTemplateExpression(lastChild)) {
+          if (lastChild && ts.isTaggedTemplateExpression(lastChild)) {
             const identifierName = lastChild
               .getChildAt(0, sourceFile)
               .getText(sourceFile);
@@ -141,7 +139,7 @@ export const createTransformationContext = (
               const processor = createTemplateExpressionProcessor(
                 context,
                 sourceFile,
-                localTs,
+                ts,
                 templateExpression.getText(sourceFile),
                 watcherCallback,
                 fs
@@ -161,17 +159,17 @@ export const createTransformationContext = (
                 );
               }
 
-              return internalTs.createVariableDeclaration(
-                internalTs.createIdentifier(variableName),
+              return ts.createVariableDeclaration(
+                ts.createIdentifier(variableName),
                 undefined,
-                internalTs.createPropertyAccess(
-                  internalTs.createParen(
-                    internalTs.createTaggedTemplate(
-                      internalTs.createIdentifier('css'),
+                ts.createPropertyAccess(
+                  ts.createParen(
+                    ts.createTaggedTemplate(
+                      ts.createIdentifier('css'),
                       newTemplateExpression
                     )
                   ),
-                  internalTs.createIdentifier(variableName)
+                  ts.createIdentifier(variableName)
                 )
               );
             }
@@ -179,11 +177,11 @@ export const createTransformationContext = (
         }
       }
 
-      if (internalTs.isTaggedTemplateExpression(node)) {
+      if (ts.isTaggedTemplateExpression(node)) {
         const childrenCount = node.getChildCount(sourceFile);
         if (childrenCount === 2) {
           const firstChild = node.getChildAt(0, sourceFile);
-          if (internalTs.isPropertyAccessExpression(firstChild)) {
+          if (ts.isPropertyAccessExpression(firstChild)) {
             const accessExpression = firstChild.getText(sourceFile);
             if (/^styled\./.test(accessExpression)) {
               const templateExpression = node.getChildAt(1, sourceFile) as
@@ -193,7 +191,7 @@ export const createTransformationContext = (
               const processor = createTemplateExpressionProcessor(
                 context,
                 sourceFile,
-                localTs,
+                ts,
                 templateExpression.getText(sourceFile),
                 watcherCallback,
                 fs
@@ -212,19 +210,16 @@ export const createTransformationContext = (
                 );
               }
 
-              return internalTs.createTaggedTemplate(
-                firstChild,
-                newTemplateExpression
-              );
+              return ts.createTaggedTemplate(firstChild, newTemplateExpression);
             }
           }
         }
       }
 
-      return internalTs.visitEachChild(node, visit, context);
+      return ts.visitEachChild(node, visit, context);
     };
 
-    return () => internalTs.visitNode(sourceFile, visit);
+    return () => ts.visitNode(sourceFile, visit);
   };
 
   const getResultSourceCode = () => resultSourceCode;
