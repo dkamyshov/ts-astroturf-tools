@@ -300,6 +300,39 @@ Table of tools and corresponding features:
   `;
   ```
 
+- Performance issues with imports **(this issue is in progress of being fixed)**
+
+  As of now, files are parsed and executed for each encountered import.
+
+  For example:
+
+  ```js
+  // a.js
+  export const RED = 'red';
+
+  // b.js
+  export { RED } from './a';
+  export const GREEN = 'green';
+
+  // ComponentA.js
+  import styled from 'astroturf';
+  import { GREEN } from './b';
+
+  export const ComponentA = styled.div`
+    color: ${GREEN};
+  `;
+
+  // ComponentB.js
+  import styled from 'astroturf';
+  import { RED } from './b';
+
+  export const ComponentB = styled.div`
+    color: ${RED};
+  `;
+  ```
+
+  In this case both `a.js` and `b.js` will be parsed and executed twice (first for `ComponentA.js` and then for `ComponentB.js`). Keep this in mind and try to avoid creating large dependency trees.
+
 - Limited support for interpolations
 
   ```javascript
