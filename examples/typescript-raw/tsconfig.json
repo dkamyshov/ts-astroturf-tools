@@ -15,8 +15,8 @@
       {
         "transform": "../../transformer"
       }
-    ],
-    "incremental": true
+    ]
   },
+  "include": ["src/*.tsx"],
   "exclude": ["node_modules"]
 }

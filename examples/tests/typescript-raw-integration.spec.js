@@ -9,14 +9,8 @@ describe('typescript-raw', () => {
 
   beforeAll(async () => {
     await runner.run(workingDirectory, 'yarn', []);
+    await runner.run(workingDirectory, 'yarn', ['ttsc']);
   });
-
-  const executeTest = async (workingDirectory, testName) => {
-    return runner.run(workingDirectory, 'yarn', [
-      'ttsc',
-      `src/${testName}.tsx`,
-    ]);
-  };
 
   const basicSnapshotTests = [
     'xcss',
@@ -30,8 +24,6 @@ describe('typescript-raw', () => {
 
   basicSnapshotTests.forEach(basicSnapshotTest => {
     it(`basic snapshot test - ${basicSnapshotTest}`, async () => {
-      await executeTest(workingDirectory, basicSnapshotTest);
-
       const resultJSFileContent = fs
         .readFileSync(
           path.resolve(workingDirectory, `lib/${basicSnapshotTest}.js`)
