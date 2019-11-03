@@ -13,11 +13,9 @@ const setupErrorsHook = createSetupErrorsHook(cache);
 
 interface LoaderOptions {
   /**
-   * Enable direct mode.
-   *
-   * Direct mode allows for calls to `xcss`.
+   * Enables linaria-like functionality (`xcss`, interpolations).
    */
-  direct: boolean;
+  linaria: boolean;
 }
 
 const loader: webpack.loader.Loader = function(source, map) {
@@ -27,7 +25,7 @@ const loader: webpack.loader.Loader = function(source, map) {
 
   const options: LoaderOptions = {
     ...{
-      direct: false,
+      linaria: false,
     },
     ...getOptions(this),
   };
@@ -74,7 +72,7 @@ const loader: webpack.loader.Loader = function(source, map) {
     });
   });
 
-  if (options.direct) {
+  if (options.linaria) {
     const transformationContext = createTransformationContext(
       sourceFile,
       ts,

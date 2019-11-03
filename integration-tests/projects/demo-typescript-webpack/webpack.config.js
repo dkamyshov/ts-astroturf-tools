@@ -40,7 +40,7 @@ module.exports = {
           {
             loader: '../../../loader',
             options: {
-              direct: true,
+              linaria: true,
             },
           },
         ],
