@@ -1,3 +1,0 @@
-# Examples
-
-Basic integration examples.

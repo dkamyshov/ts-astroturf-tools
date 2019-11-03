@@ -23,13 +23,12 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "test": "jest --verbose ./src",
-    "test-integration": "jest --verbose examples/tests --config=examples/tests/jest.config.js",
-    "build-examples": "cd examples && cd typescript-babel && yarn && cd ../typescript-webpack && yarn && cd ../..",
-    "prepare": "yarn check-style && yarn lint && yarn build && yarn test && yarn build-examples && yarn test-integration",
+    "test-integration": "jest --verbose integration-tests/test-files --config=integration-tests/test-files/jest.config.js",
+    "prepare": "yarn check-style && yarn lint && yarn build && yarn test && yarn test-integration",
     "lint-source": "eslint -c .eslintrc.js --ext .ts ./src",
-    "lint-tests": "eslint -c .eslintrc.js --ext .js ./examples/tests",
+    "lint-tests": "eslint -c .eslintrc.js --ext .js ./integration-tests/test-files",
     "lint": "yarn lint-source && yarn lint-tests",
-    "check-style": "prettier --check 'src/**/*' 'examples/tests/**/*'"
+    "check-style": "prettier --check 'src/**/*' 'integration-tests/test-files/**/*'"
   },
   "dependencies": {
     "@babel/traverse": "^7.6.0",

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "jsx": "react",
+    "skipLibCheck": true,
+    "plugins": [
+      {
+        "name": "../../../../../index"
+      }
+    ]
+  },
+  "include": ["src/index.tsx"],
+  "exclude": ["node_modules"]
+}

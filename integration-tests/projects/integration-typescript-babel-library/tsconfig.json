@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "react",
+    "sourceMap": true,
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "skipLibCheck": true,
+    "plugins": [
+      {
+        "transform": "../../../transformer"
+      }
+    ],
+    "incremental": true
+  },
+  "files": ["src/index.tsx"],
+  "exclude": ["node_modules"]
+}
