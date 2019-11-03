@@ -35,8 +35,7 @@
     "@babel/types": "^7.6.1",
     "colors": "^1.4.0",
     "loader-utils": "^1.2.3",
-    "lodash.get": "^4.4.2",
-    "typescript": "^3.6.3"
+    "lodash.get": "^4.4.2"
   },
   "devDependencies": {
     "@types/colors": "^1.2.1",
@@ -51,7 +50,11 @@
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
-    "ts-jest": "^24.1.0"
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.3"
+  },
+  "peerDependencies": {
+    "typescript": "^3.0.0"
   },
   "husky": {
     "hooks": {
