@@ -26,7 +26,9 @@
     "test-integration": "jest --verbose examples/tests --config=examples/tests/jest.config.js",
     "build-examples": "cd examples && cd typescript-babel && yarn && cd ../typescript-webpack && yarn && cd ../..",
     "prepare": "yarn check-style && yarn lint && yarn build && yarn test && yarn build-examples && yarn test-integration",
-    "lint": "eslint -c .eslintrc.js --ext .ts ./src",
+    "lint-source": "eslint -c .eslintrc.js --ext .ts ./src",
+    "lint-tests": "eslint -c .eslintrc.js --ext .js ./examples/tests",
+    "lint": "yarn lint-source && yarn lint-tests",
     "check-style": "prettier --check 'src/**/*' 'examples/tests/**/*'"
   },
   "dependencies": {

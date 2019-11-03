@@ -1,1 +1,10 @@
 node_modules
+lib
+coverage
+
+examples/typescript-webpack/dist
+examples/typescript-raw/lib
+examples/typescript-babel/ts-tmp
+examples/typescript-babel/lib
+examples/javascript-babel/dist
+

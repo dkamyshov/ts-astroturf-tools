@@ -5,6 +5,7 @@ module.exports = {
   env: {
     jest: true,
     node: true,
+    es6: true,
   },
   parserOptions: {
     ecmaVersion: 2018,
@@ -16,4 +17,12 @@ module.exports = {
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
   },
+  overrides: [
+    {
+      files: ['*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+  ],
 };

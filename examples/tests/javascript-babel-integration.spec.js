@@ -1,6 +1,5 @@
 const path = require('path');
 const runner = require('./runner');
-const fs = require('fs');
 
 jest.setTimeout(30000);
 

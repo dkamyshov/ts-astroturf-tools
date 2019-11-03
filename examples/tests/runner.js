@@ -1,8 +1,8 @@
-const child_process = require('child_process');
+const childProcess = require('child_process');
 
 const run = (cwd, command, args) => {
   return new Promise((resolve, reject) => {
-    const process = child_process.spawn(command, args, {
+    const process = childProcess.spawn(command, args, {
       cwd,
     });
 
