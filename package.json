@@ -27,7 +27,7 @@
     "build-examples": "cd examples && cd typescript-babel && yarn && cd ../typescript-webpack && yarn && cd ../..",
     "prepare": "yarn check-style && yarn lint && yarn build && yarn test && yarn build-examples && yarn test-integration",
     "lint": "eslint -c .eslintrc.js --ext .ts ./src",
-    "check-style": "prettier --check 'src/**/*'"
+    "check-style": "prettier --check 'src/**/*' 'examples/tests/**/*'"
   },
   "dependencies": {
     "@babel/traverse": "^7.6.0",
