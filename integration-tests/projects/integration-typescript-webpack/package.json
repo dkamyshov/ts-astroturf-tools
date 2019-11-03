@@ -1,0 +1,17 @@
+{
+  "name": "integration-typescript-webpack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "webpack"
+  },
+  "devDependencies": {
+    "astroturf": "^0.9.21",
+    "awesome-typescript-loader": "^5.2.1",
+    "extract-css-chunks-webpack-plugin": "^4.6.0",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "typescript-raw",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "ttsc"
+  },
+  "devDependencies": {
+    "astroturf": "^0.9.21",
+    "ttypescript": "^1.5.7",
+    "typescript": "^3.6.4"
+  }
+}
