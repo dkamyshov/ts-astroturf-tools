@@ -2,110 +2,174 @@
 
 [![npm](https://img.shields.io/npm/v/ts-astroturf-tools)](https://www.npmjs.com/package/ts-astroturf-tools) [![npm](https://img.shields.io/npm/dm/ts-astroturf-tools)](https://www.npmjs.com/package/ts-astroturf-tools) [![Build Status](https://travis-ci.org/dkamyshov/ts-astroturf-tools.svg?branch=master)](https://travis-ci.org/dkamyshov/ts-astroturf-tools) [![Coverage Status](https://coveralls.io/repos/github/dkamyshov/ts-astroturf-tools/badge.svg?branch=master)](https://coveralls.io/github/dkamyshov/ts-astroturf-tools?branch=master)
 
-This package is for developers who use both [astroturf](https://github.com/4Catalyzer/astroturf) and [TypeScript](https://www.typescriptlang.org/) and want to maximize type-safety of their code.
+This package improves DX for [astroturf](https://github.com/4Catalyzer/astroturf) users.
 
 ## Installation
 
 ```
-$ npm i --save-dev ts-astroturf-tools
+yarn add -D ts-astroturf-tools
 ```
 
-## Tools
+```
+npm i --save-dev ts-astroturf-tools
+```
 
-This package includes the following tools:
+## Overview
 
-- TypeScript Language Service Plugin
-- typescript transformer
-- webpack loader
-- babel plugin
+Features are divided in three major categories:
 
-## Features
-
-Here's a list of features these tools provide:
-
-- suggestions and warnings for unused CSS
-- errors for missing CSS
+- [linaria](https://github.com/callstack/linaria)-like functionality (formerly known as "direct mode")
+- diagnostic messages
 - autocomplete for identifiers
-- "direct mode"
-  - linaria-style `css`, available as `xcss`
-  - interpolations from imported files (in `styled` components and in `xcss`)
 
-Table of tools and corresponding features:
+## `linaria`-like functionality
 
-| Tool                               | Warnings (unused CSS) | Errors (missing CSS) | Autocomplete for identifiers | "Direct mode" |
-| ---------------------------------- | --------------------- | -------------------- | ---------------------------- | ------------- |
-| TypeScript Language Service Plugin | ✅ (suggestion)       | ✅                   | ✅                           | `N/A`         |
-| webpack loader                     | ✅                    | ✅                   | `N/A`                        | ✅ _optional_ |
-| babel plugin                       | ✅                    | ✅                   | `N/A`                        | ❌            |
-| TypeScript transformer             | ❌                    | ❌                   | `N/A`                        | ✅            |
+- Declare class names as separate variables:
 
-- `N/A` - not applicable
+  Improves type-safety!
 
-## Demo
+  ```js
+  // * before
+  import { css } from 'astroturf';
 
-- Warnings (suggestions)
+  const { btn, active } = css`
+    .btn {
+      color: red;
+    }
 
-  ![](docs/assets/editor-suggestion.png)
-  ![](docs/assets/build-suggestion-warning.png)
-  ![](docs/assets/build-warning-babel.png)
+    .active {
+      color: black;
+    }
+  `;
 
-- Errors
-
-  ![](docs/assets/editor-error.png)
-  ![](docs/assets/build-error.png)
-  ![](docs/assets/build-error-babel.png)
-
-- Autocomplete for identifiers:
-
-  ![](docs/assets/editor-autocomplete.png)
-
-* "Direct mode" for `css`
-
-  This is possible in direct mode:
-
-  ```typescript
-  // colors.tsx
-  export const colors = {
-    red: 'red',
-    green: 'green',
-  };
-
-  // index.tsx
+  // * after
   import { xcss } from 'ts-astroturf-tools/xcss';
-  import styled from 'astroturf';
-  import { colors } from './colors';
 
-  const redClassName = xcss`color: ${colors.red};`;
+  const btn = xcss`
+    color: red;
+  `;
 
-  const greenClassName = xcss`color: ${colors.green};`;
-
-  const obj = {
-    red: xcss`color: red;`,
-
-    green: xcss`
-        color: green;
-      `,
-  };
-
-  const Button = styled.button`
-    background: ${colors.green};
+  const active = xcss`
+    color: black;
   `;
   ```
 
-  Enable direct mode by passing `direct: true` to the loader:
+- Use variables declared in other modules inside your CSS:
 
-  ```json
-  {
-    "loader": "ts-astroturf-tools/loader",
-    "options": {
-      "direct": true
-    }
-  }
+  ```js
+  // * before
+  // impossible :(
+
+  // * after
+  // colors.tsx
+  export const RED = 'red';
+
+  // index.tsx
+  import { xcss } from 'ts-astroturf-tools/xcss';
+  import { RED } from './colors';
+
+  const btn = xcss`
+    color: ${RED};
+  `;
+
+  // works for styled components too!
+  import styled from 'astroturf';
+
+  const Button = styled.button`
+    color: ${RED};
+  `;
   ```
+
+## Diagnostic messages
+
+These messages are available if you use plain `css` tag from `astroturf`.
+
+There are two types of diagnostic messages:
+
+- warnings in case there is unused CSS
+
+  Available via:
+
+  - webpack loader
+  - babel plugin
+  - TS Language Service Plugin (VS Code)
+
+  ```js
+  import { css } from 'astroturf';
+
+  const { btn } = css`
+    .btn {
+      color: red;
+    }
+
+    .active {
+      color: green;
+    }
+  `;
+  ```
+
+  The warning will look like this:
+
+  <pre style="color: orange;">
+  /path/to/file.js:8:3:
+    Identifier "active" is unused. Consider removing it from CSS.
+  </pre>
+
+  In VS Code the warning will become a suggestion:
+
+  ![](docs/assets/editor-suggestion.png)
+
+- errors in case there is missing CSS
+
+  Available via:
+
+  - webpack loader
+  - babel plugin
+  - TS Language Service Plugin (VS Code)
+
+  ```js
+  import { css } from 'astroturf';
+
+  const { btn, active } = css`
+    .btn {
+      color: red;
+    }
+  `;
+  ```
+
+  The error will look like this:
+
+  <pre style="color: red;">
+  /path/to/file.js:3:14:
+    Identifier "active" is missing in corresponding CSS.
+  </pre>
+
+  In VS Code:
+
+  ![](docs/assets/editor-error.png)
+
+## Autocomplete for identifiers
+
+Available via:
+
+- TS Language Service Plugin (VS Code)
+
+![](docs/assets/editor-autocomplete.png)
+
+## Quick summary of tools and their respective features
+
+| Tool                       | Diagnostic messages | Autocomplete for identifiers | `linaria`-like functionality |
+| -------------------------- | ------------------- | ---------------------------- | ---------------------------- |
+| TS Language Service Plugin | ✅                  | ✅                           | `N/A`                        |
+| webpack loader             | ✅                  | `N/A`                        | ✅ _optional_                |
+| babel plugin               | ✅                  | `N/A`                        | ❌                           |
+| TS transformer             | ❌                  | `N/A`                        | ✅                           |
+
+- `N/A` - not applicable
 
 ## Configuration
 
-- TypeScript Language Service Plugin for astroturf
+- TS Language Service Plugin
 
   Add `ts-astroturf-tools` as a plugin to your `tsconfig.json`:
 
@@ -127,7 +191,7 @@ Table of tools and corresponding features:
 
   ![](docs/assets/workspace-typescript.png)
 
-- TypeScript transformer:
+- TS transformer:
 
   - raw TypeScript
 
@@ -202,9 +266,9 @@ Table of tools and corresponding features:
 
   Available options:
 
-  | Option name | Type      | Description                            |
-  | ----------- | --------- | -------------------------------------- |
-  | `direct`    | `boolean` | Enables direct mode (calls to `xcss`). |
+  | Option name | Type      | Description                           |
+  | ----------- | --------- | ------------------------------------- |
+  | `linaria`   | `boolean` | Enables `linaria`-like functionality. |
 
   Defaults:
 
@@ -223,7 +287,7 @@ Table of tools and corresponding features:
             {
               loader: 'ts-astroturf-tools/loader',
               options: {
-                direct: false,
+                linaria: false,
               },
             },
           ],
