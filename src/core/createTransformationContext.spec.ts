@@ -63,6 +63,10 @@ describe('createTransformationContext', () => {
           }
         \`
       };
+
+      export const AnotherStyledComponent = styledA\`
+        color: red;
+      \`;
     `;
 
     process(sourceCode, void 0, (resultCode, resultFile, sourceFile) => {
@@ -106,9 +110,30 @@ color: red
     });
   });
 
+  it('processes "styled" functions', () => {
+    const sourceCode = `const SomeComponent = styled(SourceComponent)\`color: red;\`;`;
+    const referenceResult = `const SomeComponent =styled(SourceComponent)\`color: red;\`;`;
+
+    process(sourceCode, void 0, resultCode => {
+      expect(resultCode).toBe(referenceResult);
+    });
+  });
+
   it('processes "styled" expressions with remote interpolations', () => {
     const sourceCode = `import { RED } from './colors'; const SomeComponent = styled.div\`color: \${RED};\`;`;
     const referenceResult = `import { RED } from './colors'; const SomeComponent =styled.div\`color: \${"red"};\`;`;
+    const mockfs = createCustomFileSystem({
+      '/colors.tsx': 'export const RED = "red";',
+    });
+
+    process(sourceCode, mockfs, resultCode => {
+      expect(resultCode).toBe(referenceResult);
+    });
+  });
+
+  it('processes "styled" functions with remote interpolations', () => {
+    const sourceCode = `import { RED } from './colors'; const B = styled(A)\`color: \${RED}\`;`;
+    const referenceResult = `import { RED } from './colors'; const B =styled(A)\`color: \${"red"}\`;`;
     const mockfs = createCustomFileSystem({
       '/colors.tsx': 'export const RED = "red";',
     });

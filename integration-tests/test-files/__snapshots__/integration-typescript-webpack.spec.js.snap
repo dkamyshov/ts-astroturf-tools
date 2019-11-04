@@ -36,6 +36,28 @@ color: red;
 /*# sourceMappingURL=style.css.map*/"
 `;
 
+exports[`typescript-webpack css snapshot test - styled-function-local-interpolation 1`] = `
+".styled-function-local-interpolation-A-astroturf-local_cls1 {
+color: red;
+}
+.styled-function-local-interpolation-SomeComponent-astroturf-local_cls1 {
+background: red;
+}
+
+/*# sourceMappingURL=style.css.map*/"
+`;
+
+exports[`typescript-webpack css snapshot test - styled-function-remote-interpolation 1`] = `
+".styled-function-remote-interpolation-A-astroturf-local_cls1 {
+color: red;
+}
+.styled-function-remote-interpolation-SomeComponent-astroturf-local_cls1 {
+background: red;
+}
+
+/*# sourceMappingURL=style.css.map*/"
+`;
+
 exports[`typescript-webpack css snapshot test - styled-local-interpolation 1`] = `
 ".styled-local-interpolation-SomeComponent-astroturf-local_cls1 {
 color: red;

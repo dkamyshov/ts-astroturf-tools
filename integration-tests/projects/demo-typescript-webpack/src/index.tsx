@@ -8,10 +8,16 @@ import { Example } from './Example';
 import { LocalNestedIconWithLink } from './LocalNestedIconWithLink';
 import { XCSSInterpolationFromImportedFile } from './XCSSInterpolationFromImportedFile';
 
+const PINK = 'pink';
+
 const StyledAstroturfComponent = styled.div`
   padding: 0.25rem;
   color: #3366ff;
   border: 1px solid #3366ff;
+`;
+
+const ComposedComponent = styled(StyledAstroturfComponent)`
+  background: ${PINK};
 `;
 
 const simpleClassDeclaration = xcss`
@@ -41,6 +47,10 @@ const App = React.memo(() => {
     <div>
       <Example caption="basic astroturf component">
         <StyledAstroturfComponent>Hello!</StyledAstroturfComponent>
+      </Example>
+
+      <Example caption="composed astroturf component">
+        <ComposedComponent>Hi!</ComposedComponent>
       </Example>
 
       <Example caption="xcss variable declaration">

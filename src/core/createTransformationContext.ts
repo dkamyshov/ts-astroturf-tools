@@ -181,9 +181,13 @@ export const createTransformationContext = (
         const childrenCount = node.getChildCount(sourceFile);
         if (childrenCount === 2) {
           const firstChild = node.getChildAt(0, sourceFile);
-          if (ts.isPropertyAccessExpression(firstChild)) {
-            const accessExpression = firstChild.getText(sourceFile);
-            if (/^styled\./.test(accessExpression)) {
+
+          if (
+            ts.isPropertyAccessExpression(firstChild) ||
+            ts.isCallExpression(firstChild)
+          ) {
+            const firstChildText = firstChild.getText(sourceFile);
+            if (/^styled[.(]/.test(firstChildText)) {
               const templateExpression = node.getChildAt(1, sourceFile) as
                 | internalTs.TemplateExpression
                 | internalTs.NoSubstitutionTemplateLiteral;
@@ -206,7 +210,7 @@ export const createTransformationContext = (
               if (resultSourceCode) {
                 resultSourceCode = resultSourceCode.replace(
                   nodeText,
-                  `${accessExpression}${processor.getResultCode()}`
+                  `${firstChildText}${processor.getResultCode()}`
                 );
               }
 

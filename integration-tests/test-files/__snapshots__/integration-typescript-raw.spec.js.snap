@@ -1,5 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`typescript-raw css snapshot test - styled-function-local-interpolation 1`] = `
+"import styled from 'astroturf';
+const RED = 'red';
+const A = styled.div \`
+  color: red;
+\`;
+export const SomeComponent = styled(A) \`
+  background: \${RED};
+\`;
+//# sourceMappingURL=styled-function-local-interpolation.js.map"
+`;
+
+exports[`typescript-raw css snapshot test - styled-function-remote-interpolation 1`] = `
+"import styled from 'astroturf';
+import { RED } from './utils/colors';
+const A = styled.div \`
+  color: red;
+\`;
+export const SomeComponent = styled(A) \`
+  background: \${\\"red\\"};
+\`;
+//# sourceMappingURL=styled-function-remote-interpolation.js.map"
+`;
+
 exports[`typescript-raw css snapshot test - styled-remote-interpolation 1`] = `
 "import styled from 'astroturf';
 import { RED, GREEN } from './utils/colors';
