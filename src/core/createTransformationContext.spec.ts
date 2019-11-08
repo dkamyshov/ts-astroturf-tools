@@ -1,12 +1,12 @@
+import { NodeJsInputFileSystem } from 'enhanced-resolve';
 import * as ts from 'typescript';
 import { createCustomFileSystem } from '../test-utils/createCustomFileSystem';
 import { createTransformationContext } from './createTransformationContext';
-import { FileSystem } from './interface';
 
 describe('createTransformationContext', () => {
   const process = (
     sourceCode: string,
-    fs: FileSystem | undefined,
+    fs: NodeJsInputFileSystem | undefined,
     callback: (
       resultCode: string | undefined,
       resultFile: ts.SourceFile,
