@@ -12,6 +12,7 @@
     "extract-css-chunks-webpack-plugin": "^4.6.0",
     "typescript": "^3.6.4",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "ts-astroturf-tools-imported-package": "0.1.0"
   }
 }

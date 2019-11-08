@@ -8,7 +8,7 @@ describe('createResolverContext', () => {
     const context = createResolverContext(void 0, mockfs);
     expect(() => {
       context.resolverRequire('/file.tsx', './module');
-    }).toThrow('Unable to find "./module" in "/"');
+    }).toThrow("Can't resolve './module' in '/'");
   });
 
   it('reads file and processes its content', () => {
@@ -54,6 +54,42 @@ describe('createResolverContext', () => {
     const localExports = context.resolverRequire('/file.tsx', './a');
     expect(localExports).toEqual({
       RED: 'red',
+    });
+  });
+
+  it('resolves file from external package', () => {
+    const mockfs = createCustomFileSystem({
+      '/project/node_modules/external-package/package.json': `{"main":"./lib/index.js"}`,
+      '/project/node_modules/external-package/lib/index.js':
+        'exports.RED = "red";',
+    });
+    const context = createResolverContext(void 0, mockfs);
+    const localExports = context.resolverRequire(
+      '/project/src/index.tsx',
+      'external-package'
+    );
+    expect(localExports).toEqual({
+      RED: 'red',
+    });
+  });
+
+  it('resolves file from external package (not main)', () => {
+    const mockfs = createCustomFileSystem({
+      '/project/node_modules/external-package/package.json': `{"main":"./lib/index.js"}`,
+      '/project/node_modules/external-package/lib/colors.js':
+        'exports.colors = {GREEN:"green"};',
+      '/project/node_modules/external-package/lib/index.js':
+        'exports.RED = "red";',
+    });
+    const context = createResolverContext(void 0, mockfs);
+    const localExports = context.resolverRequire(
+      '/project/src/index.tsx',
+      'external-package/lib/colors'
+    );
+    expect(localExports).toEqual({
+      colors: {
+        GREEN: 'green',
+      },
     });
   });
 });

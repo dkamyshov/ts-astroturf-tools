@@ -3445,6 +3445,11 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
+ts-astroturf-tools-imported-package@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/ts-astroturf-tools-imported-package/-/ts-astroturf-tools-imported-package-0.1.0.tgz#d5010beb917de633fe6c337f4a7baa39d45924be"
+  integrity sha512-K6HeqvYhO7yfhQ2NqfEZGhuzYoyJh8ztFewTLs9OmQM6uLNOnK3zOEcm4YvWLuDsVVpAbU9ZCFRFwHc/1e7nQw==
+
 tslib@^1.9.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"

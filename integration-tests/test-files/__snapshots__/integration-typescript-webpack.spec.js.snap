@@ -134,6 +134,30 @@ exports[`typescript-webpack css snapshot test - xcss-property-assignment-remote-
 /*# sourceMappingURL=style.css.map*/"
 `;
 
+exports[`typescript-webpack css snapshot test - xcss-remote-external-interpolation 1`] = `
+"
+.xcss-remote-external-interpolation-someClassName-astroturf-local_someClassName {
+
+  color: red;
+
+}
+
+
+/*# sourceMappingURL=style.css.map*/"
+`;
+
+exports[`typescript-webpack css snapshot test - xcss-remote-external-interpolation-tree 1`] = `
+"
+.xcss-remote-external-interpolation-tree-someClassName-astroturf-local_someClassName {
+
+  color: green;
+
+}
+
+
+/*# sourceMappingURL=style.css.map*/"
+`;
+
 exports[`typescript-webpack css snapshot test - xcss-remote-interpolation 1`] = `
 "
 .xcss-remote-interpolation-someClassName-astroturf-local_someClassName {

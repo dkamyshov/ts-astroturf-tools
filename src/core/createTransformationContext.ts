@@ -1,13 +1,13 @@
+import { NodeJsInputFileSystem } from 'enhanced-resolve';
 import * as internalTs from 'typescript';
 import { createTemplateExpressionProcessor } from './createTemplateExpressionProcessor';
-import { getDefaultFileSystem } from './utils';
 
 export const createTransformationContext = (
   sourceFile: internalTs.SourceFile,
   ts: typeof internalTs,
   sourceCode?: string,
   watcherCallback?: (fullPath: string) => void,
-  fs = getDefaultFileSystem()
+  fs = new NodeJsInputFileSystem()
 ) => {
   let resultSourceCode = sourceCode;
 
