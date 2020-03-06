@@ -32,7 +32,7 @@ describe('setupErrorsHook', () => {
 
     const setupErrorsHook = createSetupErrorsHook(cacheInstance);
 
-    /* eslint-disable @typescript-eslint/no-explicit-any */
+    /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function */
     let hookCallback: (compilation: any, callback: any) => void = () => {};
 
     const compiler: any = {
