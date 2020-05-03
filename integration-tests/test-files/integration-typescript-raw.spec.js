@@ -12,7 +12,7 @@ describe('typescript-raw', () => {
   );
 
   beforeAll(async () => {
-    await runner.run(workingDirectory, 'yarn', []);
+    await runner.run(workingDirectory, 'yarn', ['--frozen-lockfile']);
   });
 
   testlist.forEach(filename => {

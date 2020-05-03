@@ -11,7 +11,9 @@ describe('typescript-raw', () => {
 
   it('builds without errors', async () => {
     await expect(
-      runner.resolveWithCode(runner.run(workingDirectory, 'yarn', []))
+      runner.resolveWithCode(
+        runner.run(workingDirectory, 'yarn', ['--frozen-lockfile'])
+      )
     ).resolves.toBe(0);
   });
 });

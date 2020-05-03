@@ -12,7 +12,7 @@ describe('typescript-webpack', () => {
   );
 
   beforeAll(async () => {
-    await runner.run(workingDirectory, 'yarn', []);
+    await runner.run(workingDirectory, 'yarn', ['--frozen-lockfile']);
   });
 
   const executeTest = async (workingDirectory, testName) => {
