@@ -299,7 +299,7 @@ Available via:
 
 - Babel plugin
 
-  Add `ts-stroturf-tools/babel-plugin` to your babel plugins:
+  Add `ts-astroturf-tools/babel-plugin` to your babel plugins:
 
   ```js
   module.exports = {
