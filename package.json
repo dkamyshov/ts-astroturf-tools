@@ -12,7 +12,6 @@
     "visual studio code"
   ],
   "main": "index.js",
-  "typings": "./index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/dkamyshov/ts-astroturf-tools.git"
