@@ -1,8 +1,8 @@
 // import from non-main file of the external package
 
 import { colors } from 'ts-astroturf-tools-imported-package/lib/colors';
-import { xcss } from '../../../../xcss';
+import { css } from 'astroturf';
 
-export const someClassName = xcss`
+export const someClassName = css`
   color: ${colors.GREEN};
 `;

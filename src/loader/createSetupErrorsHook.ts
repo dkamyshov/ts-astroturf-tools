@@ -6,7 +6,7 @@ export const createSetupErrorsHook = (cacheInstance: typeof cache) => {
   let isAfterCompileHookSet = false;
 
   const afterCompileErrorsHook = (
-    compilation: webpack.compilation.Compilation,
+    compilation: webpack.Compilation,
     callback: () => void
   ) => {
     if (compilation.compiler.isChild()) {
@@ -18,11 +18,11 @@ export const createSetupErrorsHook = (cacheInstance: typeof cache) => {
       const entry = cacheInstance[cachedResourcePath];
 
       entry.errors.forEach(errorMessage => {
-        compilation.errors.push(new Error(errorMessage));
+        compilation.errors.push(new webpack.WebpackError(errorMessage));
       });
 
       entry.warnings.forEach(warningMessage => {
-        compilation.warnings.push(new Error(warningMessage));
+        compilation.warnings.push(new webpack.WebpackError(warningMessage));
       });
     });
 

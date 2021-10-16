@@ -1,6 +1,6 @@
-import styled from 'astroturf';
+import { css } from 'astroturf';
+import styled from 'astroturf/react';
 import * as React from 'react';
-import { xcss } from '../../../../xcss';
 import { firstLevelExport, secondLevelExport, SomeColors } from './colors';
 import { Example } from './Example';
 
@@ -10,19 +10,19 @@ const Wrapper = styled.div`
   border: 1px solid #33ff66;
 `;
 
-const simpleFirstLevelExport = xcss`
+const simpleFirstLevelExport = css`
   padding: 0.25rem;
   color: ${firstLevelExport};
   border: 1px solid ${firstLevelExport};
 `;
 
-const enumFirstLevelExport = xcss`
+const enumFirstLevelExport = css`
   padding: 0.25rem;
   color: ${SomeColors.Green};
   border: 1px solid ${SomeColors.Green};
 `;
 
-const simpleSecondLevelExport = xcss`
+const simpleSecondLevelExport = css`
   padding: 0.25rem;
   color: ${secondLevelExport};
   border: 1px solid ${secondLevelExport};
@@ -34,7 +34,7 @@ const InterpolatedStyledTag = styled.div`
   border: 1px solid ${firstLevelExport};
 `;
 
-export const XCSSInterpolationFromImportedFile = React.memo(() => {
+export const CSSInterpolationFromImportedFile = React.memo(() => {
   return (
     <Wrapper>
       <Example caption="interpolation from first-level export">

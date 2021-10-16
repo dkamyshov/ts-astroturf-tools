@@ -1,7 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`typescript-raw css snapshot test - css 1`] = `
+"import { css } from 'astroturf';
+export const someClassName = css \`
+  color: red;
+\`;
+//# sourceMappingURL=css.js.map"
+`;
+
+exports[`typescript-raw css snapshot test - css-local-interpolation 1`] = `
+"import { css } from 'astroturf';
+const RED = 'red';
+export const someClassName = css \`
+  color: \${RED};
+\`;
+//# sourceMappingURL=css-local-interpolation.js.map"
+`;
+
+exports[`typescript-raw css snapshot test - css-property-assignment 1`] = `
+"import { css } from 'astroturf';
+export const classes = {
+    someClassName: css \`
+    color: red;
+  \`,
+};
+//# sourceMappingURL=css-property-assignment.js.map"
+`;
+
+exports[`typescript-raw css snapshot test - css-property-assignment-local-interpolation 1`] = `
+"import { css } from 'astroturf';
+const RED = 'red';
+export const classes = {
+    someClassName: css \`
+    color: \${RED};
+  \`,
+};
+//# sourceMappingURL=css-property-assignment-local-interpolation.js.map"
+`;
+
+exports[`typescript-raw css snapshot test - css-property-assignment-remote-interpolation 1`] = `
+"import { RED, GREEN } from './utils/colors';
+import { css } from 'astroturf';
+export const classes = {
+    someClassName: css \`
+    color: \${\\"red\\"};
+    background: \${\\"green\\"};
+  \`,
+};
+//# sourceMappingURL=css-property-assignment-remote-interpolation.js.map"
+`;
+
+exports[`typescript-raw css snapshot test - css-remote-interpolation 1`] = `
+"import { RED, GREEN } from './utils/colors';
+import { css } from 'astroturf';
+export const someClassName = css \`
+  color: \${\\"red\\"};
+  background: \${\\"green\\"};
+\`;
+//# sourceMappingURL=css-remote-interpolation.js.map"
+`;
+
 exports[`typescript-raw css snapshot test - styled-function-local-interpolation 1`] = `
-"import styled from 'astroturf';
+"import styled from 'astroturf/react';
 const RED = 'red';
 const A = styled.div \`
   color: red;
@@ -13,7 +73,7 @@ export const SomeComponent = styled(A) \`
 `;
 
 exports[`typescript-raw css snapshot test - styled-function-remote-interpolation 1`] = `
-"import styled from 'astroturf';
+"import styled from 'astroturf/react';
 import { RED } from './utils/colors';
 const A = styled.div \`
   color: red;
@@ -25,7 +85,7 @@ export const SomeComponent = styled(A) \`
 `;
 
 exports[`typescript-raw css snapshot test - styled-remote-interpolation 1`] = `
-"import styled from 'astroturf';
+"import styled from 'astroturf/react';
 import { RED, GREEN } from './utils/colors';
 export const SomeComponent = styled.div \`
   color: \${\\"red\\"};
@@ -34,93 +94,39 @@ export const SomeComponent = styled.div \`
 //# sourceMappingURL=styled-remote-interpolation.js.map"
 `;
 
-exports[`typescript-raw css snapshot test - xcss 1`] = `
-"import { xcss } from '../../../../xcss';
-export const someClassName = (css \`
-.someClassName {
-
-  color: red;
-
-}\`).someClassName;
-//# sourceMappingURL=xcss.js.map"
-`;
-
-exports[`typescript-raw css snapshot test - xcss-local-interpolation 1`] = `
-"import { xcss } from '../../../../xcss';
-const RED = 'red';
-export const someClassName = (css \`
-.someClassName {
-
-  color: \${RED};
-
-}
-\`).someClassName;
-//# sourceMappingURL=xcss-local-interpolation.js.map"
-`;
-
-exports[`typescript-raw css snapshot test - xcss-property-assignment 1`] = `
-"import { xcss } from '../../../../xcss';
-export const classes = {
-    someClassName: (function () {
-        var p_someClassName = css \`
-.someClassName {
-
+exports[`typescript-raw css snapshot test - stylesheet 1`] = `
+"import { stylesheet } from 'astroturf';
+export const { classA, classB } = stylesheet \`
+  .classA {
     color: red;
-  
-}\`;
-        return p_someClassName.someClassName;
-    })(),
-};
-//# sourceMappingURL=xcss-property-assignment.js.map"
-`;
+  }
 
-exports[`typescript-raw css snapshot test - xcss-property-assignment-local-interpolation 1`] = `
-"import { xcss } from '../../../../xcss';
-const RED = 'red';
-export const classes = {
-    someClassName: (function () {
-        var p_someClassName = css \`
-.someClassName {
-
-    color: \${RED};
-  
-}
+  .classB {
+    color: green;
+  }
 \`;
-        return p_someClassName.someClassName;
-    })(),
-};
-//# sourceMappingURL=xcss-property-assignment-local-interpolation.js.map"
+//# sourceMappingURL=stylesheet.js.map"
 `;
 
-exports[`typescript-raw css snapshot test - xcss-property-assignment-remote-interpolation 1`] = `
-"import { RED, GREEN } from './utils/colors';
-import { xcss } from '../../../../xcss';
-export const classes = {
-    someClassName: (function () {
-        var p_someClassName = css \`
-.someClassName {
+exports[`typescript-raw css snapshot test - stylesheet-local-interpolation 1`] = `
+"import { stylesheet } from 'astroturf';
+const RED = 'red';
+export const { a } = stylesheet \`
+  .a {
+    color: \${RED};
+  }
+\`;
+//# sourceMappingURL=stylesheet-local-interpolation.js.map"
+`;
 
+exports[`typescript-raw css snapshot test - stylesheet-remote-interpolation 1`] = `
+"import { stylesheet } from 'astroturf';
+import { GREEN, RED } from './utils/colors';
+export const { a } = stylesheet \`
+  .a {
     color: \${\\"red\\"};
     background: \${\\"green\\"};
-  
-}
+  }
 \`;
-        return p_someClassName.someClassName;
-    })(),
-};
-//# sourceMappingURL=xcss-property-assignment-remote-interpolation.js.map"
-`;
-
-exports[`typescript-raw css snapshot test - xcss-remote-interpolation 1`] = `
-"import { RED, GREEN } from './utils/colors';
-import { xcss } from '../../../../xcss';
-export const someClassName = (css \`
-.someClassName {
-
-  color: \${\\"red\\"};
-  background: \${\\"green\\"};
-
-}
-\`).someClassName;
-//# sourceMappingURL=xcss-remote-interpolation.js.map"
+//# sourceMappingURL=stylesheet-remote-interpolation.js.map"
 `;

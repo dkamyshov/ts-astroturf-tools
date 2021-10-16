@@ -22,15 +22,19 @@ describe('typescript-raw', () => {
     ]);
   };
 
-  it(`shows missing CSS error for 'css'`, async () => {
+  it(`shows missing CSS error for 'stylesheet'`, async () => {
     await expect(
-      runner.rejectWithOutput(executeTest(workingDirectory, 'css-missing-css'))
+      runner.rejectWithOutput(
+        executeTest(workingDirectory, 'stylesheet-missing-css')
+      )
     ).rejects.toContain(`Identifier "classB" is missing in corresponding CSS.`);
   });
 
-  it(`shows unused CSS identifier warning for 'css'`, async () => {
+  it(`shows unused CSS identifier warning for 'stylesheet'`, async () => {
     await expect(
-      runner.resolveWithOutput(executeTest(workingDirectory, 'css-unused-css'))
+      runner.resolveWithOutput(
+        executeTest(workingDirectory, 'stylesheet-unused-css')
+      )
     ).resolves.toContain(
       `Identifier "classB" is unused. Consider removing it from CSS.`
     );

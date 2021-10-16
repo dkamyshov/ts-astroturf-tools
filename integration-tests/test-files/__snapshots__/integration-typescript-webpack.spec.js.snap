@@ -1,172 +1,211 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`typescript-webpack css snapshot test - css 1`] = `
-"
-  .css-null-astroturf-local_classA {
-    color: red;
-  }
+exports[`typescript-webpack css snapshot test - css-property-assignment 1`] = `
+"/*!***************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-property-assignment-classes.astroturf.local.css ***!
+  \\\\***************************************************************************************************************************************/
+.css-property-assignment-classes-astroturf-local_cls1 { /*!*/ }
+.css-property-assignment-classes-astroturf-local_cls2 {
 
-  .css-null-astroturf-local_classB {
-    color: green;
-  }
-
+color: red;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9jc3MtcHJvcGVydHktYXNzaWdubWVudC1jbGFzc2VzLmFzdHJvdHVyZi5sb2NhbC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsUUFBUSxJQUFJLEVBQUU7QUFDZDtBQUNBLGNBQWM7O0FBRWQsVUFBVTtBQUNWIiwiZmlsZSI6InNyYy9jc3MtcHJvcGVydHktYXNzaWdubWVudC1jbGFzc2VzLmFzdHJvdHVyZi5sb2NhbC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2xzMSB7IC8qISovIH1cbi5jbHMyIHtcbmNvbXBvc2VzOiBjbHMxO1xuXG5jb2xvcjogcmVkO1xufSJdfQ== */
 
 /*# sourceMappingURL=style.css.map*/"
 `;
 
-exports[`typescript-webpack css snapshot test - css-local-interpolation 1`] = `
-"
-  .css-local-interpolation-null-astroturf-local_classA {
-    color: red;
-  }
+exports[`typescript-webpack css snapshot test - css-property-assignment-remote-interpolation 1`] = `
+"/*!************************************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-property-assignment-remote-interpolation-classes.astroturf.local.css ***!
+  \\\\************************************************************************************************************************************************************/
+.css-property-assignment-remote-interpolation-classes-astroturf-local_cls1 { /*!*/ }
+.css-property-assignment-remote-interpolation-classes-astroturf-local_cls2 {
 
-  .css-local-interpolation-null-astroturf-local_classB {
-    color: green;
-  }
+color: red;
+background: green;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9jc3MtcHJvcGVydHktYXNzaWdubWVudC1yZW1vdGUtaW50ZXJwb2xhdGlvbi1jbGFzc2VzLmFzdHJvdHVyZi5sb2NhbC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsUUFBUSxJQUFJLEVBQUU7QUFDZDtBQUNBLGNBQWM7O0FBRWQsVUFBVTtBQUNWLGlCQUFpQjtBQUNqQiIsImZpbGUiOiJzcmMvY3NzLXByb3BlcnR5LWFzc2lnbm1lbnQtcmVtb3RlLWludGVycG9sYXRpb24tY2xhc3Nlcy5hc3Ryb3R1cmYubG9jYWwuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNsczEgeyAvKiEqLyB9XG4uY2xzMiB7XG5jb21wb3NlczogY2xzMTtcblxuY29sb3I6IHJlZDtcbmJhY2tncm91bmQ6IGdyZWVuO1xufSJdfQ== */
 
+/*# sourceMappingURL=style.css.map*/"
+`;
+
+exports[`typescript-webpack css snapshot test - css-remote-external-interpolation 1`] = `
+"/*!*******************************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-remote-external-interpolation-someClassName.astroturf.local.css ***!
+  \\\\*******************************************************************************************************************************************************/
+.css-remote-external-interpolation-someClassName-astroturf-local_cls1 { /*!*/ }
+.css-remote-external-interpolation-someClassName-astroturf-local_cls2 {
+
+color: red;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9jc3MtcmVtb3RlLWV4dGVybmFsLWludGVycG9sYXRpb24tc29tZUNsYXNzTmFtZS5hc3Ryb3R1cmYubG9jYWwuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFFBQVEsSUFBSSxFQUFFO0FBQ2Q7QUFDQSxjQUFjOztBQUVkLFVBQVU7QUFDViIsImZpbGUiOiJzcmMvY3NzLXJlbW90ZS1leHRlcm5hbC1pbnRlcnBvbGF0aW9uLXNvbWVDbGFzc05hbWUuYXN0cm90dXJmLmxvY2FsLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jbHMxIHsgLyohKi8gfVxuLmNsczIge1xuY29tcG9zZXM6IGNsczE7XG5cbmNvbG9yOiByZWQ7XG59Il19 */
+
+/*# sourceMappingURL=style.css.map*/"
+`;
+
+exports[`typescript-webpack css snapshot test - css-remote-external-interpolation-tree 1`] = `
+"/*!************************************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-remote-external-interpolation-tree-someClassName.astroturf.local.css ***!
+  \\\\************************************************************************************************************************************************************/
+.css-remote-external-interpolation-tree-someClassName-astroturf-local_cls1 { /*!*/ }
+.css-remote-external-interpolation-tree-someClassName-astroturf-local_cls2 {
+
+color: green;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9jc3MtcmVtb3RlLWV4dGVybmFsLWludGVycG9sYXRpb24tdHJlZS1zb21lQ2xhc3NOYW1lLmFzdHJvdHVyZi5sb2NhbC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsUUFBUSxJQUFJLEVBQUU7QUFDZDtBQUNBLGNBQWM7O0FBRWQsWUFBWTtBQUNaIiwiZmlsZSI6InNyYy9jc3MtcmVtb3RlLWV4dGVybmFsLWludGVycG9sYXRpb24tdHJlZS1zb21lQ2xhc3NOYW1lLmFzdHJvdHVyZi5sb2NhbC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2xzMSB7IC8qISovIH1cbi5jbHMyIHtcbmNvbXBvc2VzOiBjbHMxO1xuXG5jb2xvcjogZ3JlZW47XG59Il19 */
+
+/*# sourceMappingURL=style.css.map*/"
+`;
+
+exports[`typescript-webpack css snapshot test - css-remote-interpolation 1`] = `
+"/*!**********************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-remote-interpolation-someClassName.astroturf.local.css ***!
+  \\\\**********************************************************************************************************************************************/
+.css-remote-interpolation-someClassName-astroturf-local_cls1 { /*!*/ }
+.css-remote-interpolation-someClassName-astroturf-local_cls2 {
+
+color: red;
+background: green;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9jc3MtcmVtb3RlLWludGVycG9sYXRpb24tc29tZUNsYXNzTmFtZS5hc3Ryb3R1cmYubG9jYWwuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFFBQVEsSUFBSSxFQUFFO0FBQ2Q7QUFDQSxjQUFjOztBQUVkLFVBQVU7QUFDVixpQkFBaUI7QUFDakIiLCJmaWxlIjoic3JjL2Nzcy1yZW1vdGUtaW50ZXJwb2xhdGlvbi1zb21lQ2xhc3NOYW1lLmFzdHJvdHVyZi5sb2NhbC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2xzMSB7IC8qISovIH1cbi5jbHMyIHtcbmNvbXBvc2VzOiBjbHMxO1xuXG5jb2xvcjogcmVkO1xuYmFja2dyb3VuZDogZ3JlZW47XG59Il19 */
 
 /*# sourceMappingURL=style.css.map*/"
 `;
 
 exports[`typescript-webpack css snapshot test - styled 1`] = `
-".styled-SomeComponent-astroturf-local_cls1 {
+"/*!****************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-SomeComponent.astroturf.local.css ***!
+  \\\\****************************************************************************************************************************/
+.styled-SomeComponent-astroturf-local_cls1 { /*!*/ }
+.styled-SomeComponent-astroturf-local_cls2 {
+
 color: red;
 }
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZWQtU29tZUNvbXBvbmVudC5hc3Ryb3R1cmYubG9jYWwuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFFBQVEsSUFBSSxFQUFFO0FBQ2Q7QUFDQSxjQUFjOztBQUVkLFVBQVU7QUFDViIsImZpbGUiOiJzcmMvc3R5bGVkLVNvbWVDb21wb25lbnQuYXN0cm90dXJmLmxvY2FsLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jbHMxIHsgLyohKi8gfVxuLmNsczIge1xuY29tcG9zZXM6IGNsczE7XG5cbmNvbG9yOiByZWQ7XG59Il19 */
 
 /*# sourceMappingURL=style.css.map*/"
 `;
 
 exports[`typescript-webpack css snapshot test - styled-function-local-interpolation 1`] = `
-".styled-function-local-interpolation-A-astroturf-local_cls1 {
+"/*!*********************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-function-local-interpolation-A.astroturf.local.css ***!
+  \\\\*********************************************************************************************************************************************/
+.styled-function-local-interpolation-A-astroturf-local_cls1 { /*!*/ }
+.styled-function-local-interpolation-A-astroturf-local_cls2 {
+
 color: red;
 }
-.styled-function-local-interpolation-SomeComponent-astroturf-local_cls1 {
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZWQtZnVuY3Rpb24tbG9jYWwtaW50ZXJwb2xhdGlvbi1BLmFzdHJvdHVyZi5sb2NhbC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsUUFBUSxJQUFJLEVBQUU7QUFDZDtBQUNBLGNBQWM7O0FBRWQsVUFBVTtBQUNWIiwiZmlsZSI6InNyYy9zdHlsZWQtZnVuY3Rpb24tbG9jYWwtaW50ZXJwb2xhdGlvbi1BLmFzdHJvdHVyZi5sb2NhbC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2xzMSB7IC8qISovIH1cbi5jbHMyIHtcbmNvbXBvc2VzOiBjbHMxO1xuXG5jb2xvcjogcmVkO1xufSJdfQ== */
+/*!*********************************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-function-local-interpolation-SomeComponent.astroturf.local.css ***!
+  \\\\*********************************************************************************************************************************************************/
+.styled-function-local-interpolation-SomeComponent-astroturf-local_cls1 { /*!*/ }
+.styled-function-local-interpolation-SomeComponent-astroturf-local_cls2 {
+
 background: red;
 }
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZWQtZnVuY3Rpb24tbG9jYWwtaW50ZXJwb2xhdGlvbi1Tb21lQ29tcG9uZW50LmFzdHJvdHVyZi5sb2NhbC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsUUFBUSxJQUFJLEVBQUU7QUFDZDtBQUNBLGNBQWM7O0FBRWQsZUFBZTtBQUNmIiwiZmlsZSI6InNyYy9zdHlsZWQtZnVuY3Rpb24tbG9jYWwtaW50ZXJwb2xhdGlvbi1Tb21lQ29tcG9uZW50LmFzdHJvdHVyZi5sb2NhbC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2xzMSB7IC8qISovIH1cbi5jbHMyIHtcbmNvbXBvc2VzOiBjbHMxO1xuXG5iYWNrZ3JvdW5kOiByZWQ7XG59Il19 */
 
 /*# sourceMappingURL=style.css.map*/"
 `;
 
 exports[`typescript-webpack css snapshot test - styled-function-remote-interpolation 1`] = `
-".styled-function-remote-interpolation-A-astroturf-local_cls1 {
+"/*!**********************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-function-remote-interpolation-A.astroturf.local.css ***!
+  \\\\**********************************************************************************************************************************************/
+.styled-function-remote-interpolation-A-astroturf-local_cls1 { /*!*/ }
+.styled-function-remote-interpolation-A-astroturf-local_cls2 {
+
 color: red;
 }
-.styled-function-remote-interpolation-SomeComponent-astroturf-local_cls1 {
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZWQtZnVuY3Rpb24tcmVtb3RlLWludGVycG9sYXRpb24tQS5hc3Ryb3R1cmYubG9jYWwuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFFBQVEsSUFBSSxFQUFFO0FBQ2Q7QUFDQSxjQUFjOztBQUVkLFVBQVU7QUFDViIsImZpbGUiOiJzcmMvc3R5bGVkLWZ1bmN0aW9uLXJlbW90ZS1pbnRlcnBvbGF0aW9uLUEuYXN0cm90dXJmLmxvY2FsLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jbHMxIHsgLyohKi8gfVxuLmNsczIge1xuY29tcG9zZXM6IGNsczE7XG5cbmNvbG9yOiByZWQ7XG59Il19 */
+/*!**********************************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-function-remote-interpolation-SomeComponent.astroturf.local.css ***!
+  \\\\**********************************************************************************************************************************************************/
+.styled-function-remote-interpolation-SomeComponent-astroturf-local_cls1 { /*!*/ }
+.styled-function-remote-interpolation-SomeComponent-astroturf-local_cls2 {
+
 background: red;
 }
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZWQtZnVuY3Rpb24tcmVtb3RlLWludGVycG9sYXRpb24tU29tZUNvbXBvbmVudC5hc3Ryb3R1cmYubG9jYWwuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFFBQVEsSUFBSSxFQUFFO0FBQ2Q7QUFDQSxjQUFjOztBQUVkLGVBQWU7QUFDZiIsImZpbGUiOiJzcmMvc3R5bGVkLWZ1bmN0aW9uLXJlbW90ZS1pbnRlcnBvbGF0aW9uLVNvbWVDb21wb25lbnQuYXN0cm90dXJmLmxvY2FsLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jbHMxIHsgLyohKi8gfVxuLmNsczIge1xuY29tcG9zZXM6IGNsczE7XG5cbmJhY2tncm91bmQ6IHJlZDtcbn0iXX0= */
 
 /*# sourceMappingURL=style.css.map*/"
 `;
 
 exports[`typescript-webpack css snapshot test - styled-local-interpolation 1`] = `
-".styled-local-interpolation-SomeComponent-astroturf-local_cls1 {
+"/*!************************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-local-interpolation-SomeComponent.astroturf.local.css ***!
+  \\\\************************************************************************************************************************************************/
+.styled-local-interpolation-SomeComponent-astroturf-local_cls1 { /*!*/ }
+.styled-local-interpolation-SomeComponent-astroturf-local_cls2 {
+
 color: red;
 }
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZWQtbG9jYWwtaW50ZXJwb2xhdGlvbi1Tb21lQ29tcG9uZW50LmFzdHJvdHVyZi5sb2NhbC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsUUFBUSxJQUFJLEVBQUU7QUFDZDtBQUNBLGNBQWM7O0FBRWQsVUFBVTtBQUNWIiwiZmlsZSI6InNyYy9zdHlsZWQtbG9jYWwtaW50ZXJwb2xhdGlvbi1Tb21lQ29tcG9uZW50LmFzdHJvdHVyZi5sb2NhbC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2xzMSB7IC8qISovIH1cbi5jbHMyIHtcbmNvbXBvc2VzOiBjbHMxO1xuXG5jb2xvcjogcmVkO1xufSJdfQ== */
 
 /*# sourceMappingURL=style.css.map*/"
 `;
 
 exports[`typescript-webpack css snapshot test - styled-remote-interpolation 1`] = `
-".styled-remote-interpolation-SomeComponent-astroturf-local_cls1 {
+"/*!*************************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-remote-interpolation-SomeComponent.astroturf.local.css ***!
+  \\\\*************************************************************************************************************************************************/
+.styled-remote-interpolation-SomeComponent-astroturf-local_cls1 { /*!*/ }
+.styled-remote-interpolation-SomeComponent-astroturf-local_cls2 {
+
 color: red;
 background: green;
 }
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZWQtcmVtb3RlLWludGVycG9sYXRpb24tU29tZUNvbXBvbmVudC5hc3Ryb3R1cmYubG9jYWwuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFFBQVEsSUFBSSxFQUFFO0FBQ2Q7QUFDQSxjQUFjOztBQUVkLFVBQVU7QUFDVixpQkFBaUI7QUFDakIiLCJmaWxlIjoic3JjL3N0eWxlZC1yZW1vdGUtaW50ZXJwb2xhdGlvbi1Tb21lQ29tcG9uZW50LmFzdHJvdHVyZi5sb2NhbC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2xzMSB7IC8qISovIH1cbi5jbHMyIHtcbmNvbXBvc2VzOiBjbHMxO1xuXG5jb2xvcjogcmVkO1xuYmFja2dyb3VuZDogZ3JlZW47XG59Il19 */
 
 /*# sourceMappingURL=style.css.map*/"
 `;
 
-exports[`typescript-webpack css snapshot test - xcss 1`] = `
-"
-.xcss-someClassName-astroturf-local_someClassName {
-
-  color: red;
-
-}
-
-/*# sourceMappingURL=style.css.map*/"
-`;
-
-exports[`typescript-webpack css snapshot test - xcss-local-interpolation 1`] = `
-"
-.xcss-local-interpolation-someClassName-astroturf-local_someClassName {
-
-  color: red;
-
-}
-
-
-/*# sourceMappingURL=style.css.map*/"
-`;
-
-exports[`typescript-webpack css snapshot test - xcss-property-assignment 1`] = `
-"
-.xcss-property-assignment-p_someClassName-astroturf-local_someClassName {
-
+exports[`typescript-webpack css snapshot test - stylesheet 1`] = `
+"/*!****************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheet-undefined.astroturf.local.css ***!
+  \\\\****************************************************************************************************************************/
+.stylesheet-undefined-astroturf-local_classA {
     color: red;
-  
-}
+  }
+
+  .stylesheet-undefined-astroturf-local_classB {
+    color: green;
+  }
 
 /*# sourceMappingURL=style.css.map*/"
 `;
 
-exports[`typescript-webpack css snapshot test - xcss-property-assignment-local-interpolation 1`] = `
-"
-.xcss-property-assignment-local-interpolation-p_someClassName-astroturf-local_someClassName {
-
+exports[`typescript-webpack css snapshot test - stylesheet-remote-external-interpolation 1`] = `
+"/*!**********************************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheet-remote-external-interpolation-undefined.astroturf.local.css ***!
+  \\\\**********************************************************************************************************************************************************/
+.stylesheet-remote-external-interpolation-undefined-astroturf-local_a {
     color: red;
-  
-}
-
+  }
 
 /*# sourceMappingURL=style.css.map*/"
 `;
 
-exports[`typescript-webpack css snapshot test - xcss-property-assignment-remote-interpolation 1`] = `
-"
-.xcss-property-assignment-remote-interpolation-p_someClassName-astroturf-local_someClassName {
+exports[`typescript-webpack css snapshot test - stylesheet-remote-external-interpolation-tree 1`] = `
+"/*!***************************************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheet-remote-external-interpolation-tree-undefined.astroturf.local.css ***!
+  \\\\***************************************************************************************************************************************************************/
+.stylesheet-remote-external-interpolation-tree-undefined-astroturf-local_a {
+    color: green;
+  }
 
+/*# sourceMappingURL=style.css.map*/"
+`;
+
+exports[`typescript-webpack css snapshot test - stylesheet-remote-interpolation 1`] = `
+"/*!*************************************************************************************************************************************************!*\\\\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheet-remote-interpolation-undefined.astroturf.local.css ***!
+  \\\\*************************************************************************************************************************************************/
+.stylesheet-remote-interpolation-undefined-astroturf-local_a {
     color: red;
     background: green;
-  
-}
-
-
-/*# sourceMappingURL=style.css.map*/"
-`;
-
-exports[`typescript-webpack css snapshot test - xcss-remote-external-interpolation 1`] = `
-"
-.xcss-remote-external-interpolation-someClassName-astroturf-local_someClassName {
-
-  color: red;
-
-}
-
-
-/*# sourceMappingURL=style.css.map*/"
-`;
-
-exports[`typescript-webpack css snapshot test - xcss-remote-external-interpolation-tree 1`] = `
-"
-.xcss-remote-external-interpolation-tree-someClassName-astroturf-local_someClassName {
-
-  color: green;
-
-}
-
-
-/*# sourceMappingURL=style.css.map*/"
-`;
-
-exports[`typescript-webpack css snapshot test - xcss-remote-interpolation 1`] = `
-"
-.xcss-remote-interpolation-someClassName-astroturf-local_someClassName {
-
-  color: red;
-  background: green;
-
-}
-
+  }
 
 /*# sourceMappingURL=style.css.map*/"
 `;

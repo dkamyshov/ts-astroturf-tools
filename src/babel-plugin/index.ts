@@ -1,6 +1,6 @@
 import { NodePath } from '@babel/traverse';
 import * as babelTypes from '@babel/types';
-import * as colors from 'colors';
+import colors from 'colors';
 import * as ts from 'typescript';
 import { packageName } from '../core/constants';
 import { getAssignmentsMetadata } from '../core/getAssignmentsMetadata';
@@ -10,7 +10,7 @@ import { getUnusedTokens } from '../core/getUnusedTokens';
 const plugin = () => {
   const visitor = {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    Program: function(path: NodePath<babelTypes.Program>, stats: any) {
+    Program: function (path: NodePath<babelTypes.Program>, stats: any) {
       const filename = stats.file.opts.filename;
       const sourceCode = path.getSource();
 
@@ -28,8 +28,9 @@ const plugin = () => {
         getMissingIdentifiers(assignmentMetadata).forEach(missingIdentifier => {
           throw new Error(
             colors.red(
-              `[${packageName}/babel-plugin] ${filename}:${missingIdentifier.line +
-                1}:${missingIdentifier.character + 1}:\n    Identifier "${
+              `[${packageName}/babel-plugin] ${filename}:${
+                missingIdentifier.line + 1
+              }:${missingIdentifier.character + 1}:\n    Identifier "${
                 missingIdentifier.name
               }" is missing in corresponding CSS.`
             )
@@ -39,8 +40,9 @@ const plugin = () => {
         getUnusedTokens(assignmentMetadata).forEach(unusedToken => {
           console.warn(
             colors.yellow(
-              `WARNING [${packageName}/babel-plugin] ${filename}:${unusedToken.line +
-                1}:${unusedToken.character + 1}:\n    Identifier "${
+              `WARNING [${packageName}/babel-plugin] ${filename}:${
+                unusedToken.line + 1
+              }:${unusedToken.character + 1}:\n    Identifier "${
                 unusedToken.name
               }" is unused. Consider removing it from CSS.`
             )

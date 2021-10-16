@@ -4,6 +4,7 @@ import {
   packageName,
   unusedTokenCode,
 } from '../core/constants';
+import { extractErrorData } from '../core/extractErrorData';
 import { getAssignmentsMetadata } from '../core/getAssignmentsMetadata';
 import { getMissingIdentifiers } from '../core/getMissingIdentifiers';
 import { getSourceFile } from '../core/getSourceFile';
@@ -69,8 +70,11 @@ const init = (modules: { typescript: typeof tsserver }) => {
         });
       } catch (e) {
         if (e) {
+          const data = extractErrorData(e);
           info.project.projectService.logger.info(
-            `[ts-astroturf-tools/plugin] Exception:\n${e.message}\n\n${e.stack}`
+            `[ts-astroturf-tools/plugin] Exception:\n${
+              data.message ?? '[unknown error message]'
+            }\n\n${data.stack ?? '[no stack]'}`
           );
         }
       }
@@ -116,8 +120,11 @@ const init = (modules: { typescript: typeof tsserver }) => {
         });
       } catch (e) {
         if (e) {
+          const data = extractErrorData(e);
           info.project.projectService.logger.info(
-            `[ts-astroturf-tools/plugin] Exception:\n${e.message}\n\n${e.stack}`
+            `[ts-astroturf-tools/plugin] Exception:\n${
+              data.message ?? '[unknown error message]'
+            }\n\n${data.stack ?? '[no stack]'}`
           );
         }
       }

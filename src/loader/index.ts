@@ -13,21 +13,27 @@ const setupErrorsHook = createSetupErrorsHook(cache);
 
 interface LoaderOptions {
   /**
-   * Enables linaria-like functionality (`xcss`, interpolations).
+   * Enables linaria-like functionality (interpolations).
    */
   linaria: boolean;
 }
 
-const loader: webpack.loader.Loader = function(source, map) {
+const loader: webpack.LoaderDefinitionFunction<LoaderOptions> = function (
+  source,
+  map
+) {
   this.cacheable && this.cacheable();
 
-  setupErrorsHook(this._compiler);
+  if (this._compiler) {
+    setupErrorsHook(this._compiler);
+  }
 
   const options: LoaderOptions = {
     ...{
       linaria: false,
     },
-    ...getOptions(this),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...getOptions(this as any),
   };
 
   const resourcePath = this.resourcePath;
@@ -55,8 +61,9 @@ const loader: webpack.loader.Loader = function(source, map) {
   assignmentsMetadata.forEach(assignmentMetadata => {
     getMissingIdentifiers(assignmentMetadata).forEach(missingIdentifier => {
       currentSessionErrors.push(
-        `[${packageName}/loader] ${resourcePath}:${missingIdentifier.line +
-          1}:${missingIdentifier.character + 1}:\n    Identifier "${
+        `[${packageName}/loader] ${resourcePath}:${
+          missingIdentifier.line + 1
+        }:${missingIdentifier.character + 1}:\n    Identifier "${
           missingIdentifier.name
         }" is missing in corresponding CSS.`
       );
@@ -64,8 +71,9 @@ const loader: webpack.loader.Loader = function(source, map) {
 
     getUnusedTokens(assignmentMetadata).forEach(unusedToken => {
       currentSessionWarnings.push(
-        `[${packageName}/loader] ${resourcePath}:${unusedToken.line +
-          1}:${unusedToken.character + 1}:\n    Identifier "${
+        `[${packageName}/loader] ${resourcePath}:${unusedToken.line + 1}:${
+          unusedToken.character + 1
+        }:\n    Identifier "${
           unusedToken.name
         }" is unused. Consider removing it from CSS.`
       );

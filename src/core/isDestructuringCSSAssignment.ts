@@ -5,8 +5,8 @@ import * as internalTs from 'typescript';
  * css assignment:
  *
  *
- *    const { a } = css` .a { color: black; } `;
- *          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *    const { a } = stylesheet` .a { color: black; } `;
+ *          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  *
  * @param node
  * @param file
@@ -18,9 +18,9 @@ export const isDestructuringCSSAssignment = (
 ) => {
   // assignment node has exactly 3 children:
   //
-  // const { a } = css` .a { color: black; } `;
-  //       ^^^^  ^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  //         0   1             2
+  // const { a } = stylesheet` .a { color: black; } `;
+  //       ^^^^  ^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  //         0   1                 2
   //
   // 0 - ObjectBindingPattern
   // 1 - EqualsToken
@@ -34,7 +34,7 @@ export const isDestructuringCSSAssignment = (
 
   const firstChild = node.getChildAt(0, file);
 
-  // const { a } = css` .a { color: black; } `;
+  // const { a } = stylesheet` .a { color: black; } `;
   //       ^^^^
   if (firstChild.kind !== localTs.SyntaxKind.ObjectBindingPattern) {
     return false;
@@ -42,17 +42,17 @@ export const isDestructuringCSSAssignment = (
 
   const lastChild = node.getChildAt(2, file);
 
-  // const { a } = css` .a { color: black; } `;
-  //               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  // const { a } = stylesheet` .a { color: black; } `;
+  //               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   if (lastChild.kind !== localTs.SyntaxKind.TaggedTemplateExpression) {
     return false;
   }
 
-  // const { a } = css` .a { color: black; } `;
-  //               ^^^
+  // const { a } = stylesheet` .a { color: black; } `;
+  //               ^^^^^^^^^^
   const identifierChild = lastChild.getChildAt(0, file);
 
-  if (identifierChild.getText(file) !== 'css') {
+  if (identifierChild.getText(file) !== 'stylesheet') {
     return false;
   }
 

@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
-    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "incremental": true,
     "lib": ["esnext", "dom"],
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "outDir": "lib",
     "preserveWatchOutput": true,
     "pretty": true,
     "rootDir": "src",
-    "outDir": "lib",
-    "esModuleInterop": false,
-    "incremental": true,
-    "allowSyntheticDefaultImports": false,
-    "noUnusedLocals": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strict": true,
   },
   "files": [
     "src/plugin/index.ts",

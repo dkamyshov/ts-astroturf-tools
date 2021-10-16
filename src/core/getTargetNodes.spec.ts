@@ -2,12 +2,12 @@ import { getTargetNodes } from './getTargetNodes';
 import * as ts from 'typescript';
 
 describe('getTargetNodes', () => {
-  describe('finds destructuring css assignments', () => {
+  describe('finds destructuring stylesheet assignments', () => {
     it('finds declarations at all', () => {
       const referenceSource = `
         import * as React from 'react';
 
-        const { a, b, c } = css\`
+        const { a, b, c } = stylesheet\`
           .a {
             color: #aaa;
           }
@@ -39,9 +39,9 @@ describe('getTargetNodes', () => {
       expect(targetNodes.length).toBe(1);
     });
 
-    it('skips declarations that are not "css"', () => {
+    it('skips declarations that are not "stylesheet"', () => {
       const referenceSource = `
-        const { a } = css\`
+        const { a } = stylesheet\`
           .a {
             color: #aaa;
           }

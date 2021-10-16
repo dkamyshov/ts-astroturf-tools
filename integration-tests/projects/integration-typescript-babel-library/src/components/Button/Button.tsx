@@ -1,4 +1,5 @@
-import styled, { css } from 'astroturf';
+import { stylesheet } from 'astroturf';
+import styled from 'astroturf/react';
 import * as React from 'react';
 import { redColor } from './colors';
 import { pinkColor } from './moreColors';
@@ -12,8 +13,7 @@ const ButtonStyled = styled.button`
   background: ${pinkColor};
 `;
 
-// warning about unused classB should be generated
-const { classA } = css`
+const { classA } = stylesheet`
   .classA {
     font-size: 1rem;
   }

@@ -113,9 +113,8 @@ export const getAssignmentsMetadata = (
 
     const identifiers = getFirstLevelIdentifiers(assignmentNode, file, localTs);
     const taggedTemplateExpression = assignmentNode.getChildAt(2, file);
-    const taggedTemplateExpressionFrom = taggedTemplateExpression.getStart(
-      file
-    );
+    const taggedTemplateExpressionFrom =
+      taggedTemplateExpression.getStart(file);
     const cssSource = extractTemplateLiteralContent(assignmentNode, file);
     const clearCssSource = cssSource
       .substring(0, cssSource.length - 1)
@@ -124,7 +123,7 @@ export const getAssignmentsMetadata = (
     const tokens: AssignmentCSSIdentifier[] = [];
 
     clearCssSource.replace(tokensRegExp, (fullMatch, group, index) => {
-      const from = taggedTemplateExpressionFrom + 4 + index;
+      const from = taggedTemplateExpressionFrom + 11 + index;
       const to = from + fullMatch.length;
       const tokenSourcePosition = internalTs.getLineAndCharacterOfPosition(
         file,

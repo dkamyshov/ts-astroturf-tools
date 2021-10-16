@@ -1,6 +1,5 @@
 const path = require('path');
-const fs = require('fs');
-const ExtractCSSChunksWebpackPlugin = require('extract-css-chunks-webpack-plugin');
+const MCEP = require('mini-css-extract-plugin');
 const testlist = require('./testlist');
 
 module.exports = {
@@ -24,7 +23,7 @@ module.exports = {
         test: /\.tsx$/,
         use: [
           {
-            loader: 'awesome-typescript-loader',
+            loader: 'ts-loader',
             options: {
               transpileOnly: true,
             },
@@ -47,11 +46,10 @@ module.exports = {
       {
         test: /\.astroturf\.local\.css$/,
         use: [
-          ExtractCSSChunksWebpackPlugin.loader,
+          MCEP.loader,
           {
-            loader: 'astroturf/css-loader',
+            loader: 'css-loader',
             options: {
-              importLoaders: 1,
               modules: {
                 mode: 'local',
                 localIdentName: '[name]_[local]',
@@ -64,7 +62,7 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractCSSChunksWebpackPlugin({
+    new MCEP({
       filename: '[name]/style.css',
     }),
   ],

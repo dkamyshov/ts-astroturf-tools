@@ -24,15 +24,15 @@ describe('getAssignmentsMetadata', () => {
   it('returns all assignments in a file', () => {
     const sourceCode = `
         import * as React from 'react';
-        import { css } from 'astroturf';
+        import { stylesheet } from 'astroturf';
   
-        const { a } = css\`
+        const { a } = stylesheet\`
           .a {
             color: red;
           }
         \`;
 
-        const { b } = css\`
+        const { b } = stylesheet\`
           .b {
             color: blue;
           }
@@ -55,49 +55,49 @@ describe('getAssignmentsMetadata', () => {
         availableIdentifiers: [
           {
             character: 10,
-            from: 122,
+            from: 136,
             line: 5,
             name: 'a',
-            to: 124,
+            to: 138,
           },
         ],
-        bindingFrom: 99,
-        bindingTo: 104,
-        from: 99,
+        bindingFrom: 106,
+        bindingTo: 111,
+        from: 106,
         requestedIdentifiers: [
           {
             character: 16,
-            from: 101,
+            from: 108,
             line: 4,
             name: 'a',
-            to: 102,
+            to: 109,
           },
         ],
-        to: 172,
+        to: 186,
       },
       {
         availableIdentifiers: [
           {
             character: 10,
-            from: 212,
+            from: 233,
             line: 11,
             name: 'b',
-            to: 214,
+            to: 235,
           },
         ],
-        bindingFrom: 189,
-        bindingTo: 194,
-        from: 189,
+        bindingFrom: 203,
+        bindingTo: 208,
+        from: 203,
         requestedIdentifiers: [
           {
             character: 16,
-            from: 191,
+            from: 205,
             line: 10,
             name: 'b',
-            to: 192,
+            to: 206,
           },
         ],
-        to: 263,
+        to: 284,
       },
     ];
 
@@ -107,9 +107,9 @@ describe('getAssignmentsMetadata', () => {
   it('does not include an assignment if tokens list is empty', () => {
     const sourceCode = `
         import * as React from 'react';
-        import { css } from 'astroturf';
+        import { stylesheet } from 'astroturf';
   
-        const { a } = css\`\`;
+        const { a } = stylesheet\`\`;
 
         export const A = ({children}) => <div className={a}>
           {children}
@@ -130,9 +130,9 @@ describe('getAssignmentsMetadata', () => {
   it('does not include tokens that are not classes', () => {
     const sourceCode = `
       import * as React from 'react';
-      import { css } from 'astroturf';
+      import { stylesheet } from 'astroturf';
 
-      const { a } = css\`
+      const { a } = stylesheet\`
         .a {
           color: \${
             "red".toUpperCase().toLowerCase()
@@ -157,25 +157,25 @@ describe('getAssignmentsMetadata', () => {
         availableIdentifiers: [
           {
             character: 8,
-            from: 112,
+            from: 126,
             line: 5,
             name: 'a',
-            to: 114,
+            to: 128,
           },
         ],
-        bindingFrom: 91,
-        bindingTo: 96,
-        from: 91,
+        bindingFrom: 98,
+        bindingTo: 103,
+        from: 98,
         requestedIdentifiers: [
           {
             character: 14,
-            from: 93,
+            from: 100,
             line: 4,
             name: 'a',
-            to: 94,
+            to: 101,
           },
         ],
-        to: 242,
+        to: 256,
       },
     ];
 
@@ -184,7 +184,7 @@ describe('getAssignmentsMetadata', () => {
 
   it('throws an error in case multilevel assignment is used', () => {
     const sourceCode = `
-      const { classA: { length } } = css\`
+      const { classA: { length } } = stylesheet\`
         .classA {
           color: red;
         }
@@ -204,7 +204,7 @@ describe('getAssignmentsMetadata', () => {
 
   it('throws an error in case reassignment is used', () => {
     const sourceCode = `
-    const { classA: classB } = css\`
+    const { classA: classB } = stylesheet\`
       .classA {
         color: red;
       }

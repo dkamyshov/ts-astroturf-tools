@@ -1,7 +1,5 @@
 import { NodeJsInputFileSystem } from 'enhanced-resolve';
-/* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
-// @ts-ignore
-import * as get from 'lodash.get';
+import get from 'lodash/get';
 import * as internalTs from 'typescript';
 import { createResolverContext } from './createResolverContext';
 import { findAllNodes } from './findAllNodes';

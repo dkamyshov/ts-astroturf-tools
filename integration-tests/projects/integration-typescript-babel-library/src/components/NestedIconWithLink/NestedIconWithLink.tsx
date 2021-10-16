@@ -1,4 +1,4 @@
-import styled from 'astroturf';
+import styled from 'astroturf/react';
 import * as React from 'react';
 
 export const NestedIconWithLink = () => {

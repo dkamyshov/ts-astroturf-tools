@@ -6,8 +6,8 @@ import { isDestructuringCSSAssignment } from './isDestructuringCSSAssignment';
  * Returns an array of nodes representing astroturf
  * css assignments.
  *
- *     const { a } = css` .a { color: black; } `;
- *           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *     const { a } = stylesheet` .a { color: black; } `;
+ *                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  *
  * @param file
  */

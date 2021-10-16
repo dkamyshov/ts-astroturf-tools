@@ -4,6 +4,8 @@
 
 This package improves DX for [astroturf](https://github.com/4Catalyzer/astroturf) users.
 
+Compatible with `astroturf@>=1.0.0-beta`, `typescript@>=4` and `webpack@>=5`! For compatibility with `astroturf@>=0.9 <= 1`, use `ts-astroturf-tools@<=0.14.3`.
+
 ## Installation
 
 ```
@@ -18,41 +20,11 @@ npm i --save-dev ts-astroturf-tools
 
 Features are divided in three major categories:
 
-- [linaria](https://github.com/callstack/linaria)-like functionality (formerly known as "direct mode")
+- [linaria](https://github.com/callstack/linaria)-like functionality
 - diagnostic messages
 - autocomplete for identifiers
 
 ## `linaria`-like functionality
-
-- Declare class names as separate variables:
-
-  Improves type-safety!
-
-  ```js
-  // * before
-  import { css } from 'astroturf';
-
-  const { btn, active } = css`
-    .btn {
-      color: red;
-    }
-
-    .active {
-      color: black;
-    }
-  `;
-
-  // * after
-  import { xcss } from 'ts-astroturf-tools/xcss';
-
-  const btn = xcss`
-    color: red;
-  `;
-
-  const active = xcss`
-    color: black;
-  `;
-  ```
 
 - Use variables declared in other modules inside your CSS:
 
@@ -65,15 +37,24 @@ Features are divided in three major categories:
   export const RED = 'red';
 
   // index.tsx
-  import { xcss } from 'ts-astroturf-tools/xcss';
+  import { css } from 'astroturf';
   import { RED } from './colors';
 
-  const btn = xcss`
+  const btn = css`
     color: ${RED};
   `;
 
-  // works for styled components too!
-  import styled from 'astroturf';
+  // works for 'stylesheet' and ...
+  import { stylesheet } from 'astroturf';
+
+  const { a } = stylesheet`
+    .a {
+      color: ${RED};
+    }
+  `;
+
+  // .. styled components too!
+  import styled from 'astroturf/react';
 
   const Button = styled.button`
     color: ${RED};
@@ -82,7 +63,7 @@ Features are divided in three major categories:
 
 ## Diagnostic messages
 
-These messages are available if you use plain `css` tag from `astroturf`.
+These messages are available if you use plain `stylesheet` tag from `astroturf`.
 
 There are two types of diagnostic messages:
 
@@ -95,13 +76,13 @@ There are two types of diagnostic messages:
   - TS Language Service Plugin (VS Code)
 
   ```js
-  import { css } from 'astroturf';
+  import { stylesheet } from 'astroturf';
 
-  const { btn } = css`
+  const { btn } = stylesheet`
     .btn {
       color: red;
     }
-
+  
     .active {
       color: green;
     }
@@ -128,9 +109,9 @@ There are two types of diagnostic messages:
   - TS Language Service Plugin (VS Code)
 
   ```js
-  import { css } from 'astroturf';
+  import { stylesheet } from 'astroturf';
 
-  const { btn, active } = css`
+  const { btn, active } = stylesheet`
     .btn {
       color: red;
     }
@@ -213,7 +194,7 @@ Available via:
     }
     ```
 
-  - webpack / awesome-typescript-loader
+  - webpack / ts-loader
 
     ```js
     const transformer = require('ts-astroturf-tools/transformer');
@@ -226,7 +207,7 @@ Available via:
           {
             test: /\.tsx$/,
             use: {
-              loader: 'awesome-typescript-loader',
+              loader: 'ts-loader',
               options: {
                 // ...
                 getCustomTransformers: () => ({
@@ -254,7 +235,7 @@ Available via:
           test: /\.tsx?$/,
           use: [
             // works with any typescript loader
-            'awesome-typescript-loader',
+            'ts-loader',
             'astroturf/loader',
             'ts-astroturf-tools/loader',
           ],
@@ -312,8 +293,6 @@ Available via:
 
 - Regex-based parser is used to extract CSS class names.
 
-  TypeScript compiler API is synchronous, while `css-modules-loader-core` API is asynchronous (Promise-based), which means that it is impossible to reuse the latter for the purpose of parsing CSS in Language Service plugin.
-
 - Limited support for imports
 
   Supported extensions: `.tsx`, `.ts`, `.js`.
@@ -332,7 +311,7 @@ Available via:
 
   // index.js
   import { greenColor, redColor } from './a.js';
-  import styled from 'astroturf';
+  import styled from 'astroturf/react';
 
   const Button = styled.button`
     color: ${redColor};
@@ -348,7 +327,9 @@ Available via:
   import image from './someImage.png';
   export const redColor = 'red';
 
-  export const Something = () => <div style={{ background: `url(${image});` }}>Hello!</div>;
+  export const Something = () => (
+    <div style={{ background: `url(${image});` }}>Hello!</div>
+  );
 
   // b.js
   export const greenColor = 'green';
@@ -356,7 +337,7 @@ Available via:
 
   // index.js
   import { greenColor, redColor } from './a.js';
-  import styled from 'astroturf';
+  import styled from 'astroturf/react';
 
   const Button = styled.button`
     color: ${redColor};
@@ -379,7 +360,7 @@ Available via:
   export const GREEN = 'green';
 
   // ComponentA.js
-  import styled from 'astroturf';
+  import styled from 'astroturf/react';
   import { GREEN } from './b';
 
   export const ComponentA = styled.div`
@@ -387,7 +368,7 @@ Available via:
   `;
 
   // ComponentB.js
-  import styled from 'astroturf';
+  import styled from 'astroturf/react';
   import { RED } from './b';
 
   export const ComponentB = styled.div`
@@ -403,7 +384,7 @@ Available via:
   const WIDTH = '500px';
 
   // ok
-  const { a } = css`
+  const { a } = stylesheet`
     .a {
       width: ${WIDTH};
     }
@@ -415,7 +396,7 @@ Available via:
 
   //        error
   //      vvvvvvvvv
-  const { someClass } = css`
+  const { someClass } = stylesheet`
     .${NAME} {
       color: red;
     }
@@ -428,10 +409,10 @@ Available via:
 
   ```javascript
   // simple nesting is ok
-  const { someClass, anotherClass } = css`
+  const { someClass, anotherClass } = stylesheet`
     .someClass {
       color: red;
-
+  
       &.anotherClass {
         border: 1px solid black;
       }
@@ -444,12 +425,12 @@ Available via:
   ```javascript
   //                    error!
   //                 vvvvvvvvvvvv
-  const { someClass, anotherClass } = css`
+  const { someClass, anotherClass } = stylesheet`
     @name: anotherClass;
-
+  
     .someClass {
       color: red;
-
+  
       &.@{name} {
         color: black;
       }
@@ -460,7 +441,7 @@ Available via:
 - It is not possible to show errors in case destructuring is not used:
 
   ```typescript
-  const classes = css`
+  const classes = stylesheet`
     .a {
       color: red;
     }
@@ -469,28 +450,4 @@ Available via:
   console.log(a.b); // <- no error
   ```
 
-  The simplest solution would be to wrap the declaration in the following way:
-
-  ```typescript
-  const classes = css`
-    .a {
-      color: red;
-    }
-  ` as {
-    a: string;
-  };
-
-  console.log(a.b); // <- error!
-  ```
-
-  This is not an option because of the following:
-
-  1. It is impossible to alter AST before type-checker pass both in Language Service plugin and in typescript transformers.
-
-     _It is still possible to invoke type-checker manually, but it will result in substantial increase in build time._
-
-     _It is also possible to track the usage of a variable in the file._
-
-  2. These modifications must affect the whole project so even if this identifier is exported in some other module the type-checker could do its job.
-
-     _Possible solution: add intermediate build step, in which TS code is transpiled to TS code with necessary modifications._
+  _This is not hugely important because you should always use `css` in the first place._

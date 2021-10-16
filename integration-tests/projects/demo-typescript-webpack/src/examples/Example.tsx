@@ -1,4 +1,9 @@
+import { css } from 'astroturf';
 import * as React from 'react';
+
+const className = css`
+  color: black;
+`;
 
 export const Example = React.memo<{
   caption: string;
@@ -6,13 +11,7 @@ export const Example = React.memo<{
 }>(props => {
   return (
     <div className="example">
-      <h3
-        style={{
-          color: 'black',
-        }}
-      >
-        {props.caption}
-      </h3>
+      <h3 className={className}>{props.caption}</h3>
       {props.children}
     </div>
   );

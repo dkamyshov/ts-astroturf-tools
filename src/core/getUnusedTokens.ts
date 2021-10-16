@@ -7,8 +7,8 @@ import {
  * Computes tokens from the CSS source that
  * are unused.
  *
- *     const { a } = css` .a { color: #aaa; } .b { color: #bbb; } `;
- *                                             ^
+ *     const { a } = stylesheet` .a { color: #aaa; } .b { color: #bbb; } `;
+ *                                                    ^
  * @param assignmentMetadata
  */
 export const getUnusedTokens = (

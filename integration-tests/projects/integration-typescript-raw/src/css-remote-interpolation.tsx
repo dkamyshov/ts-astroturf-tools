@@ -1,7 +1,7 @@
 import { RED, GREEN } from './utils/colors';
-import { xcss } from '../../../../xcss';
+import { css } from 'astroturf';
 
-export const someClassName = xcss`
+export const someClassName = css`
   color: ${RED};
   background: ${GREEN};
 `;

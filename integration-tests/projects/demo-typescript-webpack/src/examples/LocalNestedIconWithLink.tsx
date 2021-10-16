@@ -1,12 +1,17 @@
 import * as React from 'react';
-import styled, { css } from 'astroturf';
+import { stylesheet } from 'astroturf';
+import styled from 'astroturf/react';
 
 // check for:
 // - warnings from other modules
 
-const { classA } = css`
+const { classA } = stylesheet`
   .classA {
     color: #003df5;
+  }
+
+  .colorB {
+    color: red;
   }
 `;
 

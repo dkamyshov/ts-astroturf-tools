@@ -1,6 +1,6 @@
-import { css } from 'astroturf';
+import { stylesheet } from 'astroturf';
 
-const { classA } = css`
+const { classA } = stylesheet`
   .classA {
     color: red;
   }

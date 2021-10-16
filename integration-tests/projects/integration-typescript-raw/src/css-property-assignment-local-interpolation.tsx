@@ -1,9 +1,9 @@
-import { xcss } from '../../../../xcss';
+import { css } from 'astroturf';
 
 const RED = 'red';
 
 export const classes = {
-  someClassName: xcss`
+  someClassName: css`
     color: ${RED};
   `,
 };

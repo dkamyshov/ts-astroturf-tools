@@ -4,8 +4,8 @@ import * as internalTs from 'typescript';
  * Extracts tagged template literal content from
  * astroturf css assignment node:
  *
- *     const { a } = css` .a { color: black; } `;
- *                      ^^^^^^^^^^^^^^^^^^^^^^^^
+ *     const { a } = stylesheet` .a { color: black; } `;
+ *                             ^^^^^^^^^^^^^^^^^^^^^^^^
  *
  * @param node
  * @param file

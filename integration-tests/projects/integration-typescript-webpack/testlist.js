@@ -2,8 +2,8 @@ const path = require('path');
 const fs = require('fs');
 
 const excluded = {
-  'css-missing-css': true,
-  'css-unused-css': true,
+  'stylesheet-missing-css': true,
+  'stylesheet-unused-css': true,
 };
 
 module.exports = fs

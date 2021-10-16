@@ -4,4 +4,4 @@ export enum SomeColors {
   Green = 'green',
 }
 
-export { secondLevelExport } from './moreColors';
+export { secondLevelExport } from './colorsNested';
