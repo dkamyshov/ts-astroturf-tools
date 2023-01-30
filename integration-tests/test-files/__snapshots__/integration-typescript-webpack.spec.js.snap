@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`typescript-webpack css snapshot test - css-property-assignment 1`] = `
-"/*!***************************************************************************************************************************************!*\\\\
+"/*!***************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-property-assignment-classes.astroturf.local.css ***!
-  \\\\***************************************************************************************************************************************/
+  \\***************************************************************************************************************************************/
 .css-property-assignment-classes-astroturf-local_cls1 { /*!*/ }
 .css-property-assignment-classes-astroturf-local_cls2 {
 
@@ -15,9 +15,9 @@ color: red;
 `;
 
 exports[`typescript-webpack css snapshot test - css-property-assignment-remote-interpolation 1`] = `
-"/*!************************************************************************************************************************************************************!*\\\\
+"/*!************************************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-property-assignment-remote-interpolation-classes.astroturf.local.css ***!
-  \\\\************************************************************************************************************************************************************/
+  \\************************************************************************************************************************************************************/
 .css-property-assignment-remote-interpolation-classes-astroturf-local_cls1 { /*!*/ }
 .css-property-assignment-remote-interpolation-classes-astroturf-local_cls2 {
 
@@ -30,9 +30,9 @@ background: green;
 `;
 
 exports[`typescript-webpack css snapshot test - css-remote-external-interpolation 1`] = `
-"/*!*******************************************************************************************************************************************************!*\\\\
+"/*!*******************************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-remote-external-interpolation-someClassName.astroturf.local.css ***!
-  \\\\*******************************************************************************************************************************************************/
+  \\*******************************************************************************************************************************************************/
 .css-remote-external-interpolation-someClassName-astroturf-local_cls1 { /*!*/ }
 .css-remote-external-interpolation-someClassName-astroturf-local_cls2 {
 
@@ -44,9 +44,9 @@ color: red;
 `;
 
 exports[`typescript-webpack css snapshot test - css-remote-external-interpolation-tree 1`] = `
-"/*!************************************************************************************************************************************************************!*\\\\
+"/*!************************************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-remote-external-interpolation-tree-someClassName.astroturf.local.css ***!
-  \\\\************************************************************************************************************************************************************/
+  \\************************************************************************************************************************************************************/
 .css-remote-external-interpolation-tree-someClassName-astroturf-local_cls1 { /*!*/ }
 .css-remote-external-interpolation-tree-someClassName-astroturf-local_cls2 {
 
@@ -58,9 +58,9 @@ color: green;
 `;
 
 exports[`typescript-webpack css snapshot test - css-remote-interpolation 1`] = `
-"/*!**********************************************************************************************************************************************!*\\\\
+"/*!**********************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-remote-interpolation-someClassName.astroturf.local.css ***!
-  \\\\**********************************************************************************************************************************************/
+  \\**********************************************************************************************************************************************/
 .css-remote-interpolation-someClassName-astroturf-local_cls1 { /*!*/ }
 .css-remote-interpolation-someClassName-astroturf-local_cls2 {
 
@@ -73,9 +73,9 @@ background: green;
 `;
 
 exports[`typescript-webpack css snapshot test - styled 1`] = `
-"/*!****************************************************************************************************************************!*\\\\
+"/*!****************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-SomeComponent.astroturf.local.css ***!
-  \\\\****************************************************************************************************************************/
+  \\****************************************************************************************************************************/
 .styled-SomeComponent-astroturf-local_cls1 { /*!*/ }
 .styled-SomeComponent-astroturf-local_cls2 {
 
@@ -87,18 +87,18 @@ color: red;
 `;
 
 exports[`typescript-webpack css snapshot test - styled-function-local-interpolation 1`] = `
-"/*!*********************************************************************************************************************************************!*\\\\
+"/*!*********************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-function-local-interpolation-A.astroturf.local.css ***!
-  \\\\*********************************************************************************************************************************************/
+  \\*********************************************************************************************************************************************/
 .styled-function-local-interpolation-A-astroturf-local_cls1 { /*!*/ }
 .styled-function-local-interpolation-A-astroturf-local_cls2 {
 
 color: red;
 }
 /*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZWQtZnVuY3Rpb24tbG9jYWwtaW50ZXJwb2xhdGlvbi1BLmFzdHJvdHVyZi5sb2NhbC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsUUFBUSxJQUFJLEVBQUU7QUFDZDtBQUNBLGNBQWM7O0FBRWQsVUFBVTtBQUNWIiwiZmlsZSI6InNyYy9zdHlsZWQtZnVuY3Rpb24tbG9jYWwtaW50ZXJwb2xhdGlvbi1BLmFzdHJvdHVyZi5sb2NhbC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2xzMSB7IC8qISovIH1cbi5jbHMyIHtcbmNvbXBvc2VzOiBjbHMxO1xuXG5jb2xvcjogcmVkO1xufSJdfQ== */
-/*!*********************************************************************************************************************************************************!*\\\\
+/*!*********************************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-function-local-interpolation-SomeComponent.astroturf.local.css ***!
-  \\\\*********************************************************************************************************************************************************/
+  \\*********************************************************************************************************************************************************/
 .styled-function-local-interpolation-SomeComponent-astroturf-local_cls1 { /*!*/ }
 .styled-function-local-interpolation-SomeComponent-astroturf-local_cls2 {
 
@@ -110,18 +110,18 @@ background: red;
 `;
 
 exports[`typescript-webpack css snapshot test - styled-function-remote-interpolation 1`] = `
-"/*!**********************************************************************************************************************************************!*\\\\
+"/*!**********************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-function-remote-interpolation-A.astroturf.local.css ***!
-  \\\\**********************************************************************************************************************************************/
+  \\**********************************************************************************************************************************************/
 .styled-function-remote-interpolation-A-astroturf-local_cls1 { /*!*/ }
 .styled-function-remote-interpolation-A-astroturf-local_cls2 {
 
 color: red;
 }
 /*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZWQtZnVuY3Rpb24tcmVtb3RlLWludGVycG9sYXRpb24tQS5hc3Ryb3R1cmYubG9jYWwuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFFBQVEsSUFBSSxFQUFFO0FBQ2Q7QUFDQSxjQUFjOztBQUVkLFVBQVU7QUFDViIsImZpbGUiOiJzcmMvc3R5bGVkLWZ1bmN0aW9uLXJlbW90ZS1pbnRlcnBvbGF0aW9uLUEuYXN0cm90dXJmLmxvY2FsLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jbHMxIHsgLyohKi8gfVxuLmNsczIge1xuY29tcG9zZXM6IGNsczE7XG5cbmNvbG9yOiByZWQ7XG59Il19 */
-/*!**********************************************************************************************************************************************************!*\\\\
+/*!**********************************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-function-remote-interpolation-SomeComponent.astroturf.local.css ***!
-  \\\\**********************************************************************************************************************************************************/
+  \\**********************************************************************************************************************************************************/
 .styled-function-remote-interpolation-SomeComponent-astroturf-local_cls1 { /*!*/ }
 .styled-function-remote-interpolation-SomeComponent-astroturf-local_cls2 {
 
@@ -133,9 +133,9 @@ background: red;
 `;
 
 exports[`typescript-webpack css snapshot test - styled-local-interpolation 1`] = `
-"/*!************************************************************************************************************************************************!*\\\\
+"/*!************************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-local-interpolation-SomeComponent.astroturf.local.css ***!
-  \\\\************************************************************************************************************************************************/
+  \\************************************************************************************************************************************************/
 .styled-local-interpolation-SomeComponent-astroturf-local_cls1 { /*!*/ }
 .styled-local-interpolation-SomeComponent-astroturf-local_cls2 {
 
@@ -147,9 +147,9 @@ color: red;
 `;
 
 exports[`typescript-webpack css snapshot test - styled-remote-interpolation 1`] = `
-"/*!*************************************************************************************************************************************************!*\\\\
+"/*!*************************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styled-remote-interpolation-SomeComponent.astroturf.local.css ***!
-  \\\\*************************************************************************************************************************************************/
+  \\*************************************************************************************************************************************************/
 .styled-remote-interpolation-SomeComponent-astroturf-local_cls1 { /*!*/ }
 .styled-remote-interpolation-SomeComponent-astroturf-local_cls2 {
 
@@ -162,9 +162,9 @@ background: green;
 `;
 
 exports[`typescript-webpack css snapshot test - stylesheet 1`] = `
-"/*!****************************************************************************************************************************!*\\\\
+"/*!****************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheet-undefined.astroturf.local.css ***!
-  \\\\****************************************************************************************************************************/
+  \\****************************************************************************************************************************/
 .stylesheet-undefined-astroturf-local_classA {
     color: red;
   }
@@ -177,9 +177,9 @@ exports[`typescript-webpack css snapshot test - stylesheet 1`] = `
 `;
 
 exports[`typescript-webpack css snapshot test - stylesheet-remote-external-interpolation 1`] = `
-"/*!**********************************************************************************************************************************************************!*\\\\
+"/*!**********************************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheet-remote-external-interpolation-undefined.astroturf.local.css ***!
-  \\\\**********************************************************************************************************************************************************/
+  \\**********************************************************************************************************************************************************/
 .stylesheet-remote-external-interpolation-undefined-astroturf-local_a {
     color: red;
   }
@@ -188,9 +188,9 @@ exports[`typescript-webpack css snapshot test - stylesheet-remote-external-inter
 `;
 
 exports[`typescript-webpack css snapshot test - stylesheet-remote-external-interpolation-tree 1`] = `
-"/*!***************************************************************************************************************************************************************!*\\\\
+"/*!***************************************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheet-remote-external-interpolation-tree-undefined.astroturf.local.css ***!
-  \\\\***************************************************************************************************************************************************************/
+  \\***************************************************************************************************************************************************************/
 .stylesheet-remote-external-interpolation-tree-undefined-astroturf-local_a {
     color: green;
   }
@@ -199,9 +199,9 @@ exports[`typescript-webpack css snapshot test - stylesheet-remote-external-inter
 `;
 
 exports[`typescript-webpack css snapshot test - stylesheet-remote-interpolation 1`] = `
-"/*!*************************************************************************************************************************************************!*\\\\
+"/*!*************************************************************************************************************************************************!*\\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/stylesheet-remote-interpolation-undefined.astroturf.local.css ***!
-  \\\\*************************************************************************************************************************************************/
+  \\*************************************************************************************************************************************************/
 .stylesheet-remote-interpolation-undefined-astroturf-local_a {
     color: red;
     background: green;

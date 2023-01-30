@@ -14,8 +14,7 @@ describe('typescript-raw', () => {
   });
 
   const executeTest = async (workingDirectory, testName) => {
-    return runner.run(workingDirectory, 'yarn', [
-      'babel',
+    return runner.run(workingDirectory, 'node_modules/.bin/babel', [
       `src/${testName}.js`,
       '--out-dir',
       'dist',

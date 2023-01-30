@@ -43,8 +43,8 @@ exports[`typescript-raw css snapshot test - css-property-assignment-remote-inter
 import { css } from 'astroturf';
 export const classes = {
     someClassName: css \`
-    color: \${\\"red\\"};
-    background: \${\\"green\\"};
+    color: \${"red"};
+    background: \${"green"};
   \`,
 };
 //# sourceMappingURL=css-property-assignment-remote-interpolation.js.map"
@@ -54,8 +54,8 @@ exports[`typescript-raw css snapshot test - css-remote-interpolation 1`] = `
 "import { RED, GREEN } from './utils/colors';
 import { css } from 'astroturf';
 export const someClassName = css \`
-  color: \${\\"red\\"};
-  background: \${\\"green\\"};
+  color: \${"red"};
+  background: \${"green"};
 \`;
 //# sourceMappingURL=css-remote-interpolation.js.map"
 `;
@@ -79,7 +79,7 @@ const A = styled.div \`
   color: red;
 \`;
 export const SomeComponent = styled(A) \`
-  background: \${\\"red\\"};
+  background: \${"red"};
 \`;
 //# sourceMappingURL=styled-function-remote-interpolation.js.map"
 `;
@@ -88,8 +88,8 @@ exports[`typescript-raw css snapshot test - styled-remote-interpolation 1`] = `
 "import styled from 'astroturf/react';
 import { RED, GREEN } from './utils/colors';
 export const SomeComponent = styled.div \`
-  color: \${\\"red\\"};
-  background: \${\\"green\\"};
+  color: \${"red"};
+  background: \${"green"};
 \`;
 //# sourceMappingURL=styled-remote-interpolation.js.map"
 `;
@@ -124,8 +124,8 @@ exports[`typescript-raw css snapshot test - stylesheet-remote-interpolation 1`] 
 import { GREEN, RED } from './utils/colors';
 export const { a } = stylesheet \`
   .a {
-    color: \${\\"red\\"};
-    background: \${\\"green\\"};
+    color: \${"red"};
+    background: \${"green"};
   }
 \`;
 //# sourceMappingURL=stylesheet-remote-interpolation.js.map"

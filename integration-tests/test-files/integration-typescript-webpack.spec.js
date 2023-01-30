@@ -16,8 +16,8 @@ describe('typescript-webpack', () => {
   });
 
   const executeTest = async (workingDirectory, testName) => {
-    return runner.run(workingDirectory, 'yarn', [
-      'webpack',
+    return runner.run(workingDirectory, 'node_modules/.bin/webpack', [
+      '--entry-reset',
       `./src/${testName}.tsx`,
       '--output-path',
       `dist/${testName}`,
